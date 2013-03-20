@@ -38,7 +38,12 @@ public class InputHandler : MonoBehaviour {
         }
         else if (Input.GetKeyUp(cognitivLiftKey))
         {
-            CognitvEventManager.TriggerCognitivLift(null, 6.4f);
+            //CognitvEventManager.TriggerCognitivLift(null, 6.4f);
+            Hashtable param = new Hashtable();
+            param.Add("skill", "lift");
+            param.Add("power", 6.4f);
+            param.Add("time", Time.time);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", param);
         }
         else if (Input.GetKeyUp(cognitivLeftKey))
         {

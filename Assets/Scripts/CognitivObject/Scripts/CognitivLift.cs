@@ -6,11 +6,30 @@ public class CognitivLift : MonoBehaviour {
 	
 	void Start() {
         CognitvEventManager.LiftEvent += handle_liftEvent;
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
 	}
 	
 	void Update () {
 		
 	}
+
+    void OnCognitivLiftEvent(Notification liftNotification)
+    {
+        Debug.Log("NotificationCenter notified CognitivLift of lift event.");
+        
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)liftNotification.data["power"];
+
+            if (powerLevel > 0.0f)
+            {
+                float amount = gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel;
+                StartCoroutine(liftObject(gObj, amount, 1.0f));
+            }
+        }
+    }
 	
 
     void handle_liftEvent(object sender, float powerLevel)

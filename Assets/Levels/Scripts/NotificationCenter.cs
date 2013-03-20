@@ -117,7 +117,7 @@ public class NotificationCenter : MonoBehaviour
             notifyList.Remove(observer);
         }
     }
-
+/*
     // The Notification class is the object that is send to receiving objects of a notification type.
     // This class contains the sending GameObject, the name of the notification, and optionally a hashtable containing data.
     public class Notification
@@ -135,5 +135,5 @@ public class NotificationCenter : MonoBehaviour
         public Notification(Component aSender, string aName, Hashtable aData) { sender = aSender; name = aName; data = aData; }
 
 
-    }
+    }*/
 }
