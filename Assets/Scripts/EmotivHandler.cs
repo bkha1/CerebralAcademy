@@ -137,13 +137,6 @@ public class EmotivHandler : MonoBehaviour {
 		
 	}
 	
-	/*void engine_EmoStateUpdated(object sender, EmoStateUpdatedEventArgs args) {
-		
-		EmoState emoState = args.emoState; 
-		
-		//Debug.Log("User has lower face expression : " + emoState.ExpressivGetLowerFaceAction().ToString() + " of strength " + emoState.ExpressivGetLowerFaceActionPower().ToString() ); 	
-	}*/
-	
 	void engine_CognitiveEmoStateUpdated(object sender, EmoStateUpdatedEventArgs args) {
 		cogState = args.emoState;
 		EmoState emoState = args.emoState;

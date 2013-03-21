@@ -8,11 +8,41 @@ public class CognitivDisappear : MonoBehaviour {
     private float disappearAmt = 0.0f;
 
     void Start() {
-        CognitvEventManager.DisappearEvent += handle_disappearEvent;
+        //CognitvEventManager.DisappearEvent += handle_disappearEvent;
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivDisappearEvent");
     }
 
-	void Update () {	
-	}
+
+    void OnCognitivDisappearEvent(Notification disappearNotification)
+    {
+        disappearAmt = (float)disappearNotification.data["power"];
+
+        if (disappear) return;
+
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj == null) return;
+
+        if (!disappear)
+        {
+            modulateAlpha(gObj, disappearAmt);
+        }
+
+        // Problem: If i just disable, obj will fall through world. 
+        if (gObj.transform.renderer.material.color.a <= 0.0f)
+        {
+            disappear = true;
+            gObj.transform.collider.enabled = false;
+
+            // Start a 1 sec time until alpha is faded back to original state
+        }
+        else
+        {
+            disappear = false;
+            gObj.transform.collider.enabled = true;
+
+        }
+    }
 	
 	void modulateAlpha(GameObject gObj, float amount) {
 		Color invisiColor = gObj.transform.renderer.material.color;
@@ -28,7 +58,7 @@ public class CognitivDisappear : MonoBehaviour {
 		gObj.transform.renderer.material.color = invisiColor;
 	}
 
-    void handle_disappearEvent(object sender, float powerLevel) {
+    /*void handle_disappearEvent(object sender, float powerLevel) {
         disappearAmt = powerLevel;
 
         if (disappear) return;
@@ -42,9 +72,6 @@ public class CognitivDisappear : MonoBehaviour {
             modulateAlpha(gObj, disappearAmt);
             //currentTime = Time.time + 1.0f;
         }
-        /*else if (Input.GetKeyUp(debugKey)) {
-            modulateAlpha(gObj, incomingPower);
-        }*/
 
         // Problem: If i just disable, obj will fall through world. 
         if (gObj.transform.renderer.material.color.a <= 0.0f)
@@ -62,7 +89,5 @@ public class CognitivDisappear : MonoBehaviour {
 
         }
 
-
-
-    }
+    }*/
 }
