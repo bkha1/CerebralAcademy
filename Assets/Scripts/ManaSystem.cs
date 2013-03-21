@@ -7,21 +7,22 @@ public class ManaSystem : MonoBehaviour {
     public GUITexture ManabarTexture;
     public float ManabarGUIWidth = 1.4f;
 
-    public float liftScaleFactor = 1.0f;
     public float ManaRefillRate = 1.0f;
-
     public float minMana = 10.0f;
     public float maxMana = 100.0f;
+
 
     private float currentMana = 10.0f;
     private float currentTime;
     private float endTime;
 
-	// Use this for initialization
 	void Start () {
 	    // Register to CognitivEvents
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
-
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLeftEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivRightEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivPushEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivDisappearEvent");
 
         // Set ManabarTexture to correct size
         Rect textureRect = ManabarTexture.pixelInset;
@@ -32,32 +33,32 @@ public class ManaSystem : MonoBehaviour {
         endTime = currentTime + 1.0f;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
         currentTime += Time.deltaTime;
         if (currentMana < maxMana && currentTime >= endTime)
         {
-            // Add 1 mana (default rate)
-            currentMana += ManaRefillRate;
+            // Add ManaRefillRate mana
+            if (currentMana < maxMana)
+            {
+                // Add 1 mana (default rate)
+                currentMana += ManaRefillRate;
+
+                if (currentMana > maxMana) currentMana = maxMana;
+
+                Rect textureRect = ManabarTexture.pixelInset;
+                textureRect.xMax = ManabarTexture.pixelInset.xMin + ManabarGUIWidth * currentMana;
+                ManabarTexture.pixelInset = textureRect;
+            }
             
             // Reset clock
             currentTime = Time.time;
             endTime = currentTime + 1.0f;
-            Debug.Log("Current Mana is " + currentMana);
         }
-
-
-        Rect textureRect = ManabarTexture.pixelInset;
-        textureRect.xMax = ManabarTexture.pixelInset.xMin + ManabarGUIWidth * currentMana;
-        ManabarTexture.pixelInset = textureRect;
-
 	}
 
     void OnCognitivLiftEvent(Notification liftNotification)
     {
-        Debug.Log("NotificationCenter notified ManaSystem of lift event.");
-
         GameObject gObj = GameState.Instance.getSelectedObject();
 
         if (gObj != null)
@@ -65,38 +66,95 @@ public class ManaSystem : MonoBehaviour {
             float powerLevel = (float)liftNotification.data["power"];
             if (powerLevel > 0)
             {
-                float amount = gObj.GetComponent<CognitivObject>().liftSensitivity / powerLevel * liftScaleFactor;
-                // subtract current mana by amount.
-
-                amount = 10.0f;
-                float endMana = currentMana - amount;
-                if (endMana < minMana)
-                {
-                    endMana = minMana;
-                }
-                currentMana = endMana;
+                updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false);
             }
         }
     }
 
-    // This is not the best method to do it with a GUIText object. 
-    /*IEnumerator decrementMana(float amount, float overTime)
+
+    void OnCognitivLeftEvent(Notification notification)
     {
-        Debug.Log("Current Mana is " + currentMana + " and will loose " + amount);
-        float startMana = currentMana;
-        float endMana = currentMana - amount;
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            if (powerLevel > 0)
+            {
+                updateMana(gObj.GetComponent<CognitivObject>().leftSensitivity, powerLevel, false);
+            }
+        }
+    }
+
+    void OnCognitivRightEvent(Notification notification)
+    {
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            if (powerLevel > 0)
+            {
+                updateMana(gObj.GetComponent<CognitivObject>().rightSensitivity, powerLevel, false);
+            }
+        }
+    }
+
+    void OnCognitivPushEvent(Notification notification)
+    {
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            if (powerLevel > 0)
+            {
+                updateMana(gObj.GetComponent<CognitivObject>().pushSensitivity, powerLevel, false);
+            }
+        }
+    }
+
+    void OnCognitivDisappearEvent(Notification notification)
+    {
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            if (powerLevel > 0)
+            {
+                updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false);
+            }
+        }
+    }
+
+    void OnEmotionEvent(Notification notification)
+    {
+        // TODO: Fill this code out for the actual emotional state of user's brain.
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            if (powerLevel > 0)
+            {
+                updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, true);
+            }
+        }
+    }
+
+
+   
+    void updateMana(float objSensitivity, float powerLevel, bool recharge)
+    {
+        float endMana;
+        if (recharge) endMana = (currentMana + powerLevel) / objSensitivity;
+        else endMana = (currentMana - powerLevel) / objSensitivity;
+        
         if (endMana < minMana)
         {
             endMana = minMana;
         }
-
-        float startTime = Time.time;
-        while (Time.time < startTime + overTime)
-        {
-            currentMana = Mathf.Lerp(startMana, endMana, (Time.time - startTime) * amount);
-            yield return null;
-        }
-
         currentMana = endMana;
-    }*/
+    }
 }

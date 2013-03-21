@@ -3,14 +3,20 @@ using System.Collections;
 
 public class CognitivObject : MonoBehaviour {
 
-    public float liftSensitivity;// { get; set; }
-    public float disappearSensitivity;// { get; set; }
-    public float leftSensitivity;// { get; set; }
-    public float rightSensitivity;// { get; set; }
-    public float pushSensitivity;// { get; set; }
+    public float liftSensitivity = 0.1f;
+    public float disappearSensitivity = 0.1f;
+    public float leftSensitivity = 0.1f;
+    public float rightSensitivity = 0.1f;
+    public float pushSensitivity = 0.1f;
 
 	// Use this for initialization
 	void Start () {
         transform.tag = "CognitivObject";
+
+        if (liftSensitivity <= 0.0f) liftSensitivity = 0.1f;
+        if (disappearSensitivity <= 0.0f) disappearSensitivity = 0.1f;
+        if (leftSensitivity <= 0.0f) leftSensitivity = 0.1f;
+        if (rightSensitivity <= 0.0f) rightSensitivity = 0.1f;
+        if (pushSensitivity <= 0.0f) pushSensitivity = 0.1f;
 	}
 }
