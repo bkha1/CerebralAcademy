@@ -12,6 +12,8 @@ public class InputHandler : MonoBehaviour {
 	public string cognitivLeftKey;
     public string cognitivRightKey;
 
+    public string debugKey;
+
     public string pauseKey = "escape";
 
     /**
@@ -86,6 +88,21 @@ public class InputHandler : MonoBehaviour {
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", param);
+        }
+
+
+        else if (Input.GetKeyUp(debugKey))
+        {
+            GameObject gObj = GameState.Instance.getSelectedObject();
+
+            if (gObj != null)
+            {
+                Hashtable param = new Hashtable();
+                param.Add("gameObject", gObj);
+                param.Add("text", "Debug String");
+                param.Add("duration", 5.0f);
+                NotificationCenter.DefaultCenter.PostNotification(this, "NewSpeechBubble", param);
+            }
         }
 	}
 

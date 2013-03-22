@@ -19,6 +19,7 @@ using System.Collections.Generic;
 
 public class NotificationCenter : MonoBehaviour
 {
+    private static GameObject notificationObject = null;
     private static NotificationCenter defaultCenter;
     public static NotificationCenter DefaultCenter
     {
@@ -26,16 +27,13 @@ public class NotificationCenter : MonoBehaviour
         {
             if (!defaultCenter)
             {
-                GameObject notificationObject = new GameObject("Default Notification Center");
-
-                defaultCenter = notificationObject.AddComponent<NotificationCenter>();
+                notificationObject = GameObject.Find("Default Notification Center");
+                defaultCenter = notificationObject.GetComponent<NotificationCenter>();
             }
 
             return defaultCenter;
         }
     }
-
-
 
     // Our hashtable containing all the notifications.  Each notification in the hash table is an ArrayList that contains all the observers for that notification.
     Hashtable notifications = new Hashtable();
@@ -117,23 +115,4 @@ public class NotificationCenter : MonoBehaviour
             notifyList.Remove(observer);
         }
     }
-/*
-    // The Notification class is the object that is send to receiving objects of a notification type.
-    // This class contains the sending GameObject, the name of the notification, and optionally a hashtable containing data.
-    public class Notification
-    {
-
-        //public Notification (GameObject aSender, string aName, Hashtable aData)
-        //{
-        //	throw new System.NotImplementedException ();
-        //}
-
-        public Component sender;
-        public string name;
-        public Hashtable data;
-        public Notification(Component aSender, string aName) { sender = aSender; name = aName; data = null; }
-        public Notification(Component aSender, string aName, Hashtable aData) { sender = aSender; name = aName; data = aData; }
-
-
-    }*/
 }
