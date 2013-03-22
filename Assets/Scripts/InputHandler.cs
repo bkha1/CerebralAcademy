@@ -98,7 +98,7 @@ public class InputHandler : MonoBehaviour {
             if (gObj != null)
             {
                 Hashtable param = new Hashtable();
-                param.Add("pos", gObj.transform.position);
+                param.Add("gameObject", gObj);
                 param.Add("text", "Debug String");
                 param.Add("duration", 5.0f);
                 NotificationCenter.DefaultCenter.PostNotification(this, "NewSpeechBubble", param);
