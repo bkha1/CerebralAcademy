@@ -3,33 +3,27 @@ using Emotiv;
 using System.Collections;
 
 public class CognitivPush : MonoBehaviour {
-	
-	public float incomingPower = 0.0f;
-	public float modifier = 0.1f;
-	public string debugKey;
-	
+
 	private Ray lookAtRay;
 	
 	// Use this for initialization
 	void Start () {
-	
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivPushEvent");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (EmotivHandler.Instance.isConnected()) {
-			EmoState emoState = EmotivHandler.Instance.getCognitiveState();
-		
-			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH) {
-				push(emoState.CognitivGetCurrentActionPower() * modifier);
-			} 
-		} else {
-			/*if (Input.GetKeyUp(debugKey)) {
-				push(incomingPower * modifier);
-			}*/
-		}
-	
-	}
+
+    void OnCognitivPushEvent(Notification notification)
+    {
+        GameObject gObj = GameState.Instance.getSelectedObject();
+
+        if (gObj != null)
+        {
+            float powerLevel = (float)notification.data["power"];
+            float amount = gObj.GetComponent<CognitivObject>().pushSensitivity * powerLevel;
+            //StartCoroutine(pushObject(gObj, amount, 1.0f));
+            push(amount);
+        }
+    }
+
 	
 	private void push(float amount) {
 		lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -7,19 +7,18 @@ public class CognitivLeft : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-        CognitvEventManager.LeftEvent += handle_leftEvent;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        //CognitvEventManager.LeftEvent += handle_leftEvent;
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLeftEvent");
 	}
 
-    void handle_leftEvent(object sender, float powerLevel)
+
+    void OnCognitivLeftEvent(Notification notification)
     {
         GameObject gObj = GameState.Instance.getSelectedObject();
 
         if (gObj != null)
         {
+            float powerLevel = (float) notification.data["power"];
             float amount = gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel;
             StartCoroutine(moveObject(gObj, Vector3.left, amount, 1.0f));
             //gObj.transform.Translate(Vector3.left * amount, Camera.main.transform);
