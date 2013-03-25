@@ -5,18 +5,31 @@ using System.Collections;
 public class Selector : MonoBehaviour {
 	
 	public Material highlightMaterial;
-	
+    public bool highlightEffect = false;
+    
 	private RaycastHit hit = new RaycastHit();
 	private Ray lookAtRay = new Ray();
 	private GameObject prevSelected;
 	private Material prevMaterial;
 	private Material[] prevMaterials;
-	public bool highlightEffect = false;
+    private GameObject defaultObject;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+
+    void Start()
+    {
+        defaultObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        defaultObject.AddComponent<Rigidbody>();
+        CognitivObject cogObjScript = defaultObject.AddComponent<CognitivObject>();
+        cogObjScript.liftSensitivity = 0.0f;
+        cogObjScript.disappearSensitivity = 0.0f;
+        cogObjScript.leftSensitivity = 0.0f;
+        cogObjScript.rightSensitivity = 0.0f;
+        cogObjScript.pushSensitivity = 0.0f;
+        defaultObject.tag = "CognitivObject";
+        defaultObject.transform.position = new Vector3(1000.0f, 1000.0f, 1000.0f);
+        defaultObject.name = "Default Selector Object";
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,32 +41,39 @@ public class Selector : MonoBehaviour {
             if (hit.collider.gameObject.tag == "CognitivObject") {
 				GameObject selectedObject = hit.collider.gameObject;
 
-				
-				if (prevSelected == null ) { // On first run
-					GameState.Instance.setSelectedObject(selectedObject);
-					prevSelected = selectedObject;
-				} else if (prevSelected != selectedObject)
-				{
-					GameState.Instance.setSelectedObject(selectedObject);
-					if (highlightEffect) {
-						prevSelected.renderer.materials = prevMaterials;
-					}
-					prevSelected = selectedObject;
-				}
-				
-				if (highlightEffect) {
-					prevMaterials = selectedObject.renderer.materials;
-					
-					Material[] selectedMaterials = new Material[selectedObject.renderer.materials.Length + 1];
-					selectedObject.renderer.materials.CopyTo(selectedMaterials, 0);
-					selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
-					selectedObject.renderer.materials = selectedMaterials;
-				}
+                swapSelectedObjects(selectedObject);
+
 			} else {
-				// Deselect? (Issues with selectedObject being null. Brian suggests selecting an object outside of scene
-
-
+                swapSelectedObjects(defaultObject);
 			}
 		}
 	}
+
+    private void swapSelectedObjects(GameObject selectedObject)
+    {
+        if (prevSelected == null)
+        { // On first run
+            GameState.Instance.setSelectedObject(selectedObject);
+            prevSelected = selectedObject;
+        }
+        else if (prevSelected != selectedObject)
+        {
+            GameState.Instance.setSelectedObject(selectedObject);
+            if (highlightEffect)
+            {
+                prevSelected.renderer.materials = prevMaterials;
+            }
+            prevSelected = selectedObject;
+        }
+
+        if (highlightEffect)
+        {
+            prevMaterials = selectedObject.renderer.materials;
+
+            Material[] selectedMaterials = new Material[selectedObject.renderer.materials.Length + 1];
+            selectedObject.renderer.materials.CopyTo(selectedMaterials, 0);
+            selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
+            selectedObject.renderer.materials = selectedMaterials;
+        }
+    }
 }
