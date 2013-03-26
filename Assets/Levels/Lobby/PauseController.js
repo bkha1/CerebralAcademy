@@ -1,5 +1,29 @@
 var gamePaused : boolean = false;
 
+function Start() 
+{
+    //NotificationCenter.DefaultCenter.AddObserver(this, "OnPauseEvent");
+    //NotificationCenter.DefaultCenter.AddObserver(this, "OnUnPauseEvent");
+}
+
+/*function OnPauseEvent(notification : Notification) 
+{
+    Time.timeScale = 1;
+	gamePaused = false;
+	gameObject.GetComponent(PauseMenu).enabled = false;
+	gameObject.GetComponent(MouseLook).enabled = true;
+	transform.parent.GetComponent(MouseLook).enabled = true;
+}
+
+function OnUnPauseEvent(notification : Notification) 
+{
+    Time.timeScale = 0;
+	gamePaused = true;
+	gameObject.GetComponent(PauseMenu).enabled = true;
+	gameObject.GetComponent(MouseLook).enabled = false;
+	transform.parent.GetComponent(MouseLook).enabled = false;
+}*/
+
 function Update()
 {
 	if(Input.GetKeyDown(KeyCode.Escape))//user its escape key

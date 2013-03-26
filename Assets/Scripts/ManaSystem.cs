@@ -17,7 +17,9 @@ public class ManaSystem : MonoBehaviour {
     private float endTime;
 
 	void Start () {
-	    // Register to CognitivEvents
+	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
+        // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
+        // skill events.
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLeftEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivRightEvent");
@@ -147,6 +149,12 @@ public class ManaSystem : MonoBehaviour {
    
     void updateMana(float objSensitivity, float powerLevel, bool recharge)
     {
+        if (!recharge && (currentMana - (powerLevel / objSensitivity) < minMana))
+        {
+            Debug.Log("Not enough mana to perform skill.");
+            return;
+        }
+
         float endMana;
         if (recharge) endMana = (currentMana + powerLevel) / objSensitivity;
         else endMana = (currentMana - powerLevel) / objSensitivity;
