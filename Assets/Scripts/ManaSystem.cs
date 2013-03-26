@@ -20,11 +20,7 @@ public class ManaSystem : MonoBehaviour {
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
         // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
         // skill events.
-        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
-        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLeftEvent");
-        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivRightEvent");
-        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivPushEvent");
-        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivDisappearEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivEvent");
 
         // Set ManabarTexture to correct size
         Rect textureRect = ManabarTexture.pixelInset;
@@ -59,22 +55,7 @@ public class ManaSystem : MonoBehaviour {
         }
 	}
 
-    void OnCognitivLiftEvent(Notification liftNotification)
-    {
-        GameObject gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
-        {
-            float powerLevel = (float)liftNotification.data["power"];
-            if (powerLevel > 0)
-            {
-                updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false);
-            }
-        }
-    }
-
-
-    void OnCognitivLeftEvent(Notification notification)
+     void OnCognitivEvent(Notification notification)
     {
         GameObject gObj = GameState.Instance.getSelectedObject();
 
@@ -83,52 +64,54 @@ public class ManaSystem : MonoBehaviour {
             float powerLevel = (float)notification.data["power"];
             if (powerLevel > 0)
             {
-                updateMana(gObj.GetComponent<CognitivObject>().leftSensitivity, powerLevel, false);
+                
+                switch((string)notification.data["skill"]) 
+                {
+                    case ("lift"): 
+                    {
+                        if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", notification.data);
+                        }
+                        break;
+                    }
+                    case ("disappear"):
+                    {
+                        if (updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", notification.data);
+                        }
+                        break;
+                    }
+                    case ("right"):
+                    {
+                        if (updateMana(gObj.GetComponent<CognitivObject>().rightSensitivity, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivRightEvent", notification.data);
+                        }
+                        break;
+                    }
+                    case ("left"):
+                    {
+                        if (updateMana(gObj.GetComponent<CognitivObject>().leftSensitivity, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLeftEvent", notification.data);
+                        }
+                        break;
+                    }
+                    case ("push"):
+                    {
+                        if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);
+                        }
+                        break;
+                    }
+                }
             }
         }
     }
-
-    void OnCognitivRightEvent(Notification notification)
-    {
-        GameObject gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
-        {
-            float powerLevel = (float)notification.data["power"];
-            if (powerLevel > 0)
-            {
-                updateMana(gObj.GetComponent<CognitivObject>().rightSensitivity, powerLevel, false);
-            }
-        }
-    }
-
-    void OnCognitivPushEvent(Notification notification)
-    {
-        GameObject gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
-        {
-            float powerLevel = (float)notification.data["power"];
-            if (powerLevel > 0)
-            {
-                updateMana(gObj.GetComponent<CognitivObject>().pushSensitivity, powerLevel, false);
-            }
-        }
-    }
-
-    void OnCognitivDisappearEvent(Notification notification)
-    {
-        GameObject gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
-        {
-            float powerLevel = (float)notification.data["power"];
-            if (powerLevel > 0)
-            {
-                updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false);
-            }
-        }
-    }
+    
 
     void OnEmotionEvent(Notification notification)
     {
@@ -147,12 +130,12 @@ public class ManaSystem : MonoBehaviour {
 
 
    
-    void updateMana(float objSensitivity, float powerLevel, bool recharge)
+    bool updateMana(float objSensitivity, float powerLevel, bool recharge)
     {
         if (!recharge && (currentMana - (powerLevel / objSensitivity) < minMana))
         {
             Debug.Log("Not enough mana to perform skill.");
-            return;
+            return false;
         }
 
         float endMana;
@@ -164,5 +147,7 @@ public class ManaSystem : MonoBehaviour {
             endMana = minMana;
         }
         currentMana = endMana;
+
+        return true;
     }
 }

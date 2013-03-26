@@ -40,13 +40,14 @@ public class InputHandler : MonoBehaviour {
         if (Input.GetKeyDown(pauseKey))
         {
             // NOTE: This can actually just be "OnPause" and let the handler manage the state.
-			if (!GameState.Instance.isPaused()) {
-                NotificationCenter.DefaultCenter.PostNotification(this, "OnPause");
+			/*if (!GameState.Instance.isPaused()) {
+                NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
 				GameEventManager.TriggerPause();
 			} else {
-                NotificationCenter.DefaultCenter.PostNotification(this, "OnUnPause");
+                NotificationCenter.DefaultCenter.PostNotification(this, "OnUnPauseEvent");
 				GameEventManager.TriggerUnpause();
-			}
+			}*/
+            //NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
 
         }
         else if (Input.GetKeyUp(cognitivDisappearKey))
@@ -55,7 +56,7 @@ public class InputHandler : MonoBehaviour {
             param.Add("skill", "disappear");
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", param);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
         }
         else if (Input.GetKeyUp(cognitivLiftKey))
         {
@@ -63,7 +64,7 @@ public class InputHandler : MonoBehaviour {
             param.Add("skill", "lift");
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", param);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
         }
         else if (Input.GetKeyUp(cognitivLeftKey))
         {
@@ -71,7 +72,7 @@ public class InputHandler : MonoBehaviour {
             param.Add("skill", "left");
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLeftEvent", param);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
         }
         else if (Input.GetKeyUp(cognitivRightKey))
         {
@@ -79,7 +80,7 @@ public class InputHandler : MonoBehaviour {
             param.Add("skill", "right");
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivRightEvent", param);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
         }
         else if (Input.GetKeyUp(cogntivPushKey))
         {
@@ -87,7 +88,7 @@ public class InputHandler : MonoBehaviour {
             param.Add("skill", "push");
             param.Add("power", 6.4f);
             param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", param);
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
         }
 
 
