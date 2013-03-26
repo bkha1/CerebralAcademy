@@ -28,7 +28,16 @@ public class NotificationCenter : MonoBehaviour
             if (!defaultCenter)
             {
                 notificationObject = GameObject.Find("Default Notification Center");
-                defaultCenter = notificationObject.GetComponent<NotificationCenter>();
+
+                if (notificationObject == null)
+                {
+                    notificationObject = new GameObject("Default Notification Center");
+                    defaultCenter = notificationObject.AddComponent<NotificationCenter>();
+                }
+                else
+                {
+                    defaultCenter = notificationObject.GetComponent<NotificationCenter>();
+                }
             }
 
             return defaultCenter;

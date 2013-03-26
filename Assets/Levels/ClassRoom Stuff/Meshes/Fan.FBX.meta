@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a1b071d663ddd2c48b823c734ef1ee65
+guid: 017beb3a44c959a4f814d4f9f03ab99f
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -33,10 +33,12 @@ ModelImporter:
     globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
