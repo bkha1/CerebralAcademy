@@ -39,16 +39,7 @@ public class InputHandler : MonoBehaviour {
 
         if (Input.GetKeyDown(pauseKey))
         {
-            // NOTE: This can actually just be "OnPause" and let the handler manage the state.
-			/*if (!GameState.Instance.isPaused()) {
-                NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
-				GameEventManager.TriggerPause();
-			} else {
-                NotificationCenter.DefaultCenter.PostNotification(this, "OnUnPauseEvent");
-				GameEventManager.TriggerUnpause();
-			}*/
-            //NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
-
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
         }
         else if (Input.GetKeyUp(cognitivDisappearKey))
         {
