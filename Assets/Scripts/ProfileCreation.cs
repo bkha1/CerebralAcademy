@@ -15,15 +15,17 @@ public class ProfileCreation : MonoBehaviour {
     private bool isMale = false;
     private bool isFemale = false;
 
+    private bool isVisible = false;
+
 	// Use this for initialization
 	void Start () {
 
         if (GameState.Instance.getCurrentPlayer() == null) {
 
             player = new Player();
-            this.GetComponent<MouseLook>().enabled = false;
-            this.transform.parent.GetComponent<MouseLook>().enabled = false;
-            gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
+            //this.GetComponent<MouseLook>().enabled = false;
+            //this.transform.parent.GetComponent<MouseLook>().enabled = false;
+            //gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
          }
 
         NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
@@ -33,15 +35,22 @@ public class ProfileCreation : MonoBehaviour {
     void OpenProfileCreationGUI(Notification notification)
     {
         Debug.Log("Profile Creation GUI is opening...");
-        enabled = true;
+        //enabled = true;
+        if (isVisible == false)
+        {
+            isVisible = true;
 
-        this.GetComponent<MouseLook>().enabled = false;
-        this.transform.parent.GetComponent<MouseLook>().enabled = false;
-        gameObject.GetComponent<PauseController>().enabled = false;
+
+            this.GetComponent<MouseLook>().enabled = false;
+            this.transform.parent.GetComponent<MouseLook>().enabled = false;
+            gameObject.GetComponent<PauseController>().enabled = false;
+        }
     }
 
     void OnGUI()
     {
+        if (!isVisible) return;
+
         Time.timeScale = 0;//this has to be here or else mana bar will fill for some reason
 
         areaHeight = Screen.height;
@@ -76,7 +85,7 @@ public class ProfileCreation : MonoBehaviour {
             this.GetComponent<MouseLook>().enabled = true;
             this.transform.parent.GetComponent<MouseLook>().enabled = true;
             gameObject.GetComponent<PauseController>().enabled = true;
-            enabled = false;
+            this.enabled = false;
         }
         GUILayout.EndArea();
     }
