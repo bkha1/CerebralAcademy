@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour {
         {
         }
         GUILayout.Space(buttonSpacing);
-        //AudioListener.volume = GUILayout.HorizontalSlider(AudioListener.volume, 0.0, 1.0);
+        AudioListener.volume = GUILayout.HorizontalSlider(AudioListener.volume, 0, 1);
         GUILayout.Space(buttonSpacing);
         if (GUILayout.Button("Main Menu"))
         {
