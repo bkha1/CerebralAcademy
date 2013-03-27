@@ -40,12 +40,20 @@ public class PauseMenu : MonoBehaviour {
         if (GUILayout.Button("Main Menu"))
         {
             Time.timeScale = 1;
+			/*
+			this.GetComponent<MouseLook>().enabled = false;
+        this.transform.parent.GetComponent<MouseLook>().enabled = false;
+        gameObject.GetComponent<PauseController>().enabled = false;
+        */
+			
             Hashtable param = new Hashtable();
             param.Add("gameObject", this.gameObject);
             param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
             param.Add("isLevel", true);
             param.Add("level", mainMenu);
             NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param);
+            
+			//Application.LoadLevel ("Main Menu");
         }
 
         GUILayout.Space(buttonSpacing);

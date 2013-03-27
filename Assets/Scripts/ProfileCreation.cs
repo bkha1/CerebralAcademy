@@ -21,6 +21,9 @@ public class ProfileCreation : MonoBehaviour {
         if (GameState.Instance.getCurrentPlayer() == null) {
 
             player = new Player();
+			
+			//Time.timeScale = 0;
+			
             this.GetComponent<MouseLook>().enabled = false;
             this.transform.parent.GetComponent<MouseLook>().enabled = false;
             gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
@@ -34,7 +37,7 @@ public class ProfileCreation : MonoBehaviour {
     {
         Debug.Log("Profile Creation GUI is opening...");
         enabled = true;
-
+		
         this.GetComponent<MouseLook>().enabled = false;
         this.transform.parent.GetComponent<MouseLook>().enabled = false;
         gameObject.GetComponent<PauseController>().enabled = false;
@@ -43,6 +46,11 @@ public class ProfileCreation : MonoBehaviour {
     void OnGUI()
     {
         Time.timeScale = 0;//this has to be here or else mana bar will fill for some reason
+		/*
+		this.GetComponent<MouseLook>().enabled = false;
+        this.transform.parent.GetComponent<MouseLook>().enabled = false;
+        gameObject.GetComponent<PauseController>().enabled = false;
+        */
 
         areaHeight = Screen.height;
 
