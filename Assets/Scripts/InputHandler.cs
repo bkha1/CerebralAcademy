@@ -85,16 +85,12 @@ public class InputHandler : MonoBehaviour {
 
         else if (Input.GetKeyUp(debugKey))
         {
-            GameObject gObj = GameState.Instance.getSelectedObject();
+            
+            Hashtable param = new Hashtable();
+            param.Add("text", "Debug String");
+            param.Add("duration", 5.0f);
+            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 
-            if (gObj != null)
-            {
-                Hashtable param = new Hashtable();
-                param.Add("gameObject", gObj);
-                param.Add("text", "Debug String");
-                param.Add("duration", 5.0f);
-                NotificationCenter.DefaultCenter.PostNotification(this, "NewSpeechBubble", param);
-            }
         }
 	}
 
