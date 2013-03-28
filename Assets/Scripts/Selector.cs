@@ -40,6 +40,10 @@ public class Selector : MonoBehaviour {
 			// if hit is a CognitivObject
             if (hit.collider.gameObject.tag == "CognitivObject") {
 				GameObject selectedObject = hit.collider.gameObject;
+				
+				Hashtable param = new Hashtable();
+            	param.Add("gameObject", selectedObject);
+				NotificationCenter.DefaultCenter.PostNotification(this, "SelectionEvent", param);
 
                 swapSelectedObjects(selectedObject);
 
