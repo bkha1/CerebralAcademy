@@ -87,7 +87,7 @@ public class InputHandler : MonoBehaviour {
         {
             
             Hashtable param = new Hashtable();
-            param.Add("text", "Debug String");
+            param.Add("text", "Debug: In order to move your character, use the WASD. W allows your character to move forward, S is for moving backward. A and D are for strafing left and right respectively.");
             param.Add("duration", 5.0f);
             NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 
