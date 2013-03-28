@@ -40,11 +40,6 @@ public class PauseMenu : MonoBehaviour {
         if (GUILayout.Button("Main Menu"))
         {
             Time.timeScale = 1;
-			/*
-			this.GetComponent<MouseLook>().enabled = false;
-        this.transform.parent.GetComponent<MouseLook>().enabled = false;
-        gameObject.GetComponent<PauseController>().enabled = false;
-        */
 			
             Hashtable param = new Hashtable();
             param.Add("gameObject", this.gameObject);

@@ -5,8 +5,10 @@ public class DeskTrigger : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        //NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
 	}
+
+
 
     void OnTriggerEnter(Collider other)
     {

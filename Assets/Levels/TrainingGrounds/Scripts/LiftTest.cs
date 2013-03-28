@@ -28,7 +28,12 @@ public class LiftTest : MonoBehaviour {
         {
             if (liftCounter == numberOfTimesToLift)
             {
-                Debug.Log("User, good job! You have learned lift!");
+                //Debug.Log("User, good job! You have learned lift!");
+                Hashtable param = new Hashtable();
+                param.Add("text", "Good job! You have learned Lift!");
+                param.Add("duration", 5.0f);
+                NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+                
                 NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
             }
         }

@@ -8,7 +8,6 @@ public class ProfileCreation : MonoBehaviour {
     public float buttonSpacing = 25;
     public GUISkin customSkin;
     public GUIStyle layoutStyle;
-    public Texture2D textureTop;
 
     private Player player = null;
     private string userName = "";
@@ -17,33 +16,38 @@ public class ProfileCreation : MonoBehaviour {
 
     private bool isVisible = false;
 
-	// Use this for initialization
 	void Start () {
 
-        if (GameState.Instance.getCurrentPlayer() == null) {
+        /*Because the Enroll button is to start fresh, we will always create a new player object.
+         * 
+         * if (GameState.Instance.getCurrentPlayer() == null)
+        {
 
             player = new Player();
-            //this.GetComponent<MouseLook>().enabled = false;
-            //this.transform.parent.GetComponent<MouseLook>().enabled = false;
-            //gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
-            this.GetComponent<MouseLook>().enabled = false;
-            this.transform.parent.GetComponent<MouseLook>().enabled = false;
-            gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
-         }
+        }
+        else
+        {
+            player = GameState.Instance.getCurrentPlayer();
+            userName = player.UserName;
+            isMale = (player.Gender == "Male") ? true : false;
+            isFemale = !isMale;
+        }*/
+
+        player = new Player();
 
         NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
+        NotificationCenter.DefaultCenter.PostNotification(this, "OpenProfileCreationGUI");
 	
 	}
 
     void OpenProfileCreationGUI(Notification notification)
     {
         Debug.Log("Profile Creation GUI is opening...");
-        //enabled = true;
+
         if (isVisible == false)
         {
             isVisible = true;
 
-		
             this.GetComponent<MouseLook>().enabled = false;
             this.transform.parent.GetComponent<MouseLook>().enabled = false;
             gameObject.GetComponent<PauseController>().enabled = false;
@@ -55,18 +59,12 @@ public class ProfileCreation : MonoBehaviour {
         if (!isVisible) return;
 
         Time.timeScale = 0;//this has to be here or else mana bar will fill for some reason
-		/*
-		this.GetComponent<MouseLook>().enabled = false;
-        this.transform.parent.GetComponent<MouseLook>().enabled = false;
-        gameObject.GetComponent<PauseController>().enabled = false;
-        */
 
         areaHeight = Screen.height;
 
         GUI.skin = customSkin;
         GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, Screen.height / 2 - areaHeight / 2, areaWidth, areaHeight), layoutStyle);
         GUILayout.Space(50);
-        //GUILayout.Label(textureTop);
         GUILayout.Label("Cerebral Academy Guest Book");
         GUILayout.Space(buttonSpacing);
         GUILayout.BeginHorizontal();
@@ -83,6 +81,7 @@ public class ProfileCreation : MonoBehaviour {
         isFemale = GUILayout.Toggle(isFemale, "Female");
         GUILayout.Space(buttonSpacing);
         GUILayout.EndHorizontal();
+
         if (GUILayout.Button("Finish"))
         {
             player.UserName = userName;
