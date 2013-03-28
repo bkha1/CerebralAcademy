@@ -14,23 +14,29 @@ public class Tutor : MonoBehaviour {
 	private bool aPressed = false;
 	private bool spacePressed = false;
 	
+	private bool movementFinished = false;
+	
 	
 	// Use this for initialization
 	void Start () {
         transform = this.GetComponent<Transform>();
 		player = GameObject.FindGameObjectWithTag("Player");
+		
+		NotificationCenter.DefaultCenter.AddObserver(this, "SelectionEvent");
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+		if (movementFinished) return;
+		
 		if (movementCount >= 5) { // 5 because of jump
 			Hashtable param = new Hashtable();
             param.Add("text", "Good, it seems you understand basic movement. Why don't you click on that cube over there?");
             param.Add("duration", 6.0f);
             NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
-			this.enabled = false;
+			movementFinished = true;
 		}
 		
 		if (Input.GetKeyUp(KeyCode.W) && !wPressed) {
@@ -61,24 +67,16 @@ public class Tutor : MonoBehaviour {
 	
 	}
 
-
-    void OnTutorTriggerEnter(Notification notification)
-    {
-        Debug.Log("Notification arried at Tutor.");
-        displayText("Hello player!", 1.0f);
-    }
-
-    void OnTutorTriggerExit(Notification notification)
-    {
-
-    }
-
-    void displayText(string textMessage, float duration)
-    {
-        Hashtable param = new Hashtable();
-        param.Add("gameObject", this.gameObject);
-        param.Add("text", textMessage);
-        param.Add("duration", duration);
-        NotificationCenter.DefaultCenter.PostNotification(this, "NewSpeechBubble", param);
-    }
+	void SelectionEvent(Notification notification) 
+	{
+		GameObject selectedObject = notification.data["gameObject"] as GameObject;
+		
+		if (selectedObject.tag == "CognitivObject") {
+			Hashtable param = new Hashtable();
+            param.Add("text", "Excellent! Now press 1 to lift the cube. Do this 3 times to continue.");
+            param.Add("duration", 6.0f);
+            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+		}
+	}
+    
 }
