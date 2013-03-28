@@ -1,14 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Levels\Scripts\DoorTrigger.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Levels\Lobby\ProfileCreation.cs">
     <Files>
-      <File FileName="Assets\Scripts\PauseController.cs" Line="17" Column="32" />
+      <File FileName="Assets\Scripts\ManaSystem.cs" Line="10" Column="37" />
+      <File FileName="Assets\Scripts\PauseController.cs" Line="10" Column="9" />
       <File FileName="Assets\Levels\Scripts\DeskTrigger.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PauseMenu.cs" Line="47" Column="11" />
-      <File FileName="Assets\Scripts\ProfileCreation.cs" Line="79" Column="40" />
-      <File FileName="Assets\Levels\Main Menu\hover Script.js" Line="12" Column="20" />
+      <File FileName="Assets\Scripts\PauseMenu.cs" Line="27" Column="13" />
+      <File FileName="Assets\Levels\Main Menu\hover Script.js" Line="1" Column="1" />
       <File FileName="Assets\Levels\Scripts\DoorTrigger.cs" Line="53" Column="3" />
-      <File FileName="Assets\Scripts\InputHandler.cs" Line="40" Column="12" />
+      <File FileName="Assets\Scripts\InputHandler.cs" Line="89" Column="13" />
+      <File FileName="Assets\Levels\Lobby\ProfileCreation.cs" Line="36" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
