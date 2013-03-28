@@ -26,6 +26,9 @@ public class ProfileCreation : MonoBehaviour {
             //this.GetComponent<MouseLook>().enabled = false;
             //this.transform.parent.GetComponent<MouseLook>().enabled = false;
             //gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
+            this.GetComponent<MouseLook>().enabled = false;
+            this.transform.parent.GetComponent<MouseLook>().enabled = false;
+            gameObject.GetComponent<PauseController>().enabled = false;//so user cant pause during profile creation
          }
 
         NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
@@ -40,7 +43,7 @@ public class ProfileCreation : MonoBehaviour {
         {
             isVisible = true;
 
-
+		
             this.GetComponent<MouseLook>().enabled = false;
             this.transform.parent.GetComponent<MouseLook>().enabled = false;
             gameObject.GetComponent<PauseController>().enabled = false;
@@ -52,6 +55,11 @@ public class ProfileCreation : MonoBehaviour {
         if (!isVisible) return;
 
         Time.timeScale = 0;//this has to be here or else mana bar will fill for some reason
+		/*
+		this.GetComponent<MouseLook>().enabled = false;
+        this.transform.parent.GetComponent<MouseLook>().enabled = false;
+        gameObject.GetComponent<PauseController>().enabled = false;
+        */
 
         areaHeight = Screen.height;
 
