@@ -28,10 +28,10 @@ public class DoorTrigger : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.E))
 		{
 			Hashtable param1 = new Hashtable();
-            param.Add("gameObject", this.gameObject);
-            param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-            param.Add("isLevel", true);
-            param.Add("level", levelToLoad);
+            param1.Add("gameObject", this.gameObject);
+            param1.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
+            param1.Add("isLevel", true);
+            param1.Add("level", levelToLoad);
             NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param1);
 		}
 			
