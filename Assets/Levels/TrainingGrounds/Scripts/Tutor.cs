@@ -26,6 +26,11 @@ public class Tutor : MonoBehaviour {
 		NotificationCenter.DefaultCenter.AddObserver(this, "SelectionEvent");
 		NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
 		NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
+		
+		Hashtable param = new Hashtable();
+        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
+        param.Add("duration", 6.0f);
+        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 
 	}
 	
@@ -71,7 +76,7 @@ public class Tutor : MonoBehaviour {
 		
 		if (selectedObject.tag == "CognitivObject") {
 			Hashtable param = new Hashtable();
-            param.Add("text", "Excellent! Now press 1 to lift the cube. Do this 3 times to continue.");
+            param.Add("text", "Excellent! Now press Q to lift the cube. Do this 3 times to continue.");
             param.Add("duration", 6.0f);
             NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 		}
@@ -93,6 +98,8 @@ public class Tutor : MonoBehaviour {
 			
 			StartCoroutine(teleportBack(6.0f));
 			
+			GameState.Instance.hasTrained = true;
+			
 			param = new Hashtable();
             param.Add("gameObject", GameObject.FindGameObjectWithTag("Player"));
             param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
@@ -104,10 +111,10 @@ public class Tutor : MonoBehaviour {
 	
 	void TeleportPlayerEvent(Notification notification) 
 	{
-		Hashtable param = new Hashtable();
-        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
-        param.Add("duration", 6.0f);
-        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+//		Hashtable param = new Hashtable();
+//        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
+//        param.Add("duration", 6.0f);
+//        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 	}
 	
 	IEnumerator teleportBack(float timeToWait) {

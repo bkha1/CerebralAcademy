@@ -30,6 +30,13 @@ public class TeleportManager : MonoBehaviour {
         if ((bool) notification.data["isLevel"] == true)
         {
             Debug.Log("Loading level: " + (string)notification.data["level"] + "...");
+			
+			if (((string)notification.data["level"]) == "MainMenu") {
+				// Handle business here
+				GameState.Instance.hasTrained = false;
+			
+			}
+			
             Application.LoadLevel((string)notification.data["level"]);
         }
         

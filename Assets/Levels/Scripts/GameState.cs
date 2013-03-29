@@ -9,7 +9,7 @@ public class GameState {
 	private bool paused = false;
 	private GameObject selectedObject;
 	private Player currentPlayer;
-	
+	public bool hasTrained { get; set;}
 	
 	static GameState() {}
 	private GameState() {}
@@ -31,13 +31,14 @@ public class GameState {
 		}
 	}
 	
+	/*
 	public bool isPaused() {
 		return paused;
 	}
 	
 	public void setPaused(bool pauseState) {
 		paused = pauseState;
-	}
+	}*/
 	
 	public GameObject getSelectedObject() {
 		return selectedObject;
@@ -54,6 +55,7 @@ public class GameState {
 	public void setCurrentPlayer(Player player) {
 		currentPlayer = player;
 	}
+	
 	
 	
 }
