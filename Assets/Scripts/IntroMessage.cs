@@ -17,13 +17,9 @@ public class IntroMessage : MonoBehaviour {
 		if (!GameState.Instance.hasTrained)
 		{
 			Time.timeScale = 0;
-	        //gamePaused = true;
-	        //gameObject.GetComponent<PauseMenu>().enabled = true;
+
 	        gameObject.GetComponent<MouseLook>().enabled = false;
 	        transform.parent.GetComponent<MouseLook>().enabled = false;
-			
-			//this.GetComponent<MouseLook>().enabled = false;
-	        //this.transform.parent.GetComponent<MouseLook>().enabled = false;
 	        gameObject.GetComponent<PauseController>().enabled = false;
 		}
 		else{

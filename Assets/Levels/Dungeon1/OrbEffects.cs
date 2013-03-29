@@ -19,13 +19,15 @@ public class OrbEffects : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.tag == "Player"){
-			NotificationCenter.DefaultCenter.PostNotification(this, "got"+name);
+			Hashtable param = new Hashtable();
+			param.Add ("name", name+"Orb");
+			NotificationCenter.DefaultCenter.PostNotification(this, "ItemPickup", param);
 			Destroy(gameObject);
 			
-			Hashtable param = new Hashtable();
-            param.Add("text", "You obtained the ability "+ name);
-            param.Add("duration", 3.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+			/*param = new Hashtable();
+            param.Add("text", "You obtained the ability "+ name+"Orb.");
+            param.Add("duration", 0.5f);
+            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);*/
 		}
 	}
 }

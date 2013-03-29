@@ -33,7 +33,7 @@ public class TeleportManager : MonoBehaviour {
 			
 			if (((string)notification.data["level"]) == "MainMenu") {
 				// Handle business here
-				GameState.Instance.hasTrained = false;
+				//GameState.Instance.hasTrained = false; // This breaks main menu
 			
 			}
 			
