@@ -2,8 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class Tutor : MonoBehaviour {
-
-    private Transform transform; 
+	
+	
+	public GameObject cube;
+	
 	private GameObject player;
 	
 	private int movementCount = 0;
@@ -19,10 +21,11 @@ public class Tutor : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-        transform = this.GetComponent<Transform>();
 		player = GameObject.FindGameObjectWithTag("Player");
 		
 		NotificationCenter.DefaultCenter.AddObserver(this, "SelectionEvent");
+		NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
+		NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
 
 	}
 	
@@ -36,22 +39,17 @@ public class Tutor : MonoBehaviour {
             param.Add("text", "Good, it seems you understand basic movement. Why don't you click on that cube over there?");
             param.Add("duration", 6.0f);
             NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+			
+			cube.SetActive(true);
+			
 			movementFinished = true;
+			
 		}
 		
 		if (Input.GetKeyUp(KeyCode.W) && !wPressed) {
-			// Congrats, you have moved forward, now try moving backward.
-			/*Hashtable param = new Hashtable();
-            param.Add("text", "Now try moving backward by pressing S.");
-            param.Add("duration", 1.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);*/
 			movementCount++;
 			wPressed = true;
 		} else if (Input.GetKeyUp(KeyCode.A) && !aPressed) {
-			/*Hashtable param = new Hashtable();
-            param.Add("text", "Now try strafing right by pressing D.");
-            param.Add("duration", 1.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);*/
 			movementCount++;
 			aPressed = true;
 		} else if (Input.GetKeyUp(KeyCode.S) && !sPressed) {
@@ -77,6 +75,44 @@ public class Tutor : MonoBehaviour {
             param.Add("duration", 6.0f);
             NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 		}
+	}
+	
+	void LiftCompleted(Notification notification)
+	{
+		if (!movementFinished) 
+		{
+			Hashtable param = new Hashtable();
+            param.Add("text", "I think you should practice movement before continuing.");
+            param.Add("duration", 3.0f);
+            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+		} else {
+			Hashtable param = new Hashtable();
+            param.Add("text", "You're amazing! I think you are ready to step it up. Head over to the Test Area.");
+            param.Add("duration", 3.0f);
+            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+			
+			StartCoroutine(teleportBack(6.0f));
+			
+			param = new Hashtable();
+            param.Add("gameObject", GameObject.FindGameObjectWithTag("Player"));
+            param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
+            param.Add("isLevel", true);
+            param.Add("level", "Lobby");
+            NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param);
+		}
+	}
+	
+	void TeleportPlayerEvent(Notification notification) 
+	{
+		Hashtable param = new Hashtable();
+        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
+        param.Add("duration", 6.0f);
+        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+	}
+	
+	IEnumerator teleportBack(float timeToWait) {
+			
+		yield return new WaitForSeconds(timeToWait); // This is NOT Working! BUG
 	}
     
 }
