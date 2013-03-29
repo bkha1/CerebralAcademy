@@ -30,13 +30,4 @@ public class PauseController : MonoBehaviour {
             transform.parent.GetComponent<MouseLook>().enabled = false;
         }
     }
-
-    void OnUnPauseEvent(Notification notification) 
-    {
-        Time.timeScale = 0;
-	    gamePaused = true;
-        gameObject.GetComponent<PauseMenu>().enabled = true;
-        gameObject.GetComponent<MouseLook>().enabled = false;
-        transform.parent.GetComponent<MouseLook>().enabled = false;
-    }
 }

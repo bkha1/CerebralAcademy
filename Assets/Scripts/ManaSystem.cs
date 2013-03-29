@@ -7,7 +7,7 @@ public class ManaSystem : MonoBehaviour {
     public GUITexture ManabarTexture;
     public float ManabarGUIWidth = 1.4f;
 
-    public float ManaRefillRate = 1.0f;
+    public float ManaRefillRate = 10.0f;
     public float minMana = 10.0f;
     public float maxMana = 100.0f;
 
