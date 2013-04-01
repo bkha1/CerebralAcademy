@@ -1,14 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TeleportManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Levels\Dungeon1\Scripts\CharacterMotor.cs">
     <Files>
-      <File FileName="Assets\Scripts\AlphaFinished.cs" Line="49" Column="4" />
-      <File FileName="Assets\Scripts\AfterProfileCreationMsg.cs" Line="46" Column="4" />
-      <File FileName="Assets\Levels\Dungeon1\OrbEffects.cs" Line="30" Column="93" />
-      <File FileName="Assets\Levels\Dungeon1\RemoveFence.cs" Line="13" Column="2" />
-      <File FileName="Assets\Scripts\IntroMessage.cs" Line="38" Column="36" />
-      <File FileName="Assets\Scripts\PauseMenu.cs" Line="54" Column="32" />
-      <File FileName="Assets\Scripts\TeleportManager.cs" Line="36" Column="70" />
+      <File FileName="Assets\Levels\Dungeon1\Scripts\SeesawPhysics.cs" Line="48" Column="5" />
+      <File FileName="Assets\Levels\Dungeon1\Scripts\CharacterMotor.cs" Line="204" Column="68" />
+      <File FileName="Assets\Levels\Dungeon1\Scripts\FPSInputController.cs" Line="18" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
