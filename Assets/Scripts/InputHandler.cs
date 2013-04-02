@@ -43,101 +43,54 @@ public class InputHandler : MonoBehaviour {
         }
         else if (Input.GetKeyUp(cognitivDisappearKey))
         {
-            Hashtable param = new Hashtable();
-            param.Add("skill", "disappear");
-            param.Add("power", 6.4f);
-            param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
+            EventFactory.FireOnCognitvEvent(this, "disappear", 6.4f, Time.time);
         }
         else if (Input.GetKeyUp(cognitivLiftKey))
         {
-            Hashtable param = new Hashtable();
-            param.Add("skill", "lift");
-            param.Add("power", 6.4f);
-            param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
+            EventFactory.FireOnCognitvEvent(this, "lift", 6.4f, Time.time);
         }
         else if (Input.GetKeyUp(cognitivLeftKey))
         {
-            Hashtable param = new Hashtable();
-            param.Add("skill", "left");
-            param.Add("power", 6.4f);
-            param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
+            EventFactory.FireOnCognitvEvent(this, "left", 6.4f, Time.time);
         }
         else if (Input.GetKeyUp(cognitivRightKey))
         {
-            Hashtable param = new Hashtable();
-            param.Add("skill", "right");
-            param.Add("power", 6.4f);
-            param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
+            EventFactory.FireOnCognitvEvent(this, "right", 6.4f, Time.time);
         }
         else if (Input.GetKeyUp(cogntivPushKey))
         {
-            Hashtable param = new Hashtable();
-            param.Add("skill", "push");
-            param.Add("power", 6.4f);
-            param.Add("time", Time.time);
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivEvent", param);
+            EventFactory.FireOnCognitvEvent(this, "push", 6.4f, Time.time);
         }
-
-
         else if (Input.GetKeyUp(debugKey))
         {
-            
-            Hashtable param = new Hashtable();
-            param.Add("text", "Debug: In order to move your character, use the WASD. W allows your character to move forward, S is for moving backward. A and D are for strafing left and right respectively.");
-            param.Add("duration", 5.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+            EventFactory.FireDisplayTextEvent(this, "Would you like some debug text with that?", 5.0f);
 
+            EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player").gameObject, GameState.Instance.getSelectedObject().transform.position, false, "");
         }
 	}
 
     void handleLeftEvent(object sender, float powerLevel)
     {
-        Hashtable param = new Hashtable();
-        param.Add("skill", "left");
-        param.Add("power", powerLevel);
-        param.Add("time", Time.time);
-        NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLeftEvent", param);
+        EventFactory.FireOnCognitvEvent(this, "left", powerLevel, Time.time);
     }
 
     void handleRightEvent(object sender, float powerLevel)
     {
-        Hashtable param = new Hashtable();
-        param.Add("skill", "right");
-        param.Add("power", powerLevel);
-        param.Add("time", Time.time);
-        NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivRightEvent", param);
+        EventFactory.FireOnCognitvEvent(this, "right", powerLevel, Time.time);
     }
 
     void handleLiftEvent(object sender, float powerLevel)
     {
-        Hashtable param = new Hashtable();
-        param.Add("skill", "lift");
-        param.Add("power", powerLevel);
-        param.Add("time", Time.time);
-        NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", param);
+        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
     }
 
     void handlePushEvent(object sender, float powerLevel)
     {
-        Hashtable param = new Hashtable();
-        param.Add("skill", "push");
-        param.Add("power", powerLevel);
-        param.Add("time", Time.time);
-        NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", param);
+        EventFactory.FireOnCognitvEvent(this, "push", powerLevel, Time.time);
     }
 
     void handleDisappearEvent(object sender, float powerLevel)
     {
-        Hashtable param = new Hashtable();
-        param.Add("skill", "disappear");
-        param.Add("power", powerLevel);
-        param.Add("time", Time.time);
-        NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", param);
+        EventFactory.FireOnCognitvEvent(this, "disappear", powerLevel, Time.time);
     }
-
-
 }

@@ -63,10 +63,6 @@ public class TextUtils : MonoBehaviour {
         {
             areaHeight += heightPadding;
         }
-        
-
-
-        //layoutStyle.normal.background.height = layoutStyle.normal.background.height + (int)(1.4f / numOfCharHigh);
 
         expireTime = Time.time + (float)notification.data["duration"];
         isVisible = true;
@@ -77,7 +73,6 @@ public class TextUtils : MonoBehaviour {
         if (!isVisible) return;
 
         GUI.skin = customSkin;
-        //GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, 40, areaWidth, areaHeight), layoutStyle);
         GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, yOffset, areaWidth, areaHeight), layoutStyle);
         
         GUILayout.Label(text);

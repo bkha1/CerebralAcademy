@@ -217,7 +217,7 @@ public class CharacterMotor : MonoBehaviour
 		
 		velocity += boostVelocity;
 		jumping.jumping = true;
-		print (velocity);
+		//print (velocity);
 		
         // Moving platform support
         Vector3 moveDistance = Vector3.zero;

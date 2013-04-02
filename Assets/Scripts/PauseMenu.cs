@@ -14,7 +14,6 @@ public class PauseMenu : MonoBehaviour {
     void OnGUI()
     {
         areaHeight = Screen.height;
-        //areaWidth = Screen.width;
         GUI.skin = customSkin;
         GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, Screen.height / 2 - areaHeight / 2, areaWidth, areaHeight), layoutStyle);
         GUILayout.Space(50);
@@ -40,18 +39,7 @@ public class PauseMenu : MonoBehaviour {
         if (GUILayout.Button("Main Menu"))
         {
             Time.timeScale = 1;
-			
-			
-			
-            Hashtable param = new Hashtable();
-            param.Add("gameObject", this.gameObject);
-            param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-            param.Add("isLevel", true);
-            param.Add("level", mainMenu);
-            NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param);
-			
-            
-			//Application.LoadLevel ("Main Menu");
+            EventFactory.FireTeleportPlayerEvent(this, this.gameObject, new Vector3(0.0f, 0.0f, 0.0f), true, mainMenu);
         }
 
         GUILayout.Space(buttonSpacing);

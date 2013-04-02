@@ -15,6 +15,8 @@ public class PauseController : MonoBehaviour {
         if (gamePaused)
         {
             Time.timeScale = 1;
+            Screen.lockCursor = true;
+            Screen.showCursor = false;
             gamePaused = false;
             gameObject.GetComponent<PauseMenu>().enabled = false;
             gameObject.GetComponent<MouseLook>().enabled = true;
@@ -24,6 +26,8 @@ public class PauseController : MonoBehaviour {
         else
         {
             Time.timeScale = 0;
+            Screen.lockCursor = false;
+            Screen.showCursor = true;
             gamePaused = true;
             gameObject.GetComponent<PauseMenu>().enabled = true;
             gameObject.GetComponent<MouseLook>().enabled = false;

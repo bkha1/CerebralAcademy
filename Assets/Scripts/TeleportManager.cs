@@ -19,25 +19,26 @@ public class TeleportManager : MonoBehaviour {
         NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
 	}
 
-    void Start()
-    {
-        //NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
-    }
-
     void TeleportPlayerEvent(Notification notification)
     {
         // Check if 
-        if ((bool) notification.data["isLevel"] == true)
+        if ((bool)notification.data["isLevel"] == true)
         {
             Debug.Log("Loading level: " + (string)notification.data["level"] + "...");
-			
-			if (((string)notification.data["level"]) == "MainMenu") {
-				// Handle business here
-				//GameState.Instance.hasTrained = false; // This breaks main menu
-			
-			}
-			
+
+            if (((string)notification.data["level"]) == "MainMenu")
+            {
+                // Handle business here
+                //GameState.Instance.hasTrained = false; // This breaks main menu
+
+            }
+
             Application.LoadLevel((string)notification.data["level"]);
+        }
+        else
+        {
+            GameObject gameObject = notification.data["gameObject"] as GameObject;
+            gameObject.transform.position = (Vector3) notification.data["target"];
         }
         
     }

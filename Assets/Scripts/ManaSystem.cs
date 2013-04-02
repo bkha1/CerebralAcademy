@@ -135,6 +135,7 @@ public class ManaSystem : MonoBehaviour {
         if (!recharge && (currentMana - (powerLevel / objSensitivity) < minMana))
         {
             Debug.Log("Not enough mana to perform skill.");
+            EventFactory.FireDisplayTextEvent(this, "Not enough mana to perform skill.", 0.5f);
             return false;
         }
 

@@ -1,23 +1,41 @@
 using UnityEngine;
-using Emotiv;
 using System.Collections;
 
+
 public class CognitivLift : MonoBehaviour {
-	
+
+    public float sensitivityReduction = 0.1f;
+
+    private bool updating = false;
+    private float movementAmount = 0.0f;
+
+    private float endTime;
+    private GameObject gObj;
+
 	void Start() {
-        CognitvEventManager.LiftEvent += handle_liftEvent;
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
 	}
 	
 	void Update () {
-		
+
+        if (updating)
+        {
+            if (Time.time >= endTime)
+            {
+                updating = false;
+            }
+            else
+            {
+                Vector3 source = gObj.transform.position;
+                Vector3 target = source + Vector3.up;
+                gObj.transform.position = Vector3.Lerp(source, target, Time.deltaTime * movementAmount);
+            }
+        }
 	}
 
     void OnCognitivLiftEvent(Notification liftNotification)
     {
-        Debug.Log("NotificationCenter notified CognitivLift of lift event.");
-        
-        GameObject gObj = GameState.Instance.getSelectedObject();
+        gObj = GameState.Instance.getSelectedObject();
 
         if (gObj != null)
         {
@@ -25,23 +43,14 @@ public class CognitivLift : MonoBehaviour {
 
             if (powerLevel > 0.0f)
             {
-                float amount = gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel;
-                StartCoroutine(liftObject(gObj, amount, 1.0f));
+                float amount = (gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel) * sensitivityReduction;
+                movementAmount = amount;
+                updating = true;
+                endTime = Time.time + 0.5f;
             }
         }
     }
-	
 
-    void handle_liftEvent(object sender, float powerLevel)
-    {
-        GameObject gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
-        {
-            float amount = gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel;
-            StartCoroutine(liftObject(gObj, amount, 1.0f)); 
-        }
-    }
 
     IEnumerator liftObject(GameObject gObj, float amount, float overTime)
     {
