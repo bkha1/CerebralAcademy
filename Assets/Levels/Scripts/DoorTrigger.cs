@@ -23,18 +23,9 @@ public class DoorTrigger : MonoBehaviour {
 			if(Input.GetKeyDown(KeyCode.E))
 			{
 				if (levelToLoad == "Dungeon1" && !GameState.Instance.hasTrained) {
-					Hashtable param = new Hashtable();
-		            param.Add("text", "You have not been authorized to enter. Please visit the training grounds.");
-		            param.Add("duration", 1.0f);
-		            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+                    EventFactory.FireDisplayTextEvent(this, "You have not been authorized to enter. Please visit the training grounds.", 1.0f);
 				} else {
-				
-					Hashtable param1 = new Hashtable();
-		            param1.Add("gameObject", this.gameObject);
-		            param1.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-		            param1.Add("isLevel", true);
-		            param1.Add("level", levelToLoad);
-		            NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param1);
+                    EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(0.0f, 0.0f, 0.0f), true, levelToLoad);
 				}
 			}
 			
@@ -45,20 +36,13 @@ public class DoorTrigger : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-			
-            Hashtable param = new Hashtable();
-            param.Add("text", "Press E Key");
-            param.Add("duration", 1.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
-			
+            EventFactory.FireDisplayTextEvent(this, "Press E Key", 1.0f);
 			onTrigger = true;
         }
     }
 	
 	void OnTriggerExit(Collider other)
 	{
-		
-		
 		if(other.gameObject.tag == "Player")
 			onTrigger = false;
 	}

@@ -5,7 +5,8 @@ public class Tutor : MonoBehaviour {
 	
 	
 	public GameObject cube;
-	
+    public int maxLifts = 5;
+
 	private GameObject player;
 	
 	private int movementCount = 0;
@@ -17,6 +18,8 @@ public class Tutor : MonoBehaviour {
 	private bool spacePressed = false;
 	
 	private bool movementFinished = false;
+
+    private const int NUM_MOVEMENT_DIRECTIONS = 5;
 	
 	
 	// Use this for initialization
@@ -27,10 +30,7 @@ public class Tutor : MonoBehaviour {
 		NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
 		NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
 		
-		Hashtable param = new Hashtable();
-        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
-        param.Add("duration", 6.0f);
-        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+        EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.", 6.0f);
 
 	}
 	
@@ -39,12 +39,9 @@ public class Tutor : MonoBehaviour {
 		
 		if (movementFinished) return;
 		
-		if (movementCount >= 5) { // 5 because of jump
-			Hashtable param = new Hashtable();
-            param.Add("text", "Good, it seems you understand basic movement. Why don't you click on that cube over there?");
-            param.Add("duration", 6.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
-			
+		if (movementCount >= NUM_MOVEMENT_DIRECTIONS) { // 5 because of jump
+
+            EventFactory.FireDisplayTextEvent(this, "Good, it seems you understand basic movement. Why don't you click on that cube over there?", 6.0f);
 			cube.SetActive(true);
 			
 			movementFinished = true;
@@ -75,10 +72,7 @@ public class Tutor : MonoBehaviour {
 		GameObject selectedObject = notification.data["gameObject"] as GameObject;
 		
 		if (selectedObject.tag == "CognitivObject") {
-			Hashtable param = new Hashtable();
-            param.Add("text", "Excellent! Now press Q to lift the cube. Do this 3 times to continue.");
-            param.Add("duration", 6.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+            EventFactory.FireDisplayTextEvent(this, "Excellent! Now press Q to lift the cube. Do this 3 times to continue.", 6.0f);
 		}
 	}
 	
@@ -86,35 +80,16 @@ public class Tutor : MonoBehaviour {
 	{
 		if (!movementFinished) 
 		{
-			Hashtable param = new Hashtable();
-            param.Add("text", "I think you should practice movement before continuing.");
-            param.Add("duration", 3.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+            EventFactory.FireDisplayTextEvent(this, "I think you should practice movement before continuing.", 3.0f);
 		} else {
-			Hashtable param = new Hashtable();
-            param.Add("text", "You're amazing! I think you are ready to step it up. Head over to the Test Area.");
-            param.Add("duration", 3.0f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
+            EventFactory.FireDisplayTextEvent(this, "You're amazing! I think you are ready to step it up. Head over to the Test Area.", 6.0f);
 			
 			StartCoroutine(teleportBack(6.0f));
 			
 			GameState.Instance.hasTrained = true;
 			
-			param = new Hashtable();
-            param.Add("gameObject", GameObject.FindGameObjectWithTag("Player"));
-            param.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-            param.Add("isLevel", true);
-            param.Add("level", "Lobby");
-            NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param);
+            EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(), true, "Lobby");
 		}
-	}
-	
-	void TeleportPlayerEvent(Notification notification) 
-	{
-//		Hashtable param = new Hashtable();
-//        param.Add("text", "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.");
-//        param.Add("duration", 6.0f);
-//        NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);
 	}
 	
 	IEnumerator teleportBack(float timeToWait) {

@@ -21,7 +21,6 @@ public class TeleportManager : MonoBehaviour {
 
     void TeleportPlayerEvent(Notification notification)
     {
-        // Check if 
         if ((bool)notification.data["isLevel"] == true)
         {
             Debug.Log("Loading level: " + (string)notification.data["level"] + "...");
