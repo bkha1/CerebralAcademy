@@ -11,6 +11,13 @@ public class PauseMenu : MonoBehaviour {
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
 
+    private GameObject player;
+
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     void OnGUI()
     {
         areaHeight = Screen.height;

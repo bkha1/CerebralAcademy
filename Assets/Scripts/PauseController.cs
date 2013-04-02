@@ -5,8 +5,13 @@ public class PauseController : MonoBehaviour {
 
     private bool gamePaused = false;
 
+    private GameObject player;
+    private GameObject playerCamera;
+
 	void Start() 
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         NotificationCenter.DefaultCenter.AddObserver(this, "OnPauseEvent");
     }
 
@@ -18,10 +23,15 @@ public class PauseController : MonoBehaviour {
             Screen.lockCursor = true;
             Screen.showCursor = false;
             gamePaused = false;
-            gameObject.GetComponent<PauseMenu>().enabled = false;
-            gameObject.GetComponent<MouseLook>().enabled = true;
-            transform.parent.GetComponent<MouseLook>().enabled = true;
-            
+
+            //gameObject.GetComponent<PauseMenu>().enabled = false;
+            //gameObject.GetComponent<MouseLook>().enabled = true;
+            //transform.parent.GetComponent<MouseLook>().enabled = true;
+
+            // New code which allows PauseController to sit in the Managers Prefab
+            player.GetComponentInChildren<PauseMenu>().enabled = false;
+            playerCamera.GetComponent<MouseLook>().enabled = true;
+            player.GetComponent<MouseLook>().enabled = true;
         }
         else
         {
@@ -29,9 +39,15 @@ public class PauseController : MonoBehaviour {
             Screen.lockCursor = false;
             Screen.showCursor = true;
             gamePaused = true;
-            gameObject.GetComponent<PauseMenu>().enabled = true;
-            gameObject.GetComponent<MouseLook>().enabled = false;
-            transform.parent.GetComponent<MouseLook>().enabled = false;
+
+            //gameObject.GetComponent<PauseMenu>().enabled = true;
+            //gameObject.GetComponent<MouseLook>().enabled = false;
+            //transform.parent.GetComponent<MouseLook>().enabled = false;
+
+            // New code which allows PauseController to sit in the Managers Prefab
+            player.GetComponentInChildren<PauseMenu>().enabled = true;
+            playerCamera.GetComponent<MouseLook>().enabled = false;
+            player.GetComponent<MouseLook>().enabled = false;
         }
     }
 }
