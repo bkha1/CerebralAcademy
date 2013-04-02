@@ -6,6 +6,7 @@ public class Player {
 
 	public Player() {
         UserName = string.Empty;
+        Gender = string.Empty;
         EmotivID = 0;
 	}
 
