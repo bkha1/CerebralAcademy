@@ -9,17 +9,25 @@ public class AfterProfileCreationMsg : MonoBehaviour {
     public GUISkin customSkin;
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
-	
+
+    private bool isVisible = false;
+    
+    private GameObject playerObject;
+    private GameObject playerCamera;
 	
 	// Use this for initialization
 	void Start () {
 
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OpenAfterProfileCreationMsg");
 	
 	}
 	
 	// Update is called once per frame
 	void OnGUI () {
-		
+
+        if (!isVisible) return;
 		
 		if (GameState.Instance.hasTrained) return;
 		
@@ -42,19 +50,18 @@ public class AfterProfileCreationMsg : MonoBehaviour {
 
             this.GetComponent<MouseLook>().enabled = true;
             this.transform.parent.GetComponent<MouseLook>().enabled = true;
-            gameObject.GetComponent<PauseController>().enabled = true;
-			
-			//this.GetComponent<ProfileCreation>().enabled = true;
-			Hashtable param1 = new Hashtable();
-            param1.Add("gameObject", this.gameObject);
-            param1.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-		    param1.Add("isLevel", true);
-		    param1.Add("level", "TrainingGround");
-		    NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param1);
-			this.enabled = false;
+            //gameObject.GetComponent<PauseController>().enabled = true;
+
+            EventFactory.FireTeleportPlayerEvent(this, gameObject, new Vector3(), true, "TrainingGround");
+            isVisible = false;
 		}//end button
         GUILayout.EndArea();
         
 	
 	}
+
+    void OpenAfterProfileCreationMsg(Notification notification)
+    {
+        isVisible = true;
+    }
 }

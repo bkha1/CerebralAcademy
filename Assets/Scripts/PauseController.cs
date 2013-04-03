@@ -13,6 +13,8 @@ public class PauseController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         NotificationCenter.DefaultCenter.AddObserver(this, "OnPauseEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "DisablePauseSettings");
+        NotificationCenter.DefaultCenter.AddObserver(this, "EnablePauseSettings");
     }
 
     void OnPauseEvent(Notification notification) 
@@ -49,5 +51,19 @@ public class PauseController : MonoBehaviour {
             playerCamera.GetComponent<MouseLook>().enabled = false;
             player.GetComponent<MouseLook>().enabled = false;
         }
+    }
+
+    void DisablePauseSettings(Notification notification)
+    {
+        player.GetComponentInChildren<PauseMenu>().enabled = false;
+        playerCamera.GetComponent<MouseLook>().enabled = true;
+        player.GetComponent<MouseLook>().enabled = true;
+    }
+
+    void EnablePauseSettings(Notification notification)
+    {
+        player.GetComponentInChildren<PauseMenu>().enabled = true;
+        playerCamera.GetComponent<MouseLook>().enabled = false;
+        player.GetComponent<MouseLook>().enabled = false;
     }
 }

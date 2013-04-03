@@ -28,7 +28,7 @@ public class TextUtils : MonoBehaviour {
         NotificationCenter.DefaultCenter.AddObserver(this, "DisplayText");
 
         NUM_PIXELS_PER_CHAR = areaWidth / 47;
-        Debug.Log("Num of pixels per Char: " + NUM_PIXELS_PER_CHAR);
+        //Debug.Log("Num of pixels per Char: " + NUM_PIXELS_PER_CHAR);
 
         prevHeight = areaHeight;
 
@@ -54,11 +54,11 @@ public class TextUtils : MonoBehaviour {
         // Assume a char is 6 pixels wide
 
         int numOfCharHigh = areaHeight / NUM_PIXELS_PER_CHAR;
-        Debug.Log("Num of Char High: " + numOfCharHigh);
+        //Debug.Log("Num of Char High: " + numOfCharHigh);
 
         int heightPadding = text.Length / numOfCharHigh;
 
-        Debug.Log("Height Padding: " + heightPadding);
+        //Debug.Log("Height Padding: " + heightPadding);
         if (areaHeight < prevHeight + heightPadding)
         {
             areaHeight += heightPadding;

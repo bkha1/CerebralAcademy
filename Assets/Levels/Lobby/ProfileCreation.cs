@@ -16,6 +16,9 @@ public class ProfileCreation : MonoBehaviour {
 
     private bool isVisible = false;
 
+    private GameObject playerObject;
+    private GameObject playerCamera;
+
 	void Start () {
 
         /*Because the Enroll button is to start fresh, we will always create a new player object.
@@ -32,7 +35,10 @@ public class ProfileCreation : MonoBehaviour {
             isMale = (player.Gender == "Male") ? true : false;
             isFemale = !isMale;
         }*/
-	
+
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
 		if (!GameState.Instance.hasTrained) {
 	        player = new Player();
 	
@@ -52,9 +58,14 @@ public class ProfileCreation : MonoBehaviour {
         {
             isVisible = true;
 
-            this.GetComponent<MouseLook>().enabled = false;
-            this.transform.parent.GetComponent<MouseLook>().enabled = false;
-            gameObject.GetComponent<PauseController>().enabled = false;
+            //this.GetComponent<MouseLook>().enabled = false;
+            //this.transform.parent.GetComponent<MouseLook>().enabled = false;
+            //gameObject.GetComponent<PauseController>().enabled = false;
+
+            playerObject.GetComponentInChildren<PauseMenu>().enabled = false;
+            playerCamera.GetComponent<MouseLook>().enabled = true;
+            playerObject.GetComponent<MouseLook>().enabled = true;
+            //NotificationCenter.DefaultCenter.PostNotification(this, "DisablePauseSettings");
         }
     }
 
@@ -101,7 +112,8 @@ public class ProfileCreation : MonoBehaviour {
             */
 			
 			//message to take to training ground
-			gameObject.GetComponent<AfterProfileCreationMsg>().enabled = true;
+			//gameObject.GetComponent<AfterProfileCreationMsg>().enabled = true;
+            NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");
 			
 			/*
 			Hashtable param1 = new Hashtable();
