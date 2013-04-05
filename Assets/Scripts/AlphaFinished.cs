@@ -47,14 +47,9 @@ public class AlphaFinished : MonoBehaviour {
 //            transform.parent.GetComponent<MouseLook>().enabled = true;
 //            gameObject.GetComponent<PauseController>().enabled = true;
 			//GameState.Instance.hasTrained = false;
-			
-			
-			Hashtable param1 = new Hashtable();
-            param1.Add("gameObject", this.gameObject);
-            param1.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-		    param1.Add("isLevel", true);
-		    param1.Add("level", "Main Menu");
-		    NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param1);
+
+
+            EventFactory.FireTeleportPlayerEvent(this, player, new Vector3(), true, "Main Menu");
 			isVisible = false;
 			
 			

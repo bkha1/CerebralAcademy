@@ -6,7 +6,6 @@ public class GameState {
 	private static volatile GameState instance;
 	private static object _lock = new object();
 	
-	private bool paused = false;
 	private GameObject selectedObject;
 	private Player currentPlayer;
 	public bool hasTrained { get; set;}
@@ -30,15 +29,6 @@ public class GameState {
 			return instance;
 		}
 	}
-	
-	/*
-	public bool isPaused() {
-		return paused;
-	}
-	
-	public void setPaused(bool pauseState) {
-		paused = pauseState;
-	}*/
 	
 	public GameObject getSelectedObject() {
 		return selectedObject;

@@ -26,6 +26,8 @@ public class PauseController : MonoBehaviour {
             Screen.showCursor = false;
             gamePaused = false;
 
+            Debug.Log("Game was paused, now unpaused");
+
             //gameObject.GetComponent<PauseMenu>().enabled = false;
             //gameObject.GetComponent<MouseLook>().enabled = true;
             //transform.parent.GetComponent<MouseLook>().enabled = true;
@@ -34,6 +36,8 @@ public class PauseController : MonoBehaviour {
             player.GetComponentInChildren<PauseMenu>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = true;
             player.GetComponent<MouseLook>().enabled = true;
+
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOn");
         }
         else
         {
@@ -46,10 +50,14 @@ public class PauseController : MonoBehaviour {
             //gameObject.GetComponent<MouseLook>().enabled = false;
             //transform.parent.GetComponent<MouseLook>().enabled = false;
 
+            Debug.Log("Game was not paused, now paused");
+
             // New code which allows PauseController to sit in the Managers Prefab
             player.GetComponentInChildren<PauseMenu>().enabled = true;
             playerCamera.GetComponent<MouseLook>().enabled = false;
             player.GetComponent<MouseLook>().enabled = false;
+
+            NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOff");
         }
     }
 

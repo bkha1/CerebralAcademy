@@ -14,4 +14,7 @@ public class Player {
     public string Gender { get; set; } // "male" or "female"
     public uint EmotivID { get; set; } // UserID for Emotiv's Control Panel
     public float Mana { get; set; } // The amount of mana the user currently owns
+
+    public bool hasLearnedLift { get; set; } // If the player has learned Lift and thus can use it
+
 }

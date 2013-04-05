@@ -11,11 +11,9 @@ public class PauseMenu : MonoBehaviour {
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
 
-    private GameObject player;
-
-    void Awake()
+    void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     void OnGUI()
@@ -28,12 +26,9 @@ public class PauseMenu : MonoBehaviour {
         GUILayout.Space(buttonSpacing);
         if (GUILayout.Button("Resume Game"))
         {
-            Time.timeScale = 1;
-
+            Debug.Log("Before OnPuaseEvent sent");
             NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
-            enabled = false;
-            gameObject.GetComponent<MouseLook>().enabled = true;
-            transform.parent.GetComponent<MouseLook>().enabled = true;
+            Debug.Log("After OnPuaseEvent sent");
         }
         GUILayout.Space(buttonSpacing);
         if (GUILayout.Button("Statistics"))

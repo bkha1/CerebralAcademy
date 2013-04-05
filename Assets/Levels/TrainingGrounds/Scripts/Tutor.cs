@@ -87,6 +87,7 @@ public class Tutor : MonoBehaviour {
 			StartCoroutine(teleportBack(6.0f));
 			
 			GameState.Instance.hasTrained = true;
+            GameState.Instance.getCurrentPlayer().hasLearnedLift = true;
 			
             EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(), true, "Lobby");
 		}
