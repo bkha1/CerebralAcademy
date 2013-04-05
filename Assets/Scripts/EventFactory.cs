@@ -46,5 +46,35 @@ static class EventFactory
         param.Add("time", time);
         NotificationCenter.DefaultCenter.PostNotification(comp, "OnEmotionEvent", param);
     }
+
+    public static void FireOnCrosshairOnEvent(Component comp)
+    {
+        NotificationCenter.DefaultCenter.PostNotification(comp, "OnCrosshairOn");
+    }
+
+    public static void FireOnCrosshairOffEvent(Component comp)
+    {
+        NotificationCenter.DefaultCenter.PostNotification(comp, "OnCrosshairOff");
+    }
+
+    public static void FireOnPauseEvent(Component comp)
+    {
+        NotificationCenter.DefaultCenter.PostNotification(comp, "OnPauseEvent");
+    }
+
+
+    /*public static void FireOpenGUIEvent(Component comp, string guiName)
+    {
+        Hashtable param = new Hashtable();
+        param.Add("guiName", guiName);
+        NotificationCenter.GUICenter.PostNotification(comp, "OpenGUI", param);
+    }
+
+    public static void FireCloseGUIEvent(Component comp, string guiName)
+    {
+        Hashtable param = new Hashtable();
+        param.Add("guiName", guiName);
+        NotificationCenter.GUICenter.PostNotification(comp, "CloseGUI", param);
+    }*/
 }
 

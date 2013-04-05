@@ -45,7 +45,7 @@ public class NotificationCenter : MonoBehaviour
     }
 
     // This is strictly for GUI Notifications
-    /*private static NotificationCenter guiCenter;
+    private static NotificationCenter guiCenter;
     public static NotificationCenter GUICenter
     {
         get
@@ -56,7 +56,7 @@ public class NotificationCenter : MonoBehaviour
 
                 if (notificationObject == null)
                 {
-                    notificationObject = new GameObject("Default Notification Center");
+                    notificationObject = new GameObject("GUI Notification Center");
                     guiCenter = notificationObject.AddComponent<NotificationCenter>();
                 }
                 else
@@ -67,7 +67,7 @@ public class NotificationCenter : MonoBehaviour
 
             return guiCenter;
         }
-    }*/
+    }
 
     // Our hashtable containing all the notifications.  Each notification in the hash table is an ArrayList that contains all the observers for that notification.
     Hashtable notifications = new Hashtable();

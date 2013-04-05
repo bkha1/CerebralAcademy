@@ -28,10 +28,6 @@ public class PauseController : MonoBehaviour {
 
             Debug.Log("Game was paused, now unpaused");
 
-            //gameObject.GetComponent<PauseMenu>().enabled = false;
-            //gameObject.GetComponent<MouseLook>().enabled = true;
-            //transform.parent.GetComponent<MouseLook>().enabled = true;
-
             // New code which allows PauseController to sit in the Managers Prefab
             player.GetComponentInChildren<PauseMenu>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = true;
@@ -45,10 +41,6 @@ public class PauseController : MonoBehaviour {
             Screen.lockCursor = false;
             Screen.showCursor = true;
             gamePaused = true;
-
-            //gameObject.GetComponent<PauseMenu>().enabled = true;
-            //gameObject.GetComponent<MouseLook>().enabled = false;
-            //transform.parent.GetComponent<MouseLook>().enabled = false;
 
             Debug.Log("Game was not paused, now paused");
 

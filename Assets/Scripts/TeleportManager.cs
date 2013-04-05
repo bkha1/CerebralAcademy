@@ -8,11 +8,11 @@ public class TeleportManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 
-        teleportManager = GameObject.Find("Teleport Manager");
+        teleportManager = GameObject.Find("TeleportManager");
 
         if (teleportManager == null)
         {
-            teleportManager = new GameObject("Teleport Manager");
+            teleportManager = new GameObject("TeleportManager");
             teleportManager.AddComponent<TeleportManager>();
         }
 

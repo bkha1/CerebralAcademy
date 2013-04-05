@@ -26,9 +26,7 @@ public class PauseMenu : MonoBehaviour {
         GUILayout.Space(buttonSpacing);
         if (GUILayout.Button("Resume Game"))
         {
-            Debug.Log("Before OnPuaseEvent sent");
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
-            Debug.Log("After OnPuaseEvent sent");
+            EventFactory.FireOnPauseEvent(this);
         }
         GUILayout.Space(buttonSpacing);
         if (GUILayout.Button("Statistics"))

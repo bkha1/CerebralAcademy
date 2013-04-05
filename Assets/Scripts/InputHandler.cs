@@ -40,7 +40,7 @@ public class InputHandler : MonoBehaviour {
 
         if (Input.GetKeyDown(pauseKey))
         {
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnPauseEvent");
+            EventFactory.FireOnPauseEvent(this);
         }
         else if (Input.GetKeyUp(cognitivDisappearKey))
         {
