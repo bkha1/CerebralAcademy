@@ -58,14 +58,9 @@ public class ProfileCreation : MonoBehaviour {
         {
             isVisible = true;
 
-            //this.GetComponent<MouseLook>().enabled = false;
-            //this.transform.parent.GetComponent<MouseLook>().enabled = false;
-            //gameObject.GetComponent<PauseController>().enabled = false;
-
-            playerObject.GetComponentInChildren<PauseMenu>().enabled = false;
-            playerCamera.GetComponent<MouseLook>().enabled = true;
-            playerObject.GetComponent<MouseLook>().enabled = true;
-            //NotificationCenter.DefaultCenter.PostNotification(this, "DisablePauseSettings");
+            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
+            playerCamera.GetComponent<MouseLook>().enabled = false;
+            playerObject.GetComponent<MouseLook>().enabled = false;
         }
     }
 
@@ -112,20 +107,8 @@ public class ProfileCreation : MonoBehaviour {
             */
 			
 			//message to take to training ground
-			//gameObject.GetComponent<AfterProfileCreationMsg>().enabled = true;
             NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");
-			
-			/*
-			Hashtable param1 = new Hashtable();
-            param1.Add("gameObject", this.gameObject);
-            param1.Add("target", new Vector3(0.0f, 0.0f, 0.0f));
-		    param1.Add("isLevel", true);
-		    param1.Add("level", "TrainingGround");
-		    NotificationCenter.DefaultCenter.PostNotification(this, "TeleportPlayerEvent", param1);
-		    */
-			
-			
-			
+
             this.enabled = false;
         }
         GUILayout.EndArea();

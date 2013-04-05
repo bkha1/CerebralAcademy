@@ -48,9 +48,10 @@ public class AfterProfileCreationMsg : MonoBehaviour {
 		{
 			Time.timeScale = 1;
 
-            this.GetComponent<MouseLook>().enabled = true;
-            this.transform.parent.GetComponent<MouseLook>().enabled = true;
-            //gameObject.GetComponent<PauseController>().enabled = true;
+
+            playerObject.GetComponent<MouseLook>().enabled = true;
+            playerCamera.GetComponent<MouseLook>().enabled = true;
+            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = true;
 
             EventFactory.FireTeleportPlayerEvent(this, gameObject, new Vector3(), true, "TrainingGround");
             isVisible = false;

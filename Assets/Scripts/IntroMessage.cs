@@ -20,13 +20,16 @@ public class IntroMessage : MonoBehaviour {
 
 	        gameObject.GetComponent<MouseLook>().enabled = false;
 	        transform.parent.GetComponent<MouseLook>().enabled = false;
-	        //gameObject.GetComponent<PauseController>().enabled = false;
+	        //gameObject.GetComponent<PauseController>().enabled = false; // no longer on player
+            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
+
 		}
 		else{
 			Time.timeScale = 1;
 			gameObject.GetComponent<MouseLook>().enabled = true;
 	        transform.parent.GetComponent<MouseLook>().enabled = true;
-			//gameObject.GetComponent<PauseController>().enabled = true;
+            //gameObject.GetComponent<PauseController>().enabled = true; // no longer on player
+            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = true;
 			
 		}
 	
