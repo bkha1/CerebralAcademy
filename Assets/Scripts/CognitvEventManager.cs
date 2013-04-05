@@ -4,7 +4,7 @@ using System.Collections;
 public static class CognitvEventManager {
 
 	public delegate void CognitivEvent(object sender, float powerLevel);
-	public static event CognitivEvent LiftEvent, PushEvent, DisappearEvent, LeftEvent, RightEvent;
+	public static event CognitivEvent LiftEvent, PushEvent, DisappearEvent, LeftEvent, RightEvent, EmotionEvent;
 
 	public static void TriggerCognitivLift(object sender, float powerLevel) {
 		if (LiftEvent != null) {
@@ -38,6 +38,14 @@ public static class CognitvEventManager {
         if (RightEvent != null)
         {
             RightEvent(sender, powerLevel);
+        }
+    }
+
+    public static void TriggerCognitivEmotion(object sender, float powerLevel)
+    {
+        if (EmotionEvent != null)
+        {
+            EmotionEvent(sender, powerLevel);
         }
     }
 }

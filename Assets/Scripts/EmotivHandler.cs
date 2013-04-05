@@ -84,11 +84,11 @@ public class EmotivHandler : MonoBehaviour {
         //engine.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
 
 		engine.CognitivEmoStateUpdated += new EmoEngine.CognitivEmoStateUpdatedEventHandler(engine_CognitiveEmoStateUpdated);
-		
+        engine.AffectivEmoStateUpdated += new EmoEngine.AffectivEmoStateUpdatedEventHandler(engine_AffectivEmoStateUpdated);
 		engine.Connect();
 		
 	}
-	
+
 	public void disconnect() {
 		try {
 			engine.Disconnect();
@@ -136,6 +136,15 @@ public class EmotivHandler : MonoBehaviour {
         profile.GetBytes();*/
 		
 	}
+
+    void engine_AffectivEmoStateUpdated(object sender, EmoStateUpdatedEventArgs args)
+    {
+        EmoState emoState = args.emoState;
+
+        CognitvEventManager.TriggerCognitivEmotion(sender, emoState.AffectivGetMeditationScore());
+
+        throw new System.NotImplementedException();
+    }
 	
 	void engine_CognitiveEmoStateUpdated(object sender, EmoStateUpdatedEventArgs args) {
 		cogState = args.emoState;

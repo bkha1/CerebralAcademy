@@ -38,6 +38,13 @@ static class EventFactory
         NotificationCenter.DefaultCenter.PostNotification(comp, "TeleportPlayerEvent", param);
     }
 
-    
+    public static void FireOnEmotionEvent(Component comp, string emotion, float powerLevel, float time)
+    {
+        Hashtable param = new Hashtable();
+        param.Add("emotion", emotion);
+        param.Add("power", powerLevel);
+        param.Add("time", time);
+        NotificationCenter.DefaultCenter.PostNotification(comp, "OnEmotionEvent", param);
+    }
 }
 

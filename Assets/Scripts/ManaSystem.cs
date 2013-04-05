@@ -21,6 +21,7 @@ public class ManaSystem : MonoBehaviour {
         // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
         // skill events.
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivEvent");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnEmotionEvent");
 
         // Set ManabarTexture to correct size
         Rect textureRect = ManabarTexture.pixelInset;

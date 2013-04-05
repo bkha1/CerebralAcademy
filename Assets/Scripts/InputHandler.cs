@@ -32,6 +32,7 @@ public class InputHandler : MonoBehaviour {
         CognitvEventManager.LiftEvent += handleLiftEvent;
         CognitvEventManager.PushEvent += handlePushEvent;
         CognitvEventManager.DisappearEvent += handleDisappearEvent;
+        CognitvEventManager.EmotionEvent += handleEmotionEvent;
     }
 	
 	// Update is called once per frame
@@ -92,5 +93,10 @@ public class InputHandler : MonoBehaviour {
     void handleDisappearEvent(object sender, float powerLevel)
     {
         EventFactory.FireOnCognitvEvent(this, "disappear", powerLevel, Time.time);
+    }
+
+    void handleEmotionEvent(object sender, float powerLevel)
+    {
+        EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
     }
 }
