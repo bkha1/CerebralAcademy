@@ -116,7 +116,8 @@ public class ManaSystem : MonoBehaviour {
 
     void OnEmotionEvent(Notification notification)
     {
-        // TODO: Fill this code out for the actual emotional state of user's brain.
+        // NOTE: This code currently is very raw and instantly updates the mana. A better solution would 
+        // be to use a 5 second rolling average and add that to the user's mana instead.
         GameObject gObj = GameState.Instance.getSelectedObject();
 
         if (gObj != null)
@@ -124,7 +125,8 @@ public class ManaSystem : MonoBehaviour {
             float powerLevel = (float)notification.data["power"];
             if (powerLevel > 0)
             {
-                updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, true);
+                currentMana += powerLevel;
+                //updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, true);
             }
         }
     }
