@@ -1,11 +1,13 @@
 using UnityEngine;
-using Emotiv;
 using System.Collections;
 using System.Collections.Generic;
-using EmoEngineClientLibrary;
+using Emotiv;
+//using EmoEngineClientLibrary;
 
 public class EmotivHandler : MonoBehaviour {
-	
+
+
+    public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
 	private static EmotivHandler instance;
 
     //private EmoEngineClient engine;
@@ -73,7 +75,7 @@ public class EmotivHandler : MonoBehaviour {
 	}
 	
 	public void connect() {
-		//engine = EmoEngine.Instance;
+		engine = EmoEngine.Instance;
         /*engine = new EmoEngineClient();
         engine.StartEmoEngine();
         engine.StartDataPolling();*/
@@ -114,7 +116,7 @@ public class EmotivHandler : MonoBehaviour {
 		
 		Debug.Log("EmoEngine Connected!");
 		userID = e.userId;
-		engine.LoadUserProfile(0, "C:/Users/jvmilazz/Desktop/Joseph.emu"); 
+		engine.LoadUserProfile(0, debugProfileDir); 
 		userID = 0;
 		engine.DataAcquisitionEnable(userID, true);
 		engine.EE_DataSetBufferSizeInSec(bufferSize); 

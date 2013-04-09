@@ -12,6 +12,8 @@ public class InputHandler : MonoBehaviour {
 	public string cognitivLeftKey;
     public string cognitivRightKey;
 
+    public string emotivEngineToggleKey = "`";
+
     public string debugKey;
 
     public string pauseKey = "escape";
@@ -67,6 +69,17 @@ public class InputHandler : MonoBehaviour {
             EventFactory.FireDisplayTextEvent(this, "Would you like some debug text with that?", 5.0f);
 
             EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player").gameObject, GameState.Instance.getSelectedObject().transform.position, false, "");
+        }
+        else if (Input.GetKeyUp(emotivEngineToggleKey))
+        {
+            if (EmotivHandler.Instance.isConnected())
+            {
+                EmotivHandler.Instance.disconnect();
+            }
+            else
+            {
+                EmotivHandler.Instance.connect();
+            }
         }
 	}
 
