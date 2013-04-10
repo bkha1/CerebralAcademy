@@ -144,8 +144,6 @@ public class EmotivHandler : MonoBehaviour {
         EmoState emoState = args.emoState;
 
         CognitvEventManager.TriggerCognitivEmotion(sender, emoState.AffectivGetMeditationScore());
-
-        throw new System.NotImplementedException();
     }
 	
 	void engine_CognitiveEmoStateUpdated(object sender, EmoStateUpdatedEventArgs args) {

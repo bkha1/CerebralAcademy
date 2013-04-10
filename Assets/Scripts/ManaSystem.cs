@@ -16,12 +16,21 @@ public class ManaSystem : MonoBehaviour {
     private float currentTime;
     private float endTime;
 
+    private Player player = null;
+    public bool debugMode = false;
+
 	void Start () {
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
         // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
         // skill events.
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "OnEmotionEvent");
+
+        // Set currentMana to be whatever player has
+        player = GameState.Instance.getCurrentPlayer();
+
+        if (player != null)
+            currentMana = player.Mana;
 
         // Set ManabarTexture to correct size
         Rect textureRect = ManabarTexture.pixelInset;
@@ -33,20 +42,24 @@ public class ManaSystem : MonoBehaviour {
 	}
 	
 	void Update () {
-
+        
         currentTime += Time.deltaTime;
-        if (currentMana < maxMana && currentTime >= endTime)
+
+        if (player == null && debugMode) player = new Player();
+
+        if (player.Mana < maxMana && currentTime >= endTime)
         {
             // Add ManaRefillRate mana
-            if (currentMana < maxMana)
+            if (player.Mana < maxMana)
             {
                 // Add 1 mana (default rate)
-                currentMana += ManaRefillRate;
+                if (debugMode)
+                    player.Mana += ManaRefillRate;
 
-                if (currentMana > maxMana) currentMana = maxMana;
+                if (player.Mana > maxMana) player.Mana = maxMana;
 
                 Rect textureRect = ManabarTexture.pixelInset;
-                textureRect.xMax = ManabarTexture.pixelInset.xMin + ManabarGUIWidth * currentMana;
+                textureRect.xMax = ManabarTexture.pixelInset.xMin + ManabarGUIWidth * player.Mana;
                 ManabarTexture.pixelInset = textureRect;
             }
             
@@ -120,13 +133,14 @@ public class ManaSystem : MonoBehaviour {
         // be to use a 5 second rolling average and add that to the user's mana instead.
         GameObject gObj = GameState.Instance.getSelectedObject();
 
+
         if (gObj != null)
         {
             float powerLevel = (float)notification.data["power"];
+            //Debug.Log("ManaSystem: OnEmotionEvent: " + powerLevel);
             if (powerLevel > 0)
             {
-                currentMana += powerLevel;
-                //updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, true);
+                player.Mana += powerLevel * 2.5f;
             }
         }
     }
@@ -135,7 +149,7 @@ public class ManaSystem : MonoBehaviour {
    
     bool updateMana(float objSensitivity, float powerLevel, bool recharge)
     {
-        if (!recharge && (currentMana - (powerLevel / objSensitivity) < minMana))
+        if (!recharge && (player.Mana - (powerLevel / objSensitivity) < minMana))
         {
             Debug.Log("Not enough mana to perform skill.");
             EventFactory.FireDisplayTextEvent(this, "Not enough mana to perform skill.", 0.5f);
@@ -143,14 +157,14 @@ public class ManaSystem : MonoBehaviour {
         }
 
         float endMana;
-        if (recharge) endMana = (currentMana + powerLevel) / objSensitivity;
-        else endMana = (currentMana - powerLevel) / objSensitivity;
+        if (recharge) endMana = (player.Mana + powerLevel) / objSensitivity;
+        else endMana = (player.Mana - powerLevel) / objSensitivity;
         
         if (endMana < minMana)
         {
             endMana = minMana;
         }
-        currentMana = endMana;
+        player.Mana = endMana;
 
         return true;
     }
