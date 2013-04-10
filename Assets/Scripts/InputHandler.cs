@@ -96,7 +96,8 @@ public class InputHandler : MonoBehaviour {
     void handleLiftEvent(object sender, float powerLevel)
     {
         //Debug.Log("Lift Event of Power: " + powerLevel);
-        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
+        //EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, 0.0f);
     }
 
     void handlePushEvent(object sender, float powerLevel)
@@ -111,6 +112,7 @@ public class InputHandler : MonoBehaviour {
 
     void handleEmotionEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
+        //EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
+        EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, 0.0f);
     }
 }

@@ -8,36 +8,60 @@ public class EmotivHandler : MonoBehaviour {
 
 
     public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
-	private static EmotivHandler instance;
+	private static EmotivHandler instance = null;
 
-    private EmoEngineClient engineClient;
+    private EmoEngineClient engineClient = null;
 
-	protected EmoEngine engine; // Access to the EDK is viaa the EmoEngine 
+	protected EmoEngine engine; // Access to the EDK is via the EmoEngine 
     private uint userID; // userID is used to uniquely identify a user's headset
 	private Profile profile;
-	
 	private EmoState cogState = null;
 	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
-	
 	private static float bufferSize = 1.0f;
-
     private float elapsedTime = 0;
 	
 	public static EmotivHandler Instance
 	{
 		get
 		{
-			if (instance == null) {
+			/*if (instance == null) {
 				instance = new GameObject("EmotivHandler").AddComponent<EmotivHandler>();
 			}
 			
-			return instance;
+			return instance;*/
+
+            if (instance == null)
+            {
+                // Check if an EmotivHandler is already in the scene
+                instance = FindObjectOfType(typeof(EmotivHandler)) as EmotivHandler;
+
+                // We couldn't find one, let's create one!
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("EmotivHandler");
+                    DontDestroyOnLoad(obj);
+                    instance = obj.AddComponent<EmotivHandler>();
+                    Debug.Log("EmotivHandler created");
+                }
+            }
+
+            Debug.Log("EmotivHandler referenced");
+            return instance;
 		}
 	}
 
     void Awake()
     {
-        engineClient = new EmoEngineClient();
+        Debug.Log("Awake called");
+        if (engineClient == null) engineClient = new EmoEngineClient();
+    }
+
+    void Start()
+    {
+        Debug.Log("Start called");
+        //if (engineClient == null) engineClient = new EmoEngineClient();
+        //engineClient = new EmoEngineClient();
+        //Debug.Log("Can start emo engine: " + engineClient.CanStartEmoEngine);
     }
 	
 	public void OnApplicationQuit() 
@@ -45,6 +69,7 @@ public class EmotivHandler : MonoBehaviour {
         if (engineClient.IsEmoEngineRunning) disconnect();
 
 		instance = null;
+        engineClient = null;
 	}
 	
 	// Update is called once per frame
@@ -105,8 +130,8 @@ public class EmotivHandler : MonoBehaviour {
 
     public static EmoEngineClient getEmoEngine()
     {
-        if (instance.engineClient == null)
-            instance.engineClient = new EmoEngineClient();
+        //if (instance.engineClient == null)
+        //    instance.engineClient = new EmoEngineClient();
 
         return instance.engineClient;
     }
@@ -132,8 +157,8 @@ public class EmotivHandler : MonoBehaviour {
         #endregion
 
         #region EmoClient
-        if (engineClient == null)
-            engineClient = new EmoEngineClient();
+        /*if (engineClient == null)
+            engineClient = new EmoEngineClient();*/
 
         engineClient.StartEmoEngine();
         engineClient.UserID = 0;
@@ -189,7 +214,7 @@ public class EmotivHandler : MonoBehaviour {
         #endregion
 
         #region EmoClient
-        //  engineClient.StopDataPolling();
+        //engineClient.StopDataPolling();
         #endregion
 
     }
