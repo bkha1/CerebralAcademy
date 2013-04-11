@@ -24,12 +24,6 @@ public class EmotivHandler : MonoBehaviour {
 	{
 		get
 		{
-			/*if (instance == null) {
-				instance = new GameObject("EmotivHandler").AddComponent<EmotivHandler>();
-			}
-			
-			return instance;*/
-
             if (instance == null)
             {
                 // Check if an EmotivHandler is already in the scene
@@ -53,24 +47,45 @@ public class EmotivHandler : MonoBehaviour {
     void Awake()
     {
         Debug.Log("Awake called");
-        if (engineClient == null) engineClient = new EmoEngineClient();
+        //if (engineClient == null) engineClient = new EmoEngineClient();
+
+        //engineClient = new EmoEngineClient();
+        StartCoroutine(startHandler());
     }
 
     void Start()
     {
         Debug.Log("Start called");
-        //if (engineClient == null) engineClient = new EmoEngineClient();
-        //engineClient = new EmoEngineClient();
-        //Debug.Log("Can start emo engine: " + engineClient.CanStartEmoEngine);
     }
 	
 	public void OnApplicationQuit() 
 	{
+        StartCoroutine(clearHandler());
+        /*if (engineClient.IsEmoEngineRunning) disconnect();
+
+		instance = null;
+        engineClient = null;*/
+	}
+
+    IEnumerator startHandler()
+    {
+        Debug.Log("Creating instance of engineClient");
+        if (engineClient == null) engineClient = new EmoEngineClient(); // BUG: Here is where exceptions spawn
+        
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator clearHandler()
+    {
         if (engineClient.IsEmoEngineRunning) disconnect();
 
 		instance = null;
         engineClient = null;
-	}
+
+        Debug.Log("Destroying instance of engineClient");
+
+        yield return new WaitForSeconds(1);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -160,9 +175,10 @@ public class EmotivHandler : MonoBehaviour {
         /*if (engineClient == null)
             engineClient = new EmoEngineClient();*/
 
-        engineClient.StartEmoEngine();
+        engineClient.ActivePort = EmoEngineClient.ControlPanelPort;
         engineClient.UserID = 0;
         engineClient.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(engineClient_PropertyChanged);
+        engineClient.StartEmoEngine();
         //engineClient.StartDataPolling();
 
         #endregion
