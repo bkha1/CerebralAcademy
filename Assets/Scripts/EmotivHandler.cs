@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Emotiv;
 using EmoEngineClientLibrary;
 
-public class EmotivHandler : MonoBehaviour {
+public class EmotivHandler {
 
 
     public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
@@ -16,6 +16,7 @@ public class EmotivHandler : MonoBehaviour {
     private uint userID; // userID is used to uniquely identify a user's headset
 	private Profile profile;
 	private EmoState cogState = null;
+
 	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
 	private static float bufferSize = 1.0f;
     private float elapsedTime = 0;
@@ -24,7 +25,7 @@ public class EmotivHandler : MonoBehaviour {
 	{
 		get
 		{
-            if (instance == null)
+            /*if (instance == null)
             {
                 // Check if an EmotivHandler is already in the scene
                 instance = FindObjectOfType(typeof(EmotivHandler)) as EmotivHandler;
@@ -37,37 +38,59 @@ public class EmotivHandler : MonoBehaviour {
                     instance = obj.AddComponent<EmotivHandler>();
                     Debug.Log("EmotivHandler created");
                 }
+            }*/
+
+            if (instance == null)
+            {
+                instance = new EmotivHandler();
+                Debug.Log("EmotivHandler created");
             }
 
-            Debug.Log("EmotivHandler referenced");
             return instance;
 		}
 	}
 
-    void Awake()
+    private EmotivHandler()
+    {
+        this.engineClient = new EmoEngineClient();
+        this.engineClient.ActivePort = EmoEngineClient.ControlPanelPort;
+        this.engineClient.UserID = 0;
+        this.engineClient.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(engineClient_PropertyChanged);
+    }
+
+   /* void Awake()
     {
         Debug.Log("Awake called");
         //if (engineClient == null) engineClient = new EmoEngineClient();
 
         //engineClient = new EmoEngineClient();
-        StartCoroutine(startHandler());
+        //StartCoroutine(startHandler());
     }
 
     void Start()
     {
         Debug.Log("Start called");
-    }
+    }*/
 	
-	public void OnApplicationQuit() 
+	/*public void OnApplicationQuit() 
 	{
-        StartCoroutine(clearHandler());
-        /*if (engineClient.IsEmoEngineRunning) disconnect();
+        //StartCoroutine(clearHandler());
+        if (engineClient.IsEmoEngineRunning) disconnect();
 
 		instance = null;
-        engineClient = null;*/
-	}
+        engineClient = null;
+	}*/
 
-    IEnumerator startHandler()
+    ~EmotivHandler()
+    {
+        if (engineClient.IsEmoEngineRunning) disconnect();
+
+        instance = null;
+        engineClient = null;
+    }
+
+
+    /*IEnumerator startHandler()
     {
         Debug.Log("Creating instance of engineClient");
         if (engineClient == null) engineClient = new EmoEngineClient(); // BUG: Here is where exceptions spawn
@@ -85,13 +108,14 @@ public class EmotivHandler : MonoBehaviour {
         Debug.Log("Destroying instance of engineClient");
 
         yield return new WaitForSeconds(1);
-    }
+    }*/
 	
 	// Update is called once per frame
-	void Update ()
+	/*void Update ()
     {
 
         #region EmoClient
+     * // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
         if (engineClient != null && engineClient.IsPolling)
         {
             EmotivState emoState = engineClient.CurrentEmotivState;
@@ -135,8 +159,8 @@ public class EmotivHandler : MonoBehaviour {
 
             if (data == null) return;
         }*/
-        #endregion
-    }
+       // #endregion
+    //}
 	
 	public uint getActiveUser() {
         return engineClient.UserID;
@@ -172,12 +196,6 @@ public class EmotivHandler : MonoBehaviour {
         #endregion
 
         #region EmoClient
-        /*if (engineClient == null)
-            engineClient = new EmoEngineClient();*/
-
-        engineClient.ActivePort = EmoEngineClient.ControlPanelPort;
-        engineClient.UserID = 0;
-        engineClient.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(engineClient_PropertyChanged);
         engineClient.StartEmoEngine();
         //engineClient.StartDataPolling();
 
@@ -190,8 +208,10 @@ public class EmotivHandler : MonoBehaviour {
 
     void engineClient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        Debug.Log("PropertyChange: " + e.PropertyName);
         if (e.PropertyName == "CurrentEmotivState")
         {
+            Debug.Log("EmotivState Update");
             EmotivState emoState = engineClient.CurrentEmotivState;
 
             if (emoState.AffectivMeditationScore > 0)
