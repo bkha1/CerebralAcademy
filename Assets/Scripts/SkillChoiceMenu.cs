@@ -39,6 +39,9 @@ public class SkillChoiceMenu : MonoBehaviour {
 		
 		layoutStyle = new GUIStyle();
 		layoutStyle.normal.textColor = Color.white;
+		layoutStyle.onHover.background = layoutStyle.hover.background = new Texture2D(2,2);
+		layoutStyle.padding.left = layoutStyle.padding.right = layoutStyle.padding.top = layoutStyle.padding.bottom = 4;
+		/*
 		Texture2D tex = new Texture2D(2,2);
 		Color[] colors = new Color[4];
 		for(int i = 0; i < 4; i++)
@@ -49,7 +52,7 @@ public class SkillChoiceMenu : MonoBehaviour {
 		tex.Apply();
 		layoutStyle.hover.background = tex;
 		layoutStyle.onHover.background = tex;
-		layoutStyle.padding.left = layoutStyle.padding.right = layoutStyle.padding.top = layoutStyle.padding.bottom = 4;
+		layoutStyle.padding.left = layoutStyle.padding.right = layoutStyle.padding.top = layoutStyle.padding.bottom = 4;*/
 		
     }
 
