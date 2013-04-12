@@ -40,7 +40,8 @@ public class PromptGUI : MonoBehaviour {
             if (Input.GetKeyUp("1"))
             {
                 //navChoice = 1;
-                activeWindow = COG_ABILITY_WIND;
+                //activeWindow = COG_ABILITY_WIND;
+                activeWindow = INVISIBLE_WIND;
                 Debug.Log("User want's to learn about skills and mana.");
                 NotificationCenter.DefaultCenter.PostNotification(this, "StartCogTutor");
             }
@@ -73,45 +74,20 @@ public class PromptGUI : MonoBehaviour {
         }
         else if (activeWindow == TRAINING_WIND)
         {
-            //activeWindow = TRAINING_WIND;
+
         }
         else if (activeWindow == RELAX_WIND)
         {
-            //activeWindow = RELAX_WIND;
+
         }
 	}
 
     void OnGUI()
     {
-        if (activeWindow != INVISIBLE_WIND || activeWindow != COG_ABILITY_WIND)
+        if ((activeWindow != INVISIBLE_WIND))
         {
             GUI.Window(activeWindow, new Rect(Screen.width / 2 - width / 2, 40, width, height), initWindow, "");
         }
-
-        /*if (navChoice == 0)
-        {
-            activeWindow = PROMPT_WIND;
-            GUI.Window(activeWindow, new Rect(Screen.width / 2 - width / 2, 40, width, height), initWindow, "");
-        }
-        else if (navChoice == 1) // GUI for teaching about cog abilities and mana
-        {
-            //activeWindow = COG_ABILITY_WIND;
-            //Debug.Log("User want's to learn about skills and mana.");
-            //NotificationCenter.DefaultCenter.PostNotification(this, "StartCogTutor");
-        }
-        else if (navChoice == 2) // GUI for training skills
-        {
-            activeWindow = TRAINING_WIND;
-        }
-        else if (navChoice == 3) // GUI for teaching about relaxation techniques
-        {
-            activeWindow = RELAX_WIND;
-        }
-        else if (navChoice == 4) // close GUI and teleport player back to Lobby
-        {
-            //activeWindow = PROMPT_WIND;
-            //EventFactory.FireTeleportPlayerEvent(this, null, new Vector3(), true, "Lobby");
-        } */
     }
 
     void initWindow(int windowID)
@@ -120,7 +96,6 @@ public class PromptGUI : MonoBehaviour {
 
         if (windowID == PROMPT_WIND)
         {
-
             GUILayout.Label(promptText);
             GUILayout.Space(1);
 

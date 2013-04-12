@@ -19,6 +19,9 @@ public class ManaSystem : MonoBehaviour {
     private Player player = null;
 
 	void Start () {
+
+        DontDestroyOnLoad(this);
+
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
         // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
         // skill events.
