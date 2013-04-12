@@ -14,18 +14,28 @@ public class SkillChoiceMenu : MonoBehaviour {
 	private bool showList = false;
 	private int listEntry = 0;
 	private bool picked = false;
-	public ComboBox myCombo = new ComboBox();
-	public GUIContent[] glist;
+	public ComboBox abilityCombo = new ComboBox();
+	public GUIContent[] abilityList;
+	
+	public ComboBox techCombo = new ComboBox();
+	public GUIContent[] techList;
 
     void Start()
     {
-		glist = new GUIContent[5];
+		abilityList = new GUIContent[5];
 
-		glist[0] = new GUIContent("Foo");
-		glist[1] = new GUIContent("Bar");
-		glist[2] = new GUIContent("Thing1");
-		glist[3] = new GUIContent("Thing2");
-		glist[4] = new GUIContent("Thing3");
+		abilityList[0] = new GUIContent("Lift");
+		abilityList[1] = new GUIContent("Push");
+		abilityList[2] = new GUIContent("Pull");
+		abilityList[3] = new GUIContent("Rotate");
+		abilityList[4] = new GUIContent("ARMAGEDDON");
+		
+		techList = new GUIContent[5];
+		techList[0] = new GUIContent("Meditate");
+		techList[1] = new GUIContent("MediTate");
+		techList[2] = new GUIContent("meditate");
+		techList[3] = new GUIContent("MEDITATE");
+		techList[4] = new GUIContent("MEDS");
 		
 		layoutStyle = new GUIStyle();
 		layoutStyle.normal.textColor = Color.white;
@@ -45,8 +55,11 @@ public class SkillChoiceMenu : MonoBehaviour {
 
     void OnGUI()
     {
-		myCombo.List(new Rect(50, 100, 100, 20), new GUIContent("Click me!"), glist, layoutStyle);
-		GUI.Label(new Rect(50, 70, 400, 20), "You picked " + myCombo.GetSelectedItemIndex().ToString() + "!");
+		abilityCombo.List(new Rect(50, 100, 100, 20), new GUIContent("Abilities"), abilityList, layoutStyle);
+		GUI.Label(new Rect(50, 70, 400, 20), "You picked " + abilityCombo.GetSelectedItemIndex().ToString() + "!");
+		
+		techCombo.List(new Rect(200, 100, 100, 20), new GUIContent("Techniques"), techList, layoutStyle);
+		GUI.Label(new Rect(200, 70, 400, 20), "You picked " + techCombo.GetSelectedItemIndex().ToString() + "!");
 		//if(myCombo.List(new Rect(50, 100, 100, 20), showList, listEntry, new GUIContent("Click me!"), glist, layoutStyle))
 		//{
 		//	picked = true;
@@ -57,8 +70,13 @@ public class SkillChoiceMenu : MonoBehaviour {
 		//myCombo.List(new Rect(0,0,Screen.width/2,Screen.height/2), new GUIContent("string"), glist,layoutStyle);
 		//myCombo.List(new Rect(0,0,Screen.width/2,Screen.height/2), new GUIContent("string"), new GUIContent[] {new GUIContent("fdsaf"),new GUIContent("gds")},layoutStyle);
         areaHeight = Screen.height;
+		if (GUILayout.Button("Okay"))
+        {
+            EventFactory.FireOnSkillChoiceEvent(this);
+        }
+		
         GUI.skin = customSkin;
-        GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, Screen.height / 2 - areaHeight / 2, areaWidth, areaHeight), layoutStyle);
+        /*GUILayout.BeginArea(new Rect(Screen.width / 2 - areaWidth / 2, Screen.height / 2 - areaHeight / 2, areaWidth, areaHeight), layoutStyle);
         GUILayout.Space(50);
         GUILayout.Label(textureTop);
         GUILayout.Space(buttonSpacing);
@@ -70,6 +88,6 @@ public class SkillChoiceMenu : MonoBehaviour {
         }
         GUILayout.Space(buttonSpacing);
 
-        GUILayout.EndArea();
+        GUILayout.EndArea();*/
     }//end OnGUI
 }
