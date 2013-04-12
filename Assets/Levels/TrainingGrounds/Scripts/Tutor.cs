@@ -42,6 +42,12 @@ public class Tutor : MonoBehaviour {
 	void Update () {
 		
 		if (movementFinished || !isActive) return;
+
+        // If they have not moved yet, keep the into text up.
+        if (movementCount == 0)
+        {
+            EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and SPACE to move. Go ahead, give it a try.", 5.0f);
+        }
 		
 		if (movementCount >= NUM_MOVEMENT_DIRECTIONS) { // 5 because of jump
 
@@ -74,7 +80,7 @@ public class Tutor : MonoBehaviour {
     void StartCogTutor(Notification notification)
     {
         isActive = true;
-        EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.", 10.0f);
+        EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and SPACE to move. Go ahead, give it a try.", 10.0f);
         
     }
 
