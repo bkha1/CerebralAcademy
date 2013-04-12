@@ -1,49 +1,152 @@
 using UnityEngine;
-using Emotiv;
 using System.Collections;
 using System.Collections.Generic;
+using Emotiv;
 using EmoEngineClientLibrary;
 
-public class EmotivHandler : MonoBehaviour {
-	
-	private static EmotivHandler instance;
+public class EmotivHandler {
 
-    //private EmoEngineClient engine;
 
-	protected EmoEngine engine; // Access to the EDK is viaa the EmoEngine 
+    public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
+	private static EmotivHandler instance = null;
+
+    private EmoEngineClient engineClient = null;
+
+	protected EmoEngine engine; // Access to the EDK is via the EmoEngine 
     private uint userID; // userID is used to uniquely identify a user's headset
 	private Profile profile;
-	
 	private EmoState cogState = null;
-	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
-	
-	private static float bufferSize = 1.0f;
 
+	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
+	private static float bufferSize = 1.0f;
     private float elapsedTime = 0;
 	
 	public static EmotivHandler Instance
 	{
 		get
 		{
-			if (instance == null) {
-				instance = new GameObject("EmotivHandler").AddComponent<EmotivHandler>();
-			}
-			
-			return instance;
+            /*if (instance == null)
+            {
+                // Check if an EmotivHandler is already in the scene
+                instance = FindObjectOfType(typeof(EmotivHandler)) as EmotivHandler;
+
+                // We couldn't find one, let's create one!
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("EmotivHandler");
+                    DontDestroyOnLoad(obj);
+                    instance = obj.AddComponent<EmotivHandler>();
+                    Debug.Log("EmotivHandler created");
+                }
+            }*/
+
+            if (instance == null)
+            {
+                instance = new EmotivHandler();
+                Debug.Log("EmotivHandler created");
+            }
+
+            return instance;
 		}
 	}
+
+    private EmotivHandler()
+    {
+        this.engineClient = new EmoEngineClient();
+        this.engineClient.ActivePort = EmoEngineClient.ControlPanelPort;
+        this.engineClient.UserID = 0;
+        this.engineClient.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(engineClient_PropertyChanged);
+    }
+
+   /* void Awake()
+    {
+        Debug.Log("Awake called");
+        //if (engineClient == null) engineClient = new EmoEngineClient();
+
+        //engineClient = new EmoEngineClient();
+        //StartCoroutine(startHandler());
+    }
+
+    void Start()
+    {
+        Debug.Log("Start called");
+    }*/
 	
-	public void OnApplicationQuit() 
+	/*public void OnApplicationQuit() 
 	{
+        //StartCoroutine(clearHandler());
+        if (engineClient.IsEmoEngineRunning) disconnect();
+
 		instance = null;
-	}
+        engineClient = null;
+	}*/
+
+    ~EmotivHandler()
+    {
+        if (engineClient.IsEmoEngineRunning) disconnect();
+
+        instance = null;
+        engineClient = null;
+    }
+
+
+    /*IEnumerator startHandler()
+    {
+        Debug.Log("Creating instance of engineClient");
+        if (engineClient == null) engineClient = new EmoEngineClient(); // BUG: Here is where exceptions spawn
+        
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator clearHandler()
+    {
+        if (engineClient.IsEmoEngineRunning) disconnect();
+
+		instance = null;
+        engineClient = null;
+
+        Debug.Log("Destroying instance of engineClient");
+
+        yield return new WaitForSeconds(1);
+    }*/
 	
 	// Update is called once per frame
-	void Update () {
-		
-		if (engine == null) return;
-		
-		
+	/*void Update ()
+    {
+
+        #region EmoClient
+     * // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
+        if (engineClient != null && engineClient.IsPolling)
+        {
+            EmotivState emoState = engineClient.CurrentEmotivState;
+
+            if (emoState.AffectivMeditationScore > 0)
+            {
+                CognitvEventManager.TriggerCognitivEmotion(null, emoState.AffectivMeditationScore);
+
+            }
+
+            if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
+            {
+                CognitvEventManager.TriggerCognitivDisappear(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LIFT)
+            {
+                CognitvEventManager.TriggerCognitivLift(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LEFT)
+            {
+                CognitvEventManager.TriggerCognitivLeft(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_PUSH)
+            {
+                CognitvEventManager.TriggerCognitivPush(null, emoState.CognitivCurrentActionPower);
+            }
+        }
+        #endregion
+
+        #region Emotiv
+        /*if (engine == null) return;
 		// Handle any waiting events
         engine.ProcessEvents();
 		
@@ -55,47 +158,102 @@ public class EmotivHandler : MonoBehaviour {
             elapsedTime = 0;
 
             if (data == null) return;
-        }
-	}
+        }*/
+       // #endregion
+    //}
 	
 	public uint getActiveUser() {
-		return (userID);
+        return engineClient.UserID;
+		//return (userID);
 	}
 
-    /*public EmoEngineClient getEmoEngine()
+    public static EmoEngineClient getEmoEngine()
     {
-        return engine;
-    }*/
+        //if (instance.engineClient == null)
+        //    instance.engineClient = new EmoEngineClient();
+
+        return instance.engineClient;
+    }
 	
-	public static EmoEngine getEmoEngine() {
+	/*public static EmoEngine getEmoEngine() {
 		if (instance.engine == null) return EmoEngine.Instance;
 		else return instance.engine;
-	}
+	}*/
 	
-	public void connect() {
-		//engine = EmoEngine.Instance;
-        /*engine = new EmoEngineClient();
-        engine.StartEmoEngine();
-        engine.StartDataPolling();*/
+	public void connect()
+    {
 
-       
-		
-		engine.EmoEngineConnected += new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
+        #region Emotiv
+        /*if (engine == null)
+		    engine = EmoEngine.Instance;
+
+        engine.EmoEngineConnected += new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
         //engine.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
 
-		engine.CognitivEmoStateUpdated += new EmoEngine.CognitivEmoStateUpdatedEventHandler(engine_CognitiveEmoStateUpdated);
+        engine.CognitivEmoStateUpdated += new EmoEngine.CognitivEmoStateUpdatedEventHandler(engine_CognitiveEmoStateUpdated);
         engine.AffectivEmoStateUpdated += new EmoEngine.AffectivEmoStateUpdatedEventHandler(engine_AffectivEmoStateUpdated);
-		engine.Connect();
-		
-	}
+        engine.Connect();*/
+        #endregion
 
-	public void disconnect() {
-		try {
+        #region EmoClient
+        engineClient.StartEmoEngine();
+        //engineClient.StartDataPolling();
+
+        #endregion
+
+
+
+
+    }
+
+    void engineClient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        Debug.Log("PropertyChange: " + e.PropertyName);
+        if (e.PropertyName == "CurrentEmotivState")
+        {
+            Debug.Log("EmotivState Update");
+            EmotivState emoState = engineClient.CurrentEmotivState;
+
+            if (emoState.AffectivMeditationScore > 0)
+            {
+                CognitvEventManager.TriggerCognitivEmotion(null, emoState.AffectivMeditationScore);
+
+            }
+
+            if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
+            {
+                CognitvEventManager.TriggerCognitivDisappear(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LIFT)
+            {
+                CognitvEventManager.TriggerCognitivLift(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LEFT)
+            {
+                CognitvEventManager.TriggerCognitivLeft(null, emoState.CognitivCurrentActionPower);
+            }
+            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_PUSH)
+            {
+                CognitvEventManager.TriggerCognitivPush(null, emoState.CognitivCurrentActionPower);
+            }
+        }
+    }
+
+	public void disconnect()
+    {
+        #region Emotiv
+        /*try {
 			engine.Disconnect();
 		} catch {}
 		
-		engine = null;
-	}
+		engine = null;*/
+        #endregion
+
+        #region EmoClient
+        //engineClient.StopDataPolling();
+        #endregion
+
+    }
 	
 	public Dictionary<EdkDll.EE_DataChannel_t, double[]> getRawData() {
 		return data;
@@ -105,21 +263,29 @@ public class EmotivHandler : MonoBehaviour {
 		return data[channel];
 	}
 	
-	public bool isConnected() {
-		return (engine != null && engine.EngineGetNumUser() > 0);
-	}
+	public bool isConnected()
+    {
+        #region Emotiv
+        //return (engine != null && engine.EngineGetNumUser() > 0);
+        #endregion
 
-	
-	void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e) {
-		
-		Debug.Log("EmoEngine Connected!");
+        #region EmoClient
+        return engineClient.IsEmoEngineRunning;
+        #endregion
+    }
+
+    #region Emotiv
+    void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
+    {
+        Debug.Log("EmoEngine Connected!");
 		userID = e.userId;
-		engine.LoadUserProfile(0, "C:/Users/jvmilazz/Desktop/Joseph.emu"); 
+		engine.LoadUserProfile(0, debugProfileDir); 
 		userID = 0;
 		engine.DataAcquisitionEnable(userID, true);
 		engine.EE_DataSetBufferSizeInSec(bufferSize); 
 		Debug.Log ("User ID: " + userID);
-	}
+
+    }
 	
 	void engine_userAdded_event(object sender, EmoEngineEventArgs e) {
 		Debug.Log("User Added Event has occured");
@@ -142,8 +308,6 @@ public class EmotivHandler : MonoBehaviour {
         EmoState emoState = args.emoState;
 
         CognitvEventManager.TriggerCognitivEmotion(sender, emoState.AffectivGetMeditationScore());
-
-        throw new System.NotImplementedException();
     }
 	
 	void engine_CognitiveEmoStateUpdated(object sender, EmoStateUpdatedEventArgs args) {
@@ -168,9 +332,11 @@ public class EmotivHandler : MonoBehaviour {
         }
 	
 	}
-	
-	public EmoState getCognitiveState() {
+
+    #endregion
+
+    /*public EmoState getCognitiveState() {
 		return cogState;
-	}
+	}*/
 
 }

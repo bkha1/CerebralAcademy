@@ -11,11 +11,6 @@ public class PauseMenu : MonoBehaviour {
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
 
-    void Start()
-    {
-
-    }
-
     void OnGUI()
     {
         areaHeight = Screen.height;

@@ -8,6 +8,7 @@ public class Player {
         UserName = string.Empty;
         Gender = string.Empty;
         EmotivID = 0;
+        Mana = 0;
 	}
 
     public string UserName { get; set; } // A unique name for the user
@@ -16,5 +17,6 @@ public class Player {
     public float Mana { get; set; } // The amount of mana the user currently owns
 
     public bool hasLearnedLift { get; set; } // If the player has learned Lift and thus can use it
-
+    public bool hasLearnedPush { get; set; } // If the player has learned Push and thus can use it
+    public bool hasLearnedPull { get; set; } // If the player has learned Pull and thus can use it
 }

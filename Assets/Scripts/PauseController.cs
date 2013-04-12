@@ -21,59 +21,41 @@ public class PauseController : MonoBehaviour {
     {
         if (gamePaused)
         {
-            Time.timeScale = 1;
-            Screen.lockCursor = true;
-            Screen.showCursor = false;
             gamePaused = false;
-
-            Debug.Log("Game was paused, now unpaused");
-
-            // New code which allows PauseController to sit in the Managers Prefab
             player.GetComponentInChildren<PauseMenu>().enabled = false;
-            playerCamera.GetComponent<MouseLook>().enabled = true;
-            player.GetComponent<MouseLook>().enabled = true;
-
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOn");
+            DisablePauseSettings(null);
+            Debug.Log("Game was paused, now unpaused");
         }
         else
         {
-            Time.timeScale = 0;
-            Screen.lockCursor = false;
-            Screen.showCursor = true;
             gamePaused = true;
-
-            Debug.Log("Game was not paused, now paused");
-
-            // New code which allows PauseController to sit in the Managers Prefab
             player.GetComponentInChildren<PauseMenu>().enabled = true;
-            playerCamera.GetComponent<MouseLook>().enabled = false;
-            player.GetComponent<MouseLook>().enabled = false;
-
-            NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOff");
+            EnablePauseSettings(null);
+            Debug.Log("Game was not paused, now paused");
         }
     }
-	
-	//Do these two functions do anything?
+
     void DisablePauseSettings(Notification notification)
     {
-		Time.timeScale = 1;
+        Time.timeScale = 1;
         Screen.lockCursor = true;
         Screen.showCursor = false;
-		
-        //player.GetComponentInChildren<PauseMenu>().enabled = false;
+
         playerCamera.GetComponent<MouseLook>().enabled = true;
         player.GetComponent<MouseLook>().enabled = true;
+
+        NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOn");
     }
 
     void EnablePauseSettings(Notification notification)
     {
-		Time.timeScale = 0;
+        Time.timeScale = 0;
         Screen.lockCursor = false;
         Screen.showCursor = true;
-		
-        //player.GetComponentInChildren<PauseMenu>().enabled = true;
+
         playerCamera.GetComponent<MouseLook>().enabled = false;
         player.GetComponent<MouseLook>().enabled = false;
+
+        NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOff");
     }
-    
 }

@@ -40,7 +40,7 @@ public class ProfileCreation : MonoBehaviour {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
 		if (!GameState.Instance.hasTrained) {
-	        player = new Player();
+	        //player = new Player();
 	
 	        NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
 			
@@ -61,6 +61,7 @@ public class ProfileCreation : MonoBehaviour {
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = false;
             playerObject.GetComponent<MouseLook>().enabled = false;
+            
         }
     }
 
@@ -94,17 +95,12 @@ public class ProfileCreation : MonoBehaviour {
 
         if (GUILayout.Button("Finish"))
         {
+            player = new Player();
             player.UserName = userName;
             player.Gender = (isMale ? "Male" : "Female");
             GameState.Instance.setCurrentPlayer(player);
-			
-			/*
-            Time.timeScale = 1;
 
-            this.GetComponent<MouseLook>().enabled = true;
-            this.transform.parent.GetComponent<MouseLook>().enabled = true;
-            gameObject.GetComponent<PauseController>().enabled = true;
-            */
+            NotificationCenter.DefaultCenter.PostNotification(this, "PlayerCreatedEvent");
 			
 			//message to take to training ground
             NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");

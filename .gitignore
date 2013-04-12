@@ -6,3 +6,7 @@
 *.csproj
 *.unityproj
 *.sln
+
+#Emotiv Genereated files
+test.txt
+test.txt.meta

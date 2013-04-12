@@ -12,6 +12,8 @@ public class InputHandler : MonoBehaviour {
 	public string cognitivLeftKey;
     public string cognitivRightKey;
 
+    public string emotivEngineToggleKey = "`";
+
     public string debugKey;
 
     public string pauseKey = "escape";
@@ -35,6 +37,7 @@ public class InputHandler : MonoBehaviour {
         CognitvEventManager.DisappearEvent += handleDisappearEvent;
         CognitvEventManager.EmotionEvent += handleEmotionEvent;
     }
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -69,9 +72,18 @@ public class InputHandler : MonoBehaviour {
         }
         else if (Input.GetKeyUp(debugKey))
         {
-            EventFactory.FireDisplayTextEvent(this, "Would you like some debug text with that?", 5.0f);
-
-            EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player").gameObject, GameState.Instance.getSelectedObject().transform.position, false, "");
+            GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
+        }
+        else if (Input.GetKeyUp(emotivEngineToggleKey))
+        {
+            if (EmotivHandler.Instance.isConnected())
+            {
+                EmotivHandler.Instance.disconnect();
+            }
+            else
+            {
+                EmotivHandler.Instance.connect();
+            }
         }
 	}
 
@@ -87,7 +99,9 @@ public class InputHandler : MonoBehaviour {
 
     void handleLiftEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
+        //Debug.Log("Lift Event of Power: " + powerLevel);
+        //EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, 0.0f);
     }
 
     void handlePushEvent(object sender, float powerLevel)
@@ -102,6 +116,7 @@ public class InputHandler : MonoBehaviour {
 
     void handleEmotionEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
+        //EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
+        EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, 0.0f);
     }
 }
