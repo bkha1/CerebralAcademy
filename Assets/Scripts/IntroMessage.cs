@@ -16,20 +16,21 @@ public class IntroMessage : MonoBehaviour {
 		
 		if (!GameState.Instance.hasTrained)
 		{
+			Debug.Log("Player has not trained yet.");
 			Time.timeScale = 0;
 
 	        gameObject.GetComponent<MouseLook>().enabled = false;
 	        transform.parent.GetComponent<MouseLook>().enabled = false;
-	        //gameObject.GetComponent<PauseController>().enabled = false; // no longer on player
-            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
+            GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;	
+			GameObject.Find("SkillChoiceManager").GetComponent<SkillChoiceController>().enabled = false; // disable gameobject for bug workaround
 
 		}
 		else{
 			Time.timeScale = 1;
 			gameObject.GetComponent<MouseLook>().enabled = true;
 	        transform.parent.GetComponent<MouseLook>().enabled = true;
-            //gameObject.GetComponent<PauseController>().enabled = true; // no longer on player
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = true;
+			GameObject.Find("SkillChoiceManager").GetComponent<SkillChoiceController>().enabled = true;
 			
 		}
 	

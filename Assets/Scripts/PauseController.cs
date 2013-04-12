@@ -56,15 +56,24 @@ public class PauseController : MonoBehaviour {
 	//Do these two functions do anything?
     void DisablePauseSettings(Notification notification)
     {
-        player.GetComponentInChildren<PauseMenu>().enabled = false;
+		Time.timeScale = 1;
+        Screen.lockCursor = true;
+        Screen.showCursor = false;
+		
+        //player.GetComponentInChildren<PauseMenu>().enabled = false;
         playerCamera.GetComponent<MouseLook>().enabled = true;
         player.GetComponent<MouseLook>().enabled = true;
     }
 
     void EnablePauseSettings(Notification notification)
     {
-        player.GetComponentInChildren<PauseMenu>().enabled = true;
+		Time.timeScale = 0;
+        Screen.lockCursor = false;
+        Screen.showCursor = true;
+		
+        //player.GetComponentInChildren<PauseMenu>().enabled = true;
         playerCamera.GetComponent<MouseLook>().enabled = false;
         player.GetComponent<MouseLook>().enabled = false;
     }
+    
 }

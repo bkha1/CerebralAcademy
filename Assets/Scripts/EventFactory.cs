@@ -62,23 +62,9 @@ static class EventFactory
         NotificationCenter.DefaultCenter.PostNotification(comp, "OnPauseEvent");
     }
 	
-	public static void  FireOnSkillChoiceEvent(Component comp)
+	public static void FireOnSkillChoiceEvent(Component comp)
 	{
 		NotificationCenter.DefaultCenter.PostNotification(comp, "SkillChoiceEvent");
 	}
-
-    /*public static void FireOpenGUIEvent(Component comp, string guiName)
-    {
-        Hashtable param = new Hashtable();
-        param.Add("guiName", guiName);
-        NotificationCenter.GUICenter.PostNotification(comp, "OpenGUI", param);
-    }
-
-    public static void FireCloseGUIEvent(Component comp, string guiName)
-    {
-        Hashtable param = new Hashtable();
-        param.Add("guiName", guiName);
-        NotificationCenter.GUICenter.PostNotification(comp, "CloseGUI", param);
-    }*/
 }
 
