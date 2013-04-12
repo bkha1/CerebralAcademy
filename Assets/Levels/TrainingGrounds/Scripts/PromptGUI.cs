@@ -21,7 +21,8 @@ public class PromptGUI : MonoBehaviour {
     public int yOffset = 10;
 
     public string promptText = "What would you like to do?";
-    //public string cogAbilityText = "What would you like to do?";
+    public string relaxText = "As you might have seen, at the bottom left corner of your screen there is a bar. This bar holds mana. Mana is used each time you use a Cognitive Skill, such as Lift. "
+                                + "Mana is replensished passively by how relaxed you feel. We have prepared 3 different techniques for you to use. What would you like to learn about?";
     private int navChoice = 0;
 
 
@@ -39,38 +40,28 @@ public class PromptGUI : MonoBehaviour {
         {
             if (Input.GetKeyUp("1"))
             {
-                //navChoice = 1;
-                //activeWindow = COG_ABILITY_WIND;
                 activeWindow = INVISIBLE_WIND;
                 Debug.Log("User want's to learn about skills and mana.");
                 NotificationCenter.DefaultCenter.PostNotification(this, "StartCogTutor");
             }
             else if (Input.GetKeyUp("2"))
             {
-                //navChoice = 2;
                 activeWindow = TRAINING_WIND;
 
             }
             else if (Input.GetKeyUp("3"))
             {
-                //navChoice = 3;
                 activeWindow = RELAX_WIND;
             }
             else if (Input.GetKeyUp("4"))
             {
-                //navChoice = 4; // Close Menu
                 activeWindow = PROMPT_WIND;
                 EventFactory.FireTeleportPlayerEvent(this, null, new Vector3(), true, "Lobby");
             }
             else
             {
-                //navChoice = 0;
                 activeWindow = PROMPT_WIND;
             }
-        }
-        else if (activeWindow == COG_ABILITY_WIND)
-        {
-            //navChoice = INVISIBLE_WIND;
         }
         else if (activeWindow == TRAINING_WIND)
         {
@@ -78,7 +69,30 @@ public class PromptGUI : MonoBehaviour {
         }
         else if (activeWindow == RELAX_WIND)
         {
+            if (Input.GetKeyUp("1"))
+            {
 
+            }
+            else if (Input.GetKeyUp("2"))
+            {
+
+            }
+            else if (Input.GetKeyUp("3"))
+            {
+
+            }
+            else if (Input.GetKeyUp("4"))
+            {
+
+            }
+            else if (Input.GetKeyUp("5"))
+            {
+                activeWindow = PROMPT_WIND; 
+            }
+            else
+            {
+                activeWindow = RELAX_WIND;
+            }
         }
 	}
 
@@ -108,18 +122,14 @@ public class PromptGUI : MonoBehaviour {
             GUILayout.Label("4. I would like to go back to the Lobby.");
 
         }
-        else if (windowID == COG_ABILITY_WIND)
-        {
-            //GUILayout.Label(cogAbilityText);
-            //GUILayout.Space(1);
-        }
         else if (windowID == TRAINING_WIND)
         {
 
         }
         else if (windowID == RELAX_WIND)
         {
-
+            GUILayout.Label(relaxText);
+            GUILayout.Space(1);
         }
 
         GUILayout.EndArea();
@@ -127,8 +137,6 @@ public class PromptGUI : MonoBehaviour {
 
     void CogTutorFinished(Notification notification)
     {
-        Debug.Log("CogTutorFinished");
         activeWindow = PROMPT_WIND;
-        //navChoice = 0;
     }
 }

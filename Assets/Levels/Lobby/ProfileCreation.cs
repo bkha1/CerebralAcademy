@@ -61,6 +61,7 @@ public class ProfileCreation : MonoBehaviour {
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = false;
             playerObject.GetComponent<MouseLook>().enabled = false;
+            
         }
     }
 

@@ -99,15 +99,12 @@ public class Tutor : MonoBehaviour {
 		} else {
             EventFactory.FireDisplayTextEvent(this, "You're amazing! I think you are ready to step it up.", 5.0f);
 			
-			//StartCoroutine(teleportBack(6.0f));
-			
 			GameState.Instance.hasTrained = true; // This is deprecated
             
             if(!GameState.Instance.DebugMode) GameState.Instance.getCurrentPlayer().hasLearnedLift = true; // NOTE: If we are debugging, then this will break game.
 
             // The tutor is done
             NotificationCenter.DefaultCenter.PostNotification(this, "CogTutorFinished");
-            Debug.Log("After post notification");
 			
 		}
 	}
@@ -119,10 +116,9 @@ public class Tutor : MonoBehaviour {
         if (liftCounter == 1)
         {
             StartCoroutine(explainMana());
-            Debug.Log("I returned.");
         } else if (liftCounter == numberOfTimesToLift)
         {
-            EventFactory.FireDisplayTextEvent(this, "Good job! You have learned Lift!", 5.0f);
+            EventFactory.FireDisplayTextEvent(this, "Good job! You have learned LIFT!", 5.0f);
 
             NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
         }
@@ -131,6 +127,6 @@ public class Tutor : MonoBehaviour {
     IEnumerator explainMana() 
     {
         EventFactory.FireDisplayTextEvent(this, "Every time you use a Cognitive Skill, your mana decreases. Mana will passively refill depending on how relaxed you are. To learn about different relaxation techniques, talk with the tutor.", 5.0f);
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
     }
 }
