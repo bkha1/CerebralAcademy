@@ -2,11 +2,12 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CognitivObject\Scripts\CognitivLift.cs">
     <Files>
+      <File FileName="Assets\Scripts\AfterProfileCreationMsg.cs" Line="1" Column="1" />
       <File FileName="Assets\Levels\Dungeon1\Scripts\SeesawPhysics.cs" Line="1" Column="1" />
       <File FileName="Assets\Levels\Dungeon1\Scripts\jumpHelper.cs" Line="1" Column="1" />
-      <File FileName="Assets\Levels\Dungeon1\Scripts\CharacterMotor.cs" Line="13" Column="49" />
+      <File FileName="Assets\Levels\Dungeon1\Scripts\CharacterMotor.cs" Line="1" Column="1" />
       <File FileName="Assets\Levels\Dungeon1\Scripts\FPSInputController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CognitivObject\Scripts\CognitivLift.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CognitivObject\Scripts\CognitivLift.cs" Line="10" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

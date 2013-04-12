@@ -9,6 +9,7 @@ public class AfterProfileCreationMsg : MonoBehaviour {
     public GUISkin customSkin;
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
+	public bool turnOffToTrainingGrounds = false;
 
     private bool isVisible = false;
     
@@ -52,9 +53,14 @@ public class AfterProfileCreationMsg : MonoBehaviour {
             playerObject.GetComponent<MouseLook>().enabled = true;
             playerCamera.GetComponent<MouseLook>().enabled = true;
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = true;
-
-            EventFactory.FireTeleportPlayerEvent(this, gameObject, new Vector3(), true, "TrainingGround");
+			
+			if(turnOffToTrainingGrounds == false)
+			{
+            	EventFactory.FireTeleportPlayerEvent(this, gameObject, new Vector3(), true, "TrainingGround");
+			}
             isVisible = false;
+			Screen.lockCursor = true;
+            Screen.showCursor = false;
 		}//end button
         GUILayout.EndArea();
         
