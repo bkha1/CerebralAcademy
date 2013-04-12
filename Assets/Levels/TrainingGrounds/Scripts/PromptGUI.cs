@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PromptGUI : MonoBehaviour {
 
-    private bool showWindow = false;
+    //private bool showWindow = false;
     private int promptWindow = 0;
     private int cogAbilityWindow = 1;
     private int trainingWindow = 2;
@@ -13,8 +13,8 @@ public class PromptGUI : MonoBehaviour {
 
     private int left = 0;
     private int top = 0;
-    private int width = 80;
-    private int height = 80;
+    public int width = 500;
+    public int height = 150;
     
     public int xOffset = 10;
     public int yOffset = 10;
@@ -26,10 +26,7 @@ public class PromptGUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        showWindow = true; // DEBUG
-
-        width = Screen.width - 20;
-        height = Screen.height / 6;
+        //showWindow = true; // DEBUG
 	}
 	
 	// Update is called once per frame
@@ -58,15 +55,17 @@ public class PromptGUI : MonoBehaviour {
 
     void OnGUI()
     {
-        if (!showWindow) return;
+        //if (!showWindow) return;
 
         if (navChoice == 0)
         {
-            GUI.Window(promptWindow, new Rect(left + xOffset, top - yOffset, width - xOffset, height), initWindow, "Prompt Window");
+            GUI.Window(promptWindow, new Rect(Screen.width / 2 - width / 2, 40, width, height), initWindow, "Prompt Window");
+            
         }
         else if (navChoice == 1) // GUI for teaching about cog abilities and mana
         {
             activeWindow = 1;
+            Debug.Log("User want's to learn about skills and mana.");
         }
         else if (navChoice == 2) // GUI for training skills
         {
@@ -87,25 +86,36 @@ public class PromptGUI : MonoBehaviour {
     {
         if (windowID == promptWindow)
         {
-            GUI.Label(new Rect(left + xOffset, top - yOffset, width - xOffset, 10), promptText);
+            GUILayout.BeginArea(new Rect(xOffset, yOffset, width, height));
 
-            GUI.BeginGroup(new Rect(left + xOffset, height - 40, width - (xOffset*2), height/4));
-            if(GUI.Button(new Rect(15, 20, 10, 10), "Learn about Cognitive Skills and Mana."))
-            {
-                Debug.Log("User want's to learn about skills and mana.");
-            }
+            GUILayout.Label(promptText);
+            GUILayout.Space(1);
 
-            /*if(GUI.Button(new Rect(30, 20, 10, 10), "Learn about Cognitive Skills and Mana."))
-            {
-                Debug.Log("User want's to learn about skills and mana.");
-            }
+            GUILayout.Label("1. Learn about Cognitive Skills and Mana.");
+            //GUILayout.Space(1);
 
-            if(GUI.Button(new Rect(45, 20, 10, 10), "Learn about Cognitive Skills and Mana."))
-            {
-                Debug.Log("User want's to learn about skills and mana.");
-            }*/
+            GUILayout.Label("2. I want to practice using my Cognitive Skills a bit.");
+            //GUILayout.Space(1);
 
-            GUI.EndGroup();
+            GUILayout.Label("3. Learn about Relaxation Techniques.");
+            //GUILayout.Space(1);
+
+            GUILayout.Label("4. Nevermind.");
+
+            GUILayout.EndArea();
+
+        }
+        else if (windowID == cogAbilityWindow)
+        {
+
+        }
+        else if (windowID == trainingWindow)
+        {
+
+        }
+        else if (windowID == relaxWindow)
+        {
+
         }
     }
 }

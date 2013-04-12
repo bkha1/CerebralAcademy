@@ -30,7 +30,7 @@ public class Tutor : MonoBehaviour {
 		NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
 		NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
 		
-        EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.", 6.0f);
+        EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.", 10.0f);
 
 	}
 	
