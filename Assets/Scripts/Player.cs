@@ -16,5 +16,6 @@ public class Player {
     public float Mana { get; set; } // The amount of mana the user currently owns
 
     public bool hasLearnedLift { get; set; } // If the player has learned Lift and thus can use it
-
+    public bool hasLearnedPush { get; set; } // If the player has learned Push and thus can use it
+    public bool hasLearnedPull { get; set; } // If the player has learned Pull and thus can use it
 }

@@ -36,6 +36,7 @@ public class InputHandler : MonoBehaviour {
         CognitvEventManager.DisappearEvent += handleDisappearEvent;
         CognitvEventManager.EmotionEvent += handleEmotionEvent;
     }
+
 	
 	// Update is called once per frame
 	void Update () {
