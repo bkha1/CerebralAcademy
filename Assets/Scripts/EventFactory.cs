@@ -61,7 +61,11 @@ static class EventFactory
     {
         NotificationCenter.DefaultCenter.PostNotification(comp, "OnPauseEvent");
     }
-
+	
+	public static void  FireOnSkillChoiceEvent(Component comp)
+	{
+		NotificationCenter.DefaultCenter.PostNotification(comp, "SkillChoiceEvent");
+	}
 
     /*public static void FireOpenGUIEvent(Component comp, string guiName)
     {

@@ -15,6 +15,7 @@ public class InputHandler : MonoBehaviour {
     public string debugKey;
 
     public string pauseKey = "escape";
+	public string tabKey = "tab";
 
     /**
      * This is the InputHandler. It is where all input into the game comes from. Due to the way 
@@ -42,6 +43,10 @@ public class InputHandler : MonoBehaviour {
         {
             EventFactory.FireOnPauseEvent(this);
         }
+		else if(Input.GetKeyDown(tabKey))
+		{
+			EventFactory.FireOnSkillChoiceEvent(this);
+		}//end tab key
         else if (Input.GetKeyUp(cognitivDisappearKey))
         {
             EventFactory.FireOnCognitvEvent(this, "disappear", 6.4f, Time.time);
