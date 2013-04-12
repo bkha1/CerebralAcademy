@@ -127,7 +127,8 @@ public class PromptGUI : MonoBehaviour {
 
     void CogTutorFinished(Notification notification)
     {
+        Debug.Log("CogTutorFinished");
         activeWindow = PROMPT_WIND;
-        navChoice = 0;
+        //navChoice = 0;
     }
 }

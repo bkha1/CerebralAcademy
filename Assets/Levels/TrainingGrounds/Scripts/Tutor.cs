@@ -22,23 +22,21 @@ public class Tutor : MonoBehaviour {
     private const int NUM_MOVEMENT_DIRECTIONS = 5;
     private bool isActive = false;
 
+    public int numberOfTimesToLift = 3;
+    private int liftCounter = 0;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
         NotificationCenter.DefaultCenter.AddObserver(this, "SelectionEvent");
-        NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
         NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "StartCogTutor");
+
+        NotificationCenter.DefaultCenter.AddObserver(this, "LiftCompleted");
+        NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
     }
-
-	void Start () {
-
-        //EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and Space to move. Go ahead, give it a try.", 10.0f);
-
-	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 		if (movementFinished || !isActive) return;
@@ -104,18 +102,35 @@ public class Tutor : MonoBehaviour {
 			//StartCoroutine(teleportBack(6.0f));
 			
 			GameState.Instance.hasTrained = true; // This is deprecated
-            GameState.Instance.getCurrentPlayer().hasLearnedLift = true;
+            
+            if(!GameState.Instance.DebugMode) GameState.Instance.getCurrentPlayer().hasLearnedLift = true; // NOTE: If we are debugging, then this will break game.
 
             // The tutor is done
             NotificationCenter.DefaultCenter.PostNotification(this, "CogTutorFinished");
+            Debug.Log("After post notification");
 			
-            //EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(), true, "Lobby");
 		}
 	}
-	
-	IEnumerator teleportBack(float timeToWait) {
-			
-		yield return new WaitForSeconds(timeToWait); // This is NOT Working! BUG
-	}
-    
+
+    void OnCognitivLiftEvent(Notification notification)
+    {
+        liftCounter++;
+
+        if (liftCounter == 1)
+        {
+            StartCoroutine(explainMana());
+            Debug.Log("I returned.");
+        } else if (liftCounter == numberOfTimesToLift)
+        {
+            EventFactory.FireDisplayTextEvent(this, "Good job! You have learned Lift!", 5.0f);
+
+            NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
+        }
+    }
+
+    IEnumerator explainMana() 
+    {
+        EventFactory.FireDisplayTextEvent(this, "Every time you use a Cognitive Skill, your mana decreases. Mana will passively refill depending on how relaxed you are. To learn about different relaxation techniques, talk with the tutor.", 5.0f);
+        yield return new WaitForSeconds(5.0f);
+    }
 }
