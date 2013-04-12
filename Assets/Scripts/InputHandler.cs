@@ -67,8 +67,6 @@ public class InputHandler : MonoBehaviour {
         }
         else if (Input.GetKeyUp(debugKey))
         {
-            EventFactory.FireDisplayTextEvent(this, "Would you like some debug text with that?", 5.0f);
-
             GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
         }
         else if (Input.GetKeyUp(emotivEngineToggleKey))
