@@ -69,7 +69,7 @@ public class InputHandler : MonoBehaviour {
         {
             EventFactory.FireDisplayTextEvent(this, "Would you like some debug text with that?", 5.0f);
 
-            EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player").gameObject, GameState.Instance.getSelectedObject().transform.position, false, "");
+            GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
         }
         else if (Input.GetKeyUp(emotivEngineToggleKey))
         {

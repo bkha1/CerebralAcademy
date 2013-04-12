@@ -8,6 +8,7 @@ public class Player {
         UserName = string.Empty;
         Gender = string.Empty;
         EmotivID = 0;
+        Mana = 0;
 	}
 
     public string UserName { get; set; } // A unique name for the user

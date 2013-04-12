@@ -45,7 +45,8 @@ public class ManaSystem : MonoBehaviour {
         
         currentTime += Time.deltaTime;
 
-        if (player == null && debugMode) player = new Player();
+        
+        if (player == null && GameState.Instance.DebugMode) player = new Player();
 
         if (player.Mana < maxMana && currentTime >= endTime)
         {

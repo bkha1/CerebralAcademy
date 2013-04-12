@@ -79,6 +79,7 @@ public class PromptGUI : MonoBehaviour {
         else if (navChoice == 4) // close GUI and teleport player back to Lobby
         {
             activeWindow = 4;
+            EventFactory.FireTeleportPlayerEvent(this, null, new Vector3(), true, "Lobby");
         }
     }
 
