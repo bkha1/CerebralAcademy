@@ -52,7 +52,8 @@ public class PauseController : MonoBehaviour {
             NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOff");
         }
     }
-
+	
+	//Do these two functions do anything?
     void DisablePauseSettings(Notification notification)
     {
         player.GetComponentInChildren<PauseMenu>().enabled = false;

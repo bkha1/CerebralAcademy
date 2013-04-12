@@ -26,10 +26,10 @@ public class SkillChoiceController : MonoBehaviour {
             Screen.showCursor = false;
             gamePaused = false;
 
-            Debug.Log("Game was paused, now unpaused");
+            Debug.Log("Game was paused, now unpaused skillchoice");
 
             // New code which allows PauseController to sit in the Managers Prefab
-            player.GetComponentInChildren<PauseMenu>().enabled = false;
+            player.GetComponentInChildren<SkillChoiceMenu>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = true;
             player.GetComponent<MouseLook>().enabled = true;
 
@@ -42,28 +42,30 @@ public class SkillChoiceController : MonoBehaviour {
             Screen.showCursor = true;
             gamePaused = true;
 
-            Debug.Log("Game was not paused, now paused");
+            Debug.Log("Game was not paused, now paused skillchoice");
 
             // New code which allows PauseController to sit in the Managers Prefab
-            player.GetComponentInChildren<PauseMenu>().enabled = true;
+            player.GetComponentInChildren<SkillChoiceMenu>().enabled = true;
             playerCamera.GetComponent<MouseLook>().enabled = false;
             player.GetComponent<MouseLook>().enabled = false;
 
             NotificationCenter.DefaultCenter.PostNotification(this, "OnCrosshairOff");
         }
     }
-
+	
+	//Do these do anything?
+	/*
     void DisablePauseSettings(Notification notification)
     {
-        player.GetComponentInChildren<PauseMenu>().enabled = false;
+        player.GetComponentInChildren<SkillChoiceMenu>().enabled = false;
         playerCamera.GetComponent<MouseLook>().enabled = true;
         player.GetComponent<MouseLook>().enabled = true;
     }
 
     void EnablePauseSettings(Notification notification)
     {
-        player.GetComponentInChildren<PauseMenu>().enabled = true;
+        player.GetComponentInChildren<SkillChoiceMenu>().enabled = true;
         playerCamera.GetComponent<MouseLook>().enabled = false;
         player.GetComponent<MouseLook>().enabled = false;
-    }
+    }*/
 }
