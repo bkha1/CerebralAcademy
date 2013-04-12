@@ -17,7 +17,6 @@ public class ManaSystem : MonoBehaviour {
     private float endTime;
 
     private Player player = null;
-    public bool debugMode = false;
 
 	void Start () {
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
@@ -46,7 +45,10 @@ public class ManaSystem : MonoBehaviour {
         currentTime += Time.deltaTime;
 
         
+        
         if (player == null && GameState.Instance.DebugMode) player = new Player();
+
+        if (player == null) return; // NOTE: This is just for starting the game. We can instead enable the mana system after profile creation.
 
         if (player.Mana < maxMana && currentTime >= endTime)
         {
@@ -54,7 +56,7 @@ public class ManaSystem : MonoBehaviour {
             if (player.Mana < maxMana)
             {
                 // Add 1 mana (default rate)
-                if (debugMode)
+                if (GameState.Instance.DebugMode)
                     player.Mana += ManaRefillRate;
 
                 if (player.Mana > maxMana) player.Mana = maxMana;
