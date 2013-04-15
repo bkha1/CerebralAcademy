@@ -63,11 +63,11 @@ public class ManaSystem : MonoBehaviour {
         
         currentTime += Time.deltaTime;
 
-        
-        
+        #region TESTING
+        // NOTE: This is just for starting the game. We can instead enable the mana system after profile creation.
         if (player == null && GameState.Instance.DebugMode) player = new Player();
-
-        if (player == null) return; // NOTE: This is just for starting the game. We can instead enable the mana system after profile creation.
+        if (player == null) return;
+        #endregion
 
         if (player.Mana < maxMana && currentTime >= endTime)
         {
@@ -101,9 +101,9 @@ public class ManaSystem : MonoBehaviour {
             if (powerLevel > 0)
             {
                 
-                switch((string)notification.data["skill"]) 
+                switch((CognitivSkill)notification.data["skill"]) 
                 {
-                    case ("lift"): 
+                    case (CognitivSkill.LIFT): 
                     {
                         //if (!player.hasLearnedLift) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
@@ -112,7 +112,7 @@ public class ManaSystem : MonoBehaviour {
                         }
                         break;
                     }
-                    case ("disappear"):
+                    case (CognitivSkill.DISAPPEAR):
                     {
                         //if (!player.hasLearnedDisappear) EventFactory.FireDisplayTextEvent(this, "You first must learn disappear.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false))
@@ -121,7 +121,7 @@ public class ManaSystem : MonoBehaviour {
                         }
                         break;
                     }
-                    case ("right"):
+                    case (CognitivSkill.RIGHT):
                     {
                         if (updateMana(gObj.GetComponent<CognitivObject>().rightSensitivity, powerLevel, false))
                         {
@@ -129,7 +129,7 @@ public class ManaSystem : MonoBehaviour {
                         }
                         break;
                     }
-                    case ("left"):
+                    case (CognitivSkill.LEFT):
                     {
                         if (updateMana(gObj.GetComponent<CognitivObject>().leftSensitivity, powerLevel, false))
                         {
@@ -137,7 +137,7 @@ public class ManaSystem : MonoBehaviour {
                         }
                         break;
                     }
-                    case ("push"):
+                    case (CognitivSkill.PUSH):
                     {
                         if (!player.hasLearnedPush) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))

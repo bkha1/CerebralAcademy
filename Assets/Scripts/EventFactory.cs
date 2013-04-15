@@ -12,12 +12,11 @@ static class EventFactory
         NotificationCenter.DefaultCenter.PostNotification(comp, "DisplayText", param);
     }
 
-    public static void FireOnCognitvEvent(Component comp, string skill, float power, float time)
+    public static void FireOnCognitvEvent(Component comp, CognitivSkill skill, float power)
     {
         Hashtable param = new Hashtable();
         param.Add("skill", skill);
         param.Add("power", power);
-        param.Add("time", time);
         NotificationCenter.DefaultCenter.PostNotification(comp, "OnCognitivEvent", param);
     }
 

@@ -101,6 +101,8 @@ public class Tutor : MonoBehaviour {
             
             GameState.Instance.getCurrentPlayer().hasLearnedLift = true;
 
+            StartCoroutine(wait(5.0f));
+
             // The tutor is done
             NotificationCenter.DefaultCenter.PostNotification(this, "CogTutorFinished");
 			
@@ -126,5 +128,10 @@ public class Tutor : MonoBehaviour {
     {
         EventFactory.FireDisplayTextEvent(this, "Every time you use a Cognitive Skill, your mana decreases. Mana will passively refill depending on how relaxed you are. To learn about different relaxation techniques, talk with the tutor.", 5.0f);
         yield return new WaitForSeconds(10.0f);
+    }
+
+    IEnumerator wait(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
     }
 }

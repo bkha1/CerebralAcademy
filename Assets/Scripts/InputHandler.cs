@@ -49,26 +49,26 @@ public class InputHandler : MonoBehaviour {
 		else if(Input.GetKeyDown(tabKey))
 		{
 			EventFactory.FireOnSkillChoiceEvent(this);
-		}//end tab key
+		}
         else if (Input.GetKeyUp(cognitivDisappearKey))
         {
-            EventFactory.FireOnCognitvEvent(this, "disappear", 6.4f, Time.time);
+            EventFactory.FireOnCognitvEvent(this, CognitivSkill.DISAPPEAR, 6.4f);
         }
         else if (Input.GetKeyUp(cognitivLiftKey))
         {
-            EventFactory.FireOnCognitvEvent(this, "lift", 6.4f, Time.time);
+            EventFactory.FireOnCognitvEvent(this, CognitivSkill.LIFT, 6.4f);
         }
         else if (Input.GetKeyUp(cognitivLeftKey))
         {
-            EventFactory.FireOnCognitvEvent(this, "left", 6.4f, Time.time);
+            EventFactory.FireOnCognitvEvent(this, CognitivSkill.LEFT, 6.4f);
         }
         else if (Input.GetKeyUp(cognitivRightKey))
         {
-            EventFactory.FireOnCognitvEvent(this, "right", 6.4f, Time.time);
+            EventFactory.FireOnCognitvEvent(this, CognitivSkill.RIGHT, 6.4f);
         }
         else if (Input.GetKeyUp(cogntivPushKey))
         {
-            EventFactory.FireOnCognitvEvent(this, "push", 6.4f, Time.time);
+            EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
         }
         else if (Input.GetKeyUp(debugKey))
         {
@@ -89,34 +89,33 @@ public class InputHandler : MonoBehaviour {
 
     void handleLeftEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnCognitvEvent(this, "left", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, CognitivSkill.LEFT, powerLevel);
     }
 
     void handleRightEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnCognitvEvent(this, "right", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, CognitivSkill.RIGHT, powerLevel);
     }
 
     void handleLiftEvent(object sender, float powerLevel)
     {
         //Debug.Log("Lift Event of Power: " + powerLevel);
         //EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
-        EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, 0.0f);
+        EventFactory.FireOnCognitvEvent(this, CognitivSkill.LIFT, powerLevel);
     }
 
     void handlePushEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnCognitvEvent(this, "push", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, powerLevel);
     }
 
     void handleDisappearEvent(object sender, float powerLevel)
     {
-        EventFactory.FireOnCognitvEvent(this, "disappear", powerLevel, Time.time);
+        EventFactory.FireOnCognitvEvent(this, CognitivSkill.DISAPPEAR, powerLevel);
     }
 
     void handleEmotionEvent(object sender, float powerLevel)
     {
-        //EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, Time.time);
         EventFactory.FireOnEmotionEvent(this, "meditation", powerLevel, 0.0f);
     }
 }
