@@ -4,7 +4,7 @@ using System;
 
 public class ManaSystem : MonoBehaviour {
 
-    public GUITexture ManabarTexture;
+    public GUITexture ManabarTexture = null;
     public float ManabarGUIWidth = 1.4f;
 
     public float ManaRefillRate = 10.0f;
@@ -20,6 +20,8 @@ public class ManaSystem : MonoBehaviour {
 
 	void Start () {
 
+
+        if (ManabarTexture == null) Debug.LogError("Please assign a GUITexture for the mana bar in the Editor.");
         DontDestroyOnLoad(this);
 
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
