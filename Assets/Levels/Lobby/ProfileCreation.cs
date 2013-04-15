@@ -39,7 +39,7 @@ public class ProfileCreation : MonoBehaviour {
         playerObject = GameObject.FindGameObjectWithTag("Player");
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-		if (!GameState.Instance.hasTrained) {
+		if (GameState.Instance.getCurrentPlayer() == null || !GameState.Instance.getCurrentPlayer().hasLearnedLift) {
 	        //player = new Player();
 	
 	        NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
@@ -61,7 +61,6 @@ public class ProfileCreation : MonoBehaviour {
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = false;
             playerObject.GetComponent<MouseLook>().enabled = false;
-            
         }
     }
 

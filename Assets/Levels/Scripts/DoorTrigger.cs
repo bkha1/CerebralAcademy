@@ -22,7 +22,7 @@ public class DoorTrigger : MonoBehaviour {
 		{
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				if (levelToLoad == "Dungeon1" && !GameState.Instance.hasTrained) {
+				if (levelToLoad == "Dungeon1" && !GameState.Instance.getCurrentPlayer().hasLearnedLift) {
                     EventFactory.FireDisplayTextEvent(this, "You have not been authorized to enter. Please visit the training grounds.", 1.0f);
 				} else {
                     EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(0.0f, 0.0f, 0.0f), true, levelToLoad);

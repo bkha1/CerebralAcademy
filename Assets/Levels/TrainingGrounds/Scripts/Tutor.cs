@@ -98,10 +98,8 @@ public class Tutor : MonoBehaviour {
             EventFactory.FireDisplayTextEvent(this, "I think you should practice movement before continuing.", 1.0f);
 		} else {
             EventFactory.FireDisplayTextEvent(this, "You're amazing! I think you are ready to step it up.", 5.0f);
-			
-			GameState.Instance.hasTrained = true; // This is deprecated
             
-            if(!GameState.Instance.DebugMode) GameState.Instance.getCurrentPlayer().hasLearnedLift = true; // NOTE: If we are debugging, then this will break game.
+            GameState.Instance.getCurrentPlayer().hasLearnedLift = true;
 
             // The tutor is done
             NotificationCenter.DefaultCenter.PostNotification(this, "CogTutorFinished");

@@ -9,14 +9,23 @@ public class IntroMessage : MonoBehaviour {
     public GUISkin customSkin;
     public GUIStyle layoutStyle;
     public Texture2D textureTop;
+
+    private bool isVisible = false;
 	
-	
-	// Use this for initialization
 	void Start () {
+
+        // NOTE: At the start of the game, we create a player object.
+        if (GameState.Instance.getCurrentPlayer() == null)
+        {
+            Debug.Log("Player was null.");
+            Player player = new Player();
+            GameState.Instance.setCurrentPlayer(player);
+        }
 		
-		if (!GameState.Instance.hasTrained)
+		if (!GameState.Instance.getCurrentPlayer().hasLearnedLift)
 		{
-			Debug.Log("Player has not trained yet.");
+			Debug.Log("Player has not learned lift.");
+            isVisible = true;
 			Time.timeScale = 0;
 
 	        gameObject.GetComponent<MouseLook>().enabled = false;
@@ -26,6 +35,7 @@ public class IntroMessage : MonoBehaviour {
 
 		}
 		else{
+            isVisible = false;
 			Time.timeScale = 1;
 			gameObject.GetComponent<MouseLook>().enabled = true;
 	        transform.parent.GetComponent<MouseLook>().enabled = true;
@@ -39,7 +49,7 @@ public class IntroMessage : MonoBehaviour {
 	// Update is called once per frame
 	void OnGUI () {
 		
-		if (GameState.Instance.hasTrained) return;
+		if (!isVisible) return;
 		
 		Time.timeScale = 0;
 		

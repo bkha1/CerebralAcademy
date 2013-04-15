@@ -30,7 +30,7 @@ public class AfterProfileCreationMsg : MonoBehaviour {
 
         if (!isVisible) return;
 		
-		if (GameState.Instance.hasTrained) return;
+		//if (GameState.Instance.getCurrentPlayer().hasLearnedLift) return;
 		
 		Time.timeScale = 0;
 		
@@ -69,6 +69,14 @@ public class AfterProfileCreationMsg : MonoBehaviour {
 
     void OpenAfterProfileCreationMsg(Notification notification)
     {
-        isVisible = true;
+        if (GameState.Instance.getCurrentPlayer().hasLearnedLift)
+        {
+            Debug.Log("Player: " + GameState.Instance.getCurrentPlayer().UserName);
+            isVisible = false;
+        }
+        else
+        {
+            isVisible = true;
+        }
     }
 }

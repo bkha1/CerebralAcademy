@@ -8,7 +8,6 @@ public class GameState {
 	
 	private GameObject selectedObject;
 	private Player currentPlayer;
-	public bool hasTrained { get; set;} // TODO: Remove this
     public bool DebugMode { get; set; }
 
     static GameState() {}
