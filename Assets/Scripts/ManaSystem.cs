@@ -15,6 +15,7 @@ public class ManaSystem : MonoBehaviour {
     private float currentMana = 10.0f;
     private float currentTime;
     private float endTime;
+    private ManaSystem instance = null;
 
     private Player player = null;
 
@@ -22,7 +23,20 @@ public class ManaSystem : MonoBehaviour {
 
 
         if (ManabarTexture == null) Debug.LogError("Please assign a GUITexture for the mana bar in the Editor.");
-        DontDestroyOnLoad(this);
+
+        if (instance == null)
+        {
+            instance = GameObject.FindObjectOfType(typeof(ManaSystem)) as ManaSystem;
+
+            if (instance == null)
+            {
+                GameObject obj = new GameObject("ManaManager");
+                instance = obj.AddComponent<ManaSystem>();
+                DontDestroyOnLoad(obj);
+            }
+        }
+        
+        
 
 	    // Register to CognitivEvents (to make the manasystem the owner of events, we should have 
         // CognitivSkillEvent passed to here and have this post (if there is enough mana) the proper 
@@ -91,6 +105,7 @@ public class ManaSystem : MonoBehaviour {
                 {
                     case ("lift"): 
                     {
+                        if (!player.hasLearnedLift) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", notification.data);
@@ -99,6 +114,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case ("disappear"):
                     {
+                        //if (!player.hasLearnedDisappear) EventFactory.FireDisplayTextEvent(this, "You first must learn disappear.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", notification.data);
@@ -123,6 +139,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case ("push"):
                     {
+                        if (!player.hasLearnedPush) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);
