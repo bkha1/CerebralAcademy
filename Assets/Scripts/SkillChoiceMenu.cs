@@ -24,20 +24,21 @@ public class SkillChoiceMenu : MonoBehaviour {
 
     void Start()
     {
-		abilityList = new GUIContent[5];
+		abilityList = new GUIContent[6];
 
 		abilityList[0] = new GUIContent("Lift");
 		abilityList[1] = new GUIContent("Push");
 		abilityList[2] = new GUIContent("Pull");
-		abilityList[3] = new GUIContent("Rotate");
-		abilityList[4] = new GUIContent("ARMAGEDDON");
+		abilityList[3] = new GUIContent("Disappear");
+		abilityList[4] = new GUIContent("Left");
+		abilityList[5] = new GUIContent("Right");
 		
-		techList = new GUIContent[5];
-		techList[0] = new GUIContent("Meditate");
-		techList[1] = new GUIContent("MediTate");
-		techList[2] = new GUIContent("meditate");
-		techList[3] = new GUIContent("MEDITATE");
-		techList[4] = new GUIContent("MEDS");
+		techList = new GUIContent[3];
+		techList[0] = new GUIContent("Breath");
+		techList[1] = new GUIContent("Count");
+		techList[2] = new GUIContent("Hum");
+		//techList[3] = new GUIContent("MEDITATE");
+		//techList[4] = new GUIContent("MEDS");
 		
 		layoutStyle = new GUIStyle();
 		layoutStyle.normal.textColor = Color.white;
@@ -65,10 +66,62 @@ public class SkillChoiceMenu : MonoBehaviour {
         if (!isVisible) return;
 
 		abilityCombo.List(new Rect(50, 100, 100, 20), new GUIContent("Abilities"), abilityList, layoutStyle);
-		GUI.Label(new Rect(50, 70, 400, 20), "You picked " + abilityCombo.GetSelectedItemIndex().ToString() + "!");
+		//checks and sets skills
+		switch(abilityCombo.GetSelectedItemIndex())
+		{
+			case 0:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;
+				Debug.Log("Cognitive Skill LIFT Set");
+				break;
+			case 1:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PUSH;
+				Debug.Log("Cognitive Skill PUSH Set");
+				break;
+			case 2:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PULL;
+				Debug.Log("Cognitive Skill PULL Set");
+				break;
+			case 3:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.DISAPPEAR;
+				Debug.Log("Cognitive Skill DISAPPEAR Set");
+				break;
+			case 4:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LEFT;
+				Debug.Log("Cognitive Skill LEFT Set");
+				break;
+			case 5:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.RIGHT;
+				Debug.Log("Cognitive Skill PUSH Set");
+				break;
+			default:
+				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;
+				Debug.Log("Cognitive Skill Default LIFT Set");
+				break;
+		}//end ability switchcase
+		GUI.Label(new Rect(50, 70, 400, 20), "You picked " + abilityList[abilityCombo.GetSelectedItemIndex()].text + "!");
 		
 		techCombo.List(new Rect(200, 100, 100, 20), new GUIContent("Techniques"), techList, layoutStyle);
-		GUI.Label(new Rect(200, 70, 400, 20), "You picked " + techCombo.GetSelectedItemIndex().ToString() + "!");
+		//checks and sets techniques
+		switch(techCombo.GetSelectedItemIndex())
+		{
+			case 0:
+				GameState.Instance.getCurrentPlayer().CurrentRelaxationEquipped = RelaxationTechnique.BREATHE;
+				Debug.Log("Relax Tech BREATHE Set");
+				break;
+			case 1:
+				GameState.Instance.getCurrentPlayer().CurrentRelaxationEquipped = RelaxationTechnique.COUNT;
+				Debug.Log("Relax Tech COUNT Set");
+				break;
+			case 2:
+				GameState.Instance.getCurrentPlayer().CurrentRelaxationEquipped = RelaxationTechnique.HUM;
+				Debug.Log("Relax Tech HUM Set");
+				break;
+			default:
+				GameState.Instance.getCurrentPlayer().CurrentRelaxationEquipped = RelaxationTechnique.BREATHE;
+				Debug.Log("Relax Tech default BREATHE Set");
+				break;
+		}//end technique switchcase
+		GUI.Label(new Rect(200, 70, 400, 20), "You picked " + techList[techCombo.GetSelectedItemIndex()].text +"!");//.ToString() + "!");
 		//if(myCombo.List(new Rect(50, 100, 100, 20), showList, listEntry, new GUIContent("Click me!"), glist, layoutStyle))
 		//{
 		//	picked = true;
@@ -108,6 +161,6 @@ public class SkillChoiceMenu : MonoBehaviour {
         else this.isVisible = true;
         //this.isVisible = !this.isVisible; // why does this not work?
 
-        Debug.Log("Menu Visiblity: " + this.isVisible);
+        Debug.Log("Menu Visibility: " + this.isVisible);
     }
 }
