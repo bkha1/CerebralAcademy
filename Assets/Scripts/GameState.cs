@@ -9,6 +9,9 @@ public class GameState {
 	private GameObject selectedObject;
 	private Player currentPlayer;
     public bool DebugMode { get; set; }
+    public bool IsPaused { get; set; }
+    public bool IsGuiOpen { get; set; }
+	public bool IsSkillMenuOpen {get; set;}
 
     static GameState() {}
     private GameState() { DebugMode = false; }

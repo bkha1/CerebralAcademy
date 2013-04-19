@@ -2,6 +2,11 @@ var levelToLoad : String;
 var soundhover : AudioClip;
 var beep : AudioClip;
 var QuitButton : boolean = false;
+
+function Start ()
+{
+	Time.timeScale = 1;
+}
 function OnMouseEnter(){
 audio.PlayOneShot(soundhover);
 }

@@ -30,7 +30,7 @@ public class CognitivLeft : MonoBehaviour {
 
     IEnumerator moveObject(GameObject gObj, Vector3 target, float amount, float overTime)
     {
-        Vector3 source = gObj.transform.position;
+        //Vector3 source = gObj.transform.position;
        // Vector3 target = source + alongAxis;
 
         float startTime = Time.time;

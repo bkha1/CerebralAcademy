@@ -59,6 +59,7 @@ public class AfterProfileCreationMsg : MonoBehaviour {
             	EventFactory.FireTeleportPlayerEvent(this, gameObject, new Vector3(), true, "TrainingGround");
 			}
             isVisible = false;
+			GameState.Instance.IsGuiOpen = false;
 			Screen.lockCursor = true;
             Screen.showCursor = false;
 		}//end button
@@ -78,5 +79,7 @@ public class AfterProfileCreationMsg : MonoBehaviour {
         {
             isVisible = true;
         }
+
+        GameState.Instance.IsGuiOpen = isVisible;
     }
 }

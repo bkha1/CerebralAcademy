@@ -105,7 +105,7 @@ public class ManaSystem : MonoBehaviour {
                 {
                     case (CognitivSkill.LIFT): 
                     {
-                        //if (!player.hasLearnedLift) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
+                        if (!player.hasLearnedLift && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", notification.data);

@@ -40,8 +40,7 @@ public class PromptGUI : MonoBehaviour {
         {
             if (Input.GetKeyUp("1"))
             {
-                activeWindow = INVISIBLE_WIND;
-                Debug.Log("User want's to learn about skills and mana.");
+                activeWindow = INVISIBLE_WIND; 
                 NotificationCenter.DefaultCenter.PostNotification(this, "StartCogTutor");
             }
             else if (Input.GetKeyUp("2"))
@@ -56,7 +55,14 @@ public class PromptGUI : MonoBehaviour {
             else if (Input.GetKeyUp("4"))
             {
                 activeWindow = PROMPT_WIND;
-                EventFactory.FireTeleportPlayerEvent(this, null, new Vector3(), true, "Lobby");
+                if (GameState.Instance.getCurrentPlayer().hasLearnedLift)
+                {
+                    EventFactory.FireTeleportPlayerEvent(this, null, new Vector3(), true, "Lobby");
+                }
+                else
+                {
+                    //TODO: Tell player they should learn lift before returning.
+                }
             }
             else
             {
@@ -83,7 +89,7 @@ public class PromptGUI : MonoBehaviour {
             }
             else if (Input.GetKeyUp("4"))
             {
-
+                activeWindow = PROMPT_WIND; 
             }
             else if (Input.GetKeyUp("5"))
             {
@@ -130,6 +136,14 @@ public class PromptGUI : MonoBehaviour {
         {
             GUILayout.Label(relaxText);
             GUILayout.Space(1);
+
+            GUILayout.Label("1. Relaxation Technique 1.");
+
+            GUILayout.Label("2. Relaxation Technique 2.");
+
+            GUILayout.Label("3. Relaxation Technique 3.");
+
+            GUILayout.Label("4. I actually want to talk about something else.");
         }
 
         GUILayout.EndArea();
