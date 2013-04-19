@@ -10,7 +10,7 @@ public class jumpHelper : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.rigidbody.position.y > 1){ //good for one lift)
+		if (this.rigidbody.position.y > 1.5){
 			this.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 		}	
 	}

@@ -201,7 +201,8 @@ public class CharacterMotor : MonoBehaviour
 	Vector3 boostVelocity = Vector3.zero;
 	
 	void Jump (Notification notification){
-		boostVelocity.y += float.Parse(""+notification.data["force"])/1.3F;
+		float impactForce = float.Parse(""+notification.data["force"]);	
+		boostVelocity.y += impactForce/1.3F;
 	}
 	
 	private void UpdateFunction()
@@ -217,7 +218,6 @@ public class CharacterMotor : MonoBehaviour
 		
 		velocity += boostVelocity;
 		jumping.jumping = true;
-		//print (velocity);
 		
         // Moving platform support
         Vector3 moveDistance = Vector3.zero;

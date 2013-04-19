@@ -139,7 +139,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.PUSH):
                     {
-                        if (!player.hasLearnedPush) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
+                        if (!player.hasLearnedPush && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
                         if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);

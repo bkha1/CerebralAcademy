@@ -11,6 +11,10 @@ public class CognitivLift : MonoBehaviour {
 
     private float endTime;
     private GameObject gObj;
+	
+	private bool yLock = false;
+	private RigidbodyConstraints freezeStatus;
+	private int freezeStatus2; // 2 types becasue the input exists in binary and enum states
 
 	void Start() {
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivLiftEvent");
@@ -36,8 +40,63 @@ public class CognitivLift : MonoBehaviour {
     void OnCognitivLiftEvent(Notification liftNotification)
     {
         gObj = GameState.Instance.getSelectedObject();
-
-        if (gObj != null)
+		yLock = false;
+		
+		freezeStatus = gObj.rigidbody.constraints;
+				
+		if (freezeStatus == RigidbodyConstraints.FreezePositionY || freezeStatus == RigidbodyConstraints.FreezePosition ||
+			freezeStatus == RigidbodyConstraints.FreezeAll)
+		{
+			yLock = true;
+		}
+		else if (freezeStatus == RigidbodyConstraints.FreezePositionX || freezeStatus == RigidbodyConstraints.FreezePositionZ ||
+				freezeStatus == RigidbodyConstraints.FreezeRotationX || freezeStatus == RigidbodyConstraints.FreezeRotationY ||
+				freezeStatus == RigidbodyConstraints.FreezeRotationZ || freezeStatus == RigidbodyConstraints.FreezeRotation ||
+				freezeStatus == RigidbodyConstraints.None)
+		{
+			//do nothing	
+		}
+		else
+		{
+			freezeStatus2 = int.Parse(""+gObj.rigidbody.constraints);
+			if( freezeStatus2 == 4 ||
+				freezeStatus2 == 2 + 4 ||
+				freezeStatus2 == 4 + 8 ||
+				
+				freezeStatus2 == 4 + 16 ||
+				freezeStatus2 == 2 + 4 + 16 ||
+				freezeStatus2 == 4 + 8 + 16 ||
+				
+				freezeStatus2 == 4 + 32 ||
+				freezeStatus2 == 2 + 4 + 32 ||
+				freezeStatus2 == 4 + 8 + 32 ||
+				
+				freezeStatus2 == 4 + 16 + 32 ||
+				freezeStatus2 == 2 + 4 + 16 + 32 ||
+				freezeStatus2 == 4 + 8 + 16 + 32 ||
+				
+				freezeStatus2 == 4 + 64 ||
+				freezeStatus2 == 2 + 4 + 64 ||
+				freezeStatus2 == 4 + 8 + 64 ||
+				
+				freezeStatus2 == 4 + 16 + 64 ||
+				freezeStatus2 == 2 + 4 + 16 + 64 ||
+				freezeStatus2 == 4 + 8 + 16 + 64 ||
+				
+				freezeStatus2 == 4 + 32 + 64 ||
+				freezeStatus2 == 2 + 4 + 32 + 64 ||
+				freezeStatus2 == 4 + 8 + 32 + 64 ||
+				
+				freezeStatus2 == 4 + 16 + 32 + 64 ||
+				freezeStatus2 == 2 + 4 + 16 + 32 + 64 ||
+				freezeStatus2 == 4 + 8 + 16 + 32 + 64)
+			{
+				yLock = true;
+			}
+		}
+		
+			
+        if (gObj != null && !yLock)
         {
             float powerLevel = (float)liftNotification.data["power"];
 
