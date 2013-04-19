@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Emotiv;
 using EmoEngineClientLibrary;
+using System.IO;
+using System;
 
 public class EmotivHandler : MonoBehaviour {
 
@@ -176,7 +178,7 @@ public class EmotivHandler : MonoBehaviour {
 
         engine.EmoEngineConnected += new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
         engine.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
-
+        
         engine.CognitivEmoStateUpdated += new EmoEngine.CognitivEmoStateUpdatedEventHandler(engine_CognitiveEmoStateUpdated);
         engine.AffectivEmoStateUpdated += new EmoEngine.AffectivEmoStateUpdatedEventHandler(engine_AffectivEmoStateUpdated);
         engine.Connect();
@@ -321,5 +323,48 @@ public class EmotivHandler : MonoBehaviour {
     {
         engine.LoadUserProfile(userID, profilePath);
         return engine.GetUserProfile(userID);
+    }
+
+    public void LoadProfile(ref Player player, string userName)
+    {
+        // Switch directories to %appdata%
+        string targetPath = Environment.GetEnvironmentVariable("appdata") + @"/CerebralAcademy/Profiles/";
+        targetPath = targetPath.Replace(@"\", @"/");
+
+        string[] profiles = Directory.GetFiles(Application.dataPath + "/Resources/Profile/", "*.emu");
+
+        for (int i = 0; i < profiles.Length; i++)
+        {
+            string profile = profiles[i].Substring(profiles[i].LastIndexOf("/") + 1);
+            Debug.Log("Profile " + i + " = " + profile);
+
+
+            string sourceFile = profiles[i];
+            string targetFile = userName + ".emu";
+            string destFile = System.IO.Path.Combine(targetPath, targetFile);
+
+            Debug.Log("Source File: " + sourceFile);
+            Debug.Log("Target File: " + targetFile);
+            Debug.Log("Dest File: " + destFile);
+
+            // Check if /CerebrealAcademy/Profile/ exists
+            if (!System.IO.Directory.Exists(targetPath))
+            {
+                System.IO.Directory.CreateDirectory(targetPath);
+                Debug.Log("Created Directory at " + targetPath);
+            }
+
+            if (!System.IO.File.Exists(destFile))
+            {
+                Debug.Log("Profile does not exist, creating...");
+                // Copy over the profile file and do not overwrite if already existing
+                System.IO.File.Copy(sourceFile, destFile, false);
+            }
+
+            player.ProfilePath = destFile;
+            player.Profile = loadProfileFromPath(sourceFile);
+            engine.SetHardwarePlayerDisplay(userID, 1);
+            Debug.Log("User connected: Player Profile: " + player.Profile.ToString());
+        }
     }
 }

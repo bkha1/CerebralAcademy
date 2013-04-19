@@ -10,6 +10,10 @@ public class PromptGUI : MonoBehaviour {
     private const int RELAX_WIND = 3;
     private const int INVISIBLE_WIND = -1; // This stands for showing no window.
 
+    private const int RELAX_TECH1 = 4;
+    private const int RELAX_TECH2 = 5;
+    private const int RELAX_TECH3 = 6;
+
     private int activeWindow = 0;
 
     private int left = 0;
@@ -23,6 +27,10 @@ public class PromptGUI : MonoBehaviour {
     public string promptText = "What would you like to do?";
     public string relaxText = "As you might have seen, at the bottom left corner of your screen there is a bar. This bar holds mana. Mana is used each time you use a Cognitive Skill, such as Lift. "
                                 + "Mana is replensished passively by how relaxed you feel. We have prepared 3 different techniques for you to use. What would you like to learn about?";
+    public string relaxTech1Text = "A common relaxation technique is to stop what you are doing and clear your mind by counting up from 1 to 10. As you count, focus on the number in your head.";
+    public string relaxTech2Text = "One way to calm down is to take long, deep breaths. Focus on how the air fills your lungs and leaves your body.";
+    public string relaxTech3Text = "Some people find it relaxing to hum a melody to themselves. A simple familiar tune can relax you and improve your mood to boot.";
+
     private int navChoice = 0;
 
 
@@ -77,15 +85,15 @@ public class PromptGUI : MonoBehaviour {
         {
             if (Input.GetKeyUp("1"))
             {
-
+                activeWindow = RELAX_TECH1;
             }
             else if (Input.GetKeyUp("2"))
             {
-
+                activeWindow = RELAX_TECH2;
             }
             else if (Input.GetKeyUp("3"))
             {
-
+                activeWindow = RELAX_TECH3;
             }
             else if (Input.GetKeyUp("4"))
             {
@@ -98,6 +106,13 @@ public class PromptGUI : MonoBehaviour {
             else
             {
                 activeWindow = RELAX_WIND;
+            }
+        }
+        else if (activeWindow == RELAX_TECH1 || activeWindow == RELAX_TECH2 || activeWindow == RELAX_TECH3)
+        {
+            if (Input.GetKeyUp("1"))
+            {
+                activeWindow = PROMPT_WIND;
             }
         }
 	}
@@ -144,6 +159,27 @@ public class PromptGUI : MonoBehaviour {
             GUILayout.Label("3. Relaxation Technique 3.");
 
             GUILayout.Label("4. I actually want to talk about something else.");
+        }
+        else if (windowID == RELAX_TECH1)
+        {
+            GUILayout.Label(relaxTech1Text);
+            GUILayout.Space(1);
+
+            GUILayout.Label("1. Go Back");
+        }
+        else if (windowID == RELAX_TECH2)
+        {
+            GUILayout.Label(relaxTech2Text);
+            GUILayout.Space(1);
+
+            GUILayout.Label("1. Go Back");
+        }
+        else if (windowID == RELAX_TECH3)
+        {
+            GUILayout.Label(relaxTech3Text);
+            GUILayout.Space(1);
+
+            GUILayout.Label("1. Go Back");
         }
 
         GUILayout.EndArea();

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.IO;
 
 public class ProfileCreation : MonoBehaviour {
 
@@ -125,30 +124,9 @@ public class ProfileCreation : MonoBehaviour {
                 player = GameState.Instance.getCurrentPlayer();
                 player.UserName = userName;
                 player.Gender = (isMale ? "Male" : "Female");
-                player.ProfilePath = EmotivHandler.DefaultProfilePath + userName + ".emu";
 
-                //File f = Resources.Load("Profile/Default.emu") as File;
-                Debug.Log("App datapath: " + Application.dataPath);
-                string[] profiles = Directory.GetFiles(Application.dataPath + "/Resources/Profile/", "*.emu");
-
-                for (int i = 0; i < profiles.Length; i++)
-                {
-                    //Debug.Log("Profile " + i + " = " + profiles[i]);
-                    string profile = profiles[i].Substring(profiles[i].LastIndexOf("/") + 1);
-                    Debug.Log("Profile " + i + " = " + profile);
-
-                    if (profile.StartsWith(userName))
-                    {
-                        player.Profile = EmotivHandler.Instance.loadProfileFromPath(profiles[i]);
-                        Debug.Log("User connected: Player Profile: " + player.Profile.ToString());
-                    }
-                }
-                
-                
+                EmotivHandler.Instance.LoadProfile(ref player, userName);
                 GameState.Instance.setCurrentPlayer(player);
-
-
-
 
                 NotificationCenter.DefaultCenter.PostNotification(this, "PlayerCreatedEvent");
                 NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");
@@ -158,4 +136,6 @@ public class ProfileCreation : MonoBehaviour {
         }
         GUILayout.EndArea();
     }
+
+    
 }
