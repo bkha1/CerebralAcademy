@@ -6,7 +6,7 @@ using EmoEngineClientLibrary;
 
 public class EmotivHandler {
 
-
+    public static string DefaultProfilePath = "%appdata%";
     public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
 	private static EmotivHandler instance = null;
 
@@ -115,7 +115,7 @@ public class EmotivHandler {
     {
 
         #region EmoClient
-     * // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
+        // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
         if (engineClient != null && engineClient.IsPolling)
         {
             EmotivState emoState = engineClient.CurrentEmotivState;
@@ -196,14 +196,9 @@ public class EmotivHandler {
         #endregion
 
         #region EmoClient
+        EmoEngine.Instance.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
         engineClient.StartEmoEngine();
-        //engineClient.StartDataPolling();
-
         #endregion
-
-
-
-
     }
 
     void engineClient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -335,8 +330,10 @@ public class EmotivHandler {
 
     #endregion
 
-    /*public EmoState getCognitiveState() {
-		return cogState;
-	}*/
 
+    public Profile loadProfileFromPath(string profilePath)
+    {
+        EmoEngine.Instance.LoadUserProfile(userID, profilePath);
+        return EmoEngine.Instance.GetUserProfile(userID);
+    }
 }
