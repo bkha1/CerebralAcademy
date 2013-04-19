@@ -25,3 +25,5 @@ public class Player {
     public CognitivSkill CurrentSkillEquipped { get; set; }
     public RelaxationTechnique CurrentRelaxationEquipped { get; set; }
 }
+
+//GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;

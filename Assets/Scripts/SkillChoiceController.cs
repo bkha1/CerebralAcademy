@@ -21,12 +21,16 @@ public class SkillChoiceController : MonoBehaviour {
         {
             NotificationCenter.DefaultCenter.PostNotification(this, "DisablePauseSettings");
             NotificationCenter.DefaultCenter.PostNotification(this, "ToggleSkillChoiceMenuVisibility");
+			
+			GameState.Instance.IsSkillMenuOpen = false;//IsGuiOpen = gamePaused;
             menuOpen = false;
         }
         else
         {
             NotificationCenter.DefaultCenter.PostNotification(this, "EnablePauseSettings");
             NotificationCenter.DefaultCenter.PostNotification(this, "ToggleSkillChoiceMenuVisibility");
+			
+			GameState.Instance.IsSkillMenuOpen = true;//IsGuiOpen = gamePaused;
             menuOpen = true;
         }
     }

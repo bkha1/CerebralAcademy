@@ -20,6 +20,8 @@ public class PauseController : MonoBehaviour {
 
     void OnPauseEvent(Notification notification) 
     {
+		if(GameState.Instance.IsSkillMenuOpen) return;//checks to see if skill menu is opened
+		
         if (gamePaused)
         {
             gamePaused = false;
