@@ -7,6 +7,10 @@
 *.unityproj
 *.sln
 
+#Assemblies
+*.pidb
+
+
 #Emotiv Genereated files
 test.txt
 test.txt.meta

@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Emotiv;
 using EmoEngineClientLibrary;
+using System.IO;
+using System;
 
-public class EmotivHandler {
+public class EmotivHandler : MonoBehaviour {
 
-
+    public static string DefaultProfilePath = "%appdata%";
     public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
 	private static EmotivHandler instance = null;
 
@@ -24,8 +26,9 @@ public class EmotivHandler {
 	public static EmotivHandler Instance
 	{
 		get
-		{
-            /*if (instance == null)
+        {
+            #region Emotiv
+            if (instance == null)
             {
                 // Check if an EmotivHandler is already in the scene
                 instance = FindObjectOfType(typeof(EmotivHandler)) as EmotivHandler;
@@ -38,56 +41,42 @@ public class EmotivHandler {
                     instance = obj.AddComponent<EmotivHandler>();
                     Debug.Log("EmotivHandler created");
                 }
-            }*/
+            }
+            #endregion
 
-            if (instance == null)
+            #region EmotivClient
+            /*if (instance == null)
             {
                 instance = new EmotivHandler();
                 Debug.Log("EmotivHandler created");
-            }
+            }*/
+            #endregion
 
             return instance;
 		}
 	}
 
-    private EmotivHandler()
+    /*private EmotivHandler()
     {
         this.engineClient = new EmoEngineClient();
         this.engineClient.ActivePort = EmoEngineClient.ControlPanelPort;
         this.engineClient.UserID = 0;
         this.engineClient.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(engineClient_PropertyChanged);
-    }
-
-   /* void Awake()
-    {
-        Debug.Log("Awake called");
-        //if (engineClient == null) engineClient = new EmoEngineClient();
-
-        //engineClient = new EmoEngineClient();
-        //StartCoroutine(startHandler());
-    }
-
-    void Start()
-    {
-        Debug.Log("Start called");
     }*/
 	
-	/*public void OnApplicationQuit() 
+	public void OnApplicationQuit() 
 	{
-        //StartCoroutine(clearHandler());
-        if (engineClient.IsEmoEngineRunning) disconnect();
-
 		instance = null;
         engineClient = null;
-	}*/
+	}
 
-    ~EmotivHandler()
+    /*~EmotivHandler()
     {
         if (engineClient.IsEmoEngineRunning) disconnect();
 
         instance = null;
         engineClient = null;
-    }
+    }*/
 
 
     /*IEnumerator startHandler()
@@ -111,12 +100,12 @@ public class EmotivHandler {
     }*/
 	
 	// Update is called once per frame
-	/*void Update ()
+	void Update ()
     {
 
         #region EmoClient
-     * // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
-        if (engineClient != null && engineClient.IsPolling)
+        // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
+        /*if (engineClient != null && engineClient.IsPolling)
         {
             EmotivState emoState = engineClient.CurrentEmotivState;
 
@@ -142,16 +131,16 @@ public class EmotivHandler {
             {
                 CognitvEventManager.TriggerCognitivPush(null, emoState.CognitivCurrentActionPower);
             }
-        }
+        }*/
         #endregion
 
         #region Emotiv
-        /*if (engine == null) return;
+        if (engine == null) return;
 		// Handle any waiting events
         engine.ProcessEvents();
 		
-		// This should be called every second...
-        elapsedTime += Time.deltaTime;
+		// This should be called every second... (NOTE: Not needed for this game, thus commented)
+        /*elapsedTime += Time.deltaTime;
         if (elapsedTime > bufferSize)
         {
             data = engine.GetData(userID);
@@ -159,51 +148,46 @@ public class EmotivHandler {
 
             if (data == null) return;
         }*/
-       // #endregion
-    //}
+       #endregion Emotiv
+    }
 	
 	public uint getActiveUser() {
-        return engineClient.UserID;
-		//return (userID);
+        //return engineClient.UserID;
+		return (userID);
 	}
 
-    public static EmoEngineClient getEmoEngine()
+    /*public static EmoEngineClient getEmoEngine()
     {
         //if (instance.engineClient == null)
         //    instance.engineClient = new EmoEngineClient();
 
         return instance.engineClient;
-    }
+    }*/
 	
-	/*public static EmoEngine getEmoEngine() {
+	public static EmoEngine getEmoEngine() {
 		if (instance.engine == null) return EmoEngine.Instance;
 		else return instance.engine;
-	}*/
+	}
 	
 	public void connect()
     {
 
         #region Emotiv
-        /*if (engine == null)
+       if (engine == null)
 		    engine = EmoEngine.Instance;
 
         engine.EmoEngineConnected += new EmoEngine.EmoEngineConnectedEventHandler(engine_EmoEngineConnected);
-        //engine.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
-
+        engine.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
+        
         engine.CognitivEmoStateUpdated += new EmoEngine.CognitivEmoStateUpdatedEventHandler(engine_CognitiveEmoStateUpdated);
         engine.AffectivEmoStateUpdated += new EmoEngine.AffectivEmoStateUpdatedEventHandler(engine_AffectivEmoStateUpdated);
-        engine.Connect();*/
-        #endregion
+        engine.Connect();
+        #endregion Emotiv
 
         #region EmoClient
-        engineClient.StartEmoEngine();
-        //engineClient.StartDataPolling();
-
-        #endregion
-
-
-
-
+        /*EmoEngine.Instance.UserAdded += new EmoEngine.UserAddedEventHandler(engine_userAdded_event);
+        engineClient.StartEmoEngine();*/
+        #endregion EmoClient
     }
 
     void engineClient_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -242,11 +226,11 @@ public class EmotivHandler {
 	public void disconnect()
     {
         #region Emotiv
-        /*try {
+        try {
 			engine.Disconnect();
 		} catch {}
 		
-		engine = null;*/
+		engine = null;
         #endregion
 
         #region EmoClient
@@ -266,11 +250,11 @@ public class EmotivHandler {
 	public bool isConnected()
     {
         #region Emotiv
-        //return (engine != null && engine.EngineGetNumUser() > 0);
+        return (engine != null && engine.EngineGetNumUser() > 0);
         #endregion
 
         #region EmoClient
-        return engineClient.IsEmoEngineRunning;
+        //return engineClient.IsEmoEngineRunning;
         #endregion
     }
 
@@ -278,11 +262,10 @@ public class EmotivHandler {
     void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e)
     {
         Debug.Log("EmoEngine Connected!");
-		userID = e.userId;
-		engine.LoadUserProfile(0, debugProfileDir); 
-		userID = 0;
-		engine.DataAcquisitionEnable(userID, true);
-		engine.EE_DataSetBufferSizeInSec(bufferSize); 
+        userID = 0;
+        //engine.LoadUserProfile(userID, debugProfileDir); 
+		//engine.DataAcquisitionEnable(userID, true);
+		//engine.EE_DataSetBufferSizeInSec(bufferSize); 
 		Debug.Log ("User ID: " + userID);
 
     }
@@ -333,10 +316,55 @@ public class EmotivHandler {
 	
 	}
 
-    #endregion
+    #endregion Emotiv
 
-    /*public EmoState getCognitiveState() {
-		return cogState;
-	}*/
 
+    public Profile loadProfileFromPath(string profilePath)
+    {
+        engine.LoadUserProfile(userID, profilePath);
+        return engine.GetUserProfile(userID);
+    }
+
+    public void LoadProfile(ref Player player, string userName)
+    {
+        // Switch directories to %appdata%
+        string targetPath = Environment.GetEnvironmentVariable("appdata") + @"/CerebralAcademy/Profiles/";
+        targetPath = targetPath.Replace(@"\", @"/");
+
+        string[] profiles = Directory.GetFiles(Application.dataPath + "/Resources/Profile/", "*.emu");
+
+        for (int i = 0; i < profiles.Length; i++)
+        {
+            string profile = profiles[i].Substring(profiles[i].LastIndexOf("/") + 1);
+            Debug.Log("Profile " + i + " = " + profile);
+
+
+            string sourceFile = profiles[i];
+            string targetFile = userName + ".emu";
+            string destFile = System.IO.Path.Combine(targetPath, targetFile);
+
+            Debug.Log("Source File: " + sourceFile);
+            Debug.Log("Target File: " + targetFile);
+            Debug.Log("Dest File: " + destFile);
+
+            // Check if /CerebrealAcademy/Profile/ exists
+            if (!System.IO.Directory.Exists(targetPath))
+            {
+                System.IO.Directory.CreateDirectory(targetPath);
+                Debug.Log("Created Directory at " + targetPath);
+            }
+
+            if (!System.IO.File.Exists(destFile))
+            {
+                Debug.Log("Profile does not exist, creating...");
+                // Copy over the profile file and do not overwrite if already existing
+                System.IO.File.Copy(sourceFile, destFile, false);
+            }
+
+            player.ProfilePath = destFile;
+            player.Profile = loadProfileFromPath(sourceFile);
+            engine.SetHardwarePlayerDisplay(userID, 1);
+            Debug.Log("User connected: Player Profile: " + player.Profile.ToString());
+        }
+    }
 }
