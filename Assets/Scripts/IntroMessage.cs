@@ -31,7 +31,6 @@ public class IntroMessage : MonoBehaviour {
 	        gameObject.GetComponent<MouseLook>().enabled = false;
 	        transform.parent.GetComponent<MouseLook>().enabled = false;
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;	
-			//GameObject.Find("SkillChoiceManager").GetComponent<SkillChoiceController>().enabled = false; // disable gameobject for bug workaround
 
 		}
 		else{
@@ -40,8 +39,6 @@ public class IntroMessage : MonoBehaviour {
 			gameObject.GetComponent<MouseLook>().enabled = true;
 	        transform.parent.GetComponent<MouseLook>().enabled = true;
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = true;
-			//GameObject.Find("SkillChoiceManager").GetComponent<SkillChoiceController>().enabled = true;
-			
 		}
 
         GameState.Instance.IsGuiOpen = isVisible;

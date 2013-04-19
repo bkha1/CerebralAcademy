@@ -16,6 +16,9 @@ public class ProfileCreation : MonoBehaviour {
 
     private bool isVisible = false;
 
+    private bool isError = false;
+    private string errorMsg = "";
+
     private GameObject playerObject;
     private GameObject playerCamera;
 
@@ -79,34 +82,58 @@ public class ProfileCreation : MonoBehaviour {
         GUILayout.Space(50);
         GUILayout.Label("Cerebral Academy Guest Book");
         GUILayout.Space(buttonSpacing);
+        
+        #region Name Field
         GUILayout.BeginHorizontal();
         GUILayout.Label("Name:");
         GUILayout.Space(10);
         userName = GUILayout.TextField(userName, 25);
         GUILayout.EndHorizontal();
+        #endregion 
+
         GUILayout.Space(buttonSpacing);
+
+        #region Gender Field
         GUILayout.BeginHorizontal();
         GUILayout.Label("Gender:");
         GUILayout.Space(10);
         isMale = GUILayout.Toggle(isMale, "Male");
         GUILayout.Space(10);
         isFemale = GUILayout.Toggle(isFemale, "Female");
-        GUILayout.Space(buttonSpacing);
         GUILayout.EndHorizontal();
+        #endregion 
+
+        GUILayout.Space(buttonSpacing);
+
+        #region Error Field
+        if (isError) GUILayout.Label("Error: " + errorMsg, "Error");
+        #endregion
+
+        GUILayout.Space(buttonSpacing);
 
         if (GUILayout.Button("Finish"))
         {
-            player = new Player();
-            player.UserName = userName;
-            player.Gender = (isMale ? "Male" : "Female");
-            GameState.Instance.setCurrentPlayer(player);
+            if (userName.Length == 0)
+            {
+                isError = true;
+                errorMsg = "Please enter a username with at least one character.";
+            }
+            else
+            {
+                isError = false;
+                player = GameState.Instance.getCurrentPlayer();
+                //player = new Player();
+                player.UserName = userName;
+                player.Gender = (isMale ? "Male" : "Female");
+                GameState.Instance.setCurrentPlayer(player);
 
-            NotificationCenter.DefaultCenter.PostNotification(this, "PlayerCreatedEvent");
-			
-			//message to take to training ground
-            NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");
+                NotificationCenter.DefaultCenter.PostNotification(this, "PlayerCreatedEvent");
 
-            this.enabled = false;
+                //message to take to training ground
+                NotificationCenter.DefaultCenter.PostNotification(this, "OpenAfterProfileCreationMsg");
+
+                this.enabled = false;
+            }
         }
         GUILayout.EndArea();
     }
