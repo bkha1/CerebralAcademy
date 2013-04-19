@@ -6,8 +6,6 @@ public class Tutor : MonoBehaviour {
     
 	public GameObject cube;
     public int maxLifts = 5;
-
-	private GameObject player;
 	
 	private int movementCount = 0;
 	
@@ -27,8 +25,6 @@ public class Tutor : MonoBehaviour {
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-
         NotificationCenter.DefaultCenter.AddObserver(this, "SelectionEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "TeleportPlayerEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "StartCogTutor");

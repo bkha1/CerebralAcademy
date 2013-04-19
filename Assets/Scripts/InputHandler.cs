@@ -99,8 +99,6 @@ public class InputHandler : MonoBehaviour {
 
     void handleLiftEvent(object sender, float powerLevel)
     {
-        //Debug.Log("Lift Event of Power: " + powerLevel);
-        //EventFactory.FireOnCognitvEvent(this, "lift", powerLevel, Time.time);
         EventFactory.FireOnCognitvEvent(this, CognitivSkill.LIFT, powerLevel);
     }
 

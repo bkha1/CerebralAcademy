@@ -78,5 +78,7 @@ public class AfterProfileCreationMsg : MonoBehaviour {
         {
             isVisible = true;
         }
+
+        GameState.Instance.IsGuiOpen = isVisible;
     }
 }

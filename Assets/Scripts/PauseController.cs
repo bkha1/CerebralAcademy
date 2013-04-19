@@ -12,6 +12,7 @@ public class PauseController : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
         NotificationCenter.DefaultCenter.AddObserver(this, "OnPauseEvent");
         NotificationCenter.DefaultCenter.AddObserver(this, "DisablePauseSettings");
         NotificationCenter.DefaultCenter.AddObserver(this, "EnablePauseSettings");
@@ -24,15 +25,16 @@ public class PauseController : MonoBehaviour {
             gamePaused = false;
             player.GetComponentInChildren<PauseMenu>().enabled = false;
             DisablePauseSettings(null);
-            Debug.Log("Game was paused, now unpaused");
         }
         else
         {
             gamePaused = true;
             player.GetComponentInChildren<PauseMenu>().enabled = true;
             EnablePauseSettings(null);
-            Debug.Log("Game was not paused, now paused");
         }
+
+        GameState.Instance.IsGuiOpen = gamePaused;
+        GameState.Instance.IsPaused = gamePaused;
     }
 
     void DisablePauseSettings(Notification notification)

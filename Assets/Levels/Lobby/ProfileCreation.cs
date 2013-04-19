@@ -39,14 +39,15 @@ public class ProfileCreation : MonoBehaviour {
         playerObject = GameObject.FindGameObjectWithTag("Player");
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-		if (GameState.Instance.getCurrentPlayer() == null || !GameState.Instance.getCurrentPlayer().hasLearnedLift) {
-	        //player = new Player();
-	
-	        NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
-			
-			
-	        NotificationCenter.DefaultCenter.PostNotification(this, "OpenProfileCreationGUI");
-		}
+        if (GameState.Instance.getCurrentPlayer() == null || !GameState.Instance.getCurrentPlayer().hasLearnedLift)
+        {
+            NotificationCenter.DefaultCenter.AddObserver(this, "OpenProfileCreationGUI");
+            NotificationCenter.DefaultCenter.PostNotification(this, "OpenProfileCreationGUI");
+        }
+        else
+        {
+            GameState.Instance.IsGuiOpen = false;
+        }
 	
 	}
 
@@ -57,6 +58,7 @@ public class ProfileCreation : MonoBehaviour {
         if (isVisible == false)
         {
             isVisible = true;
+            GameState.Instance.IsGuiOpen = isVisible;
 
             GameObject.Find("PauseManager").GetComponent<PauseController>().enabled = false;
             playerCamera.GetComponent<MouseLook>().enabled = false;

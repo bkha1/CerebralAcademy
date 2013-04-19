@@ -20,6 +20,8 @@ public class SkillChoiceMenu : MonoBehaviour {
 	public ComboBox techCombo = new ComboBox();
 	public GUIContent[] techList;
 
+    private bool isVisible = false;
+
     void Start()
     {
 		abilityList = new GUIContent[5];
@@ -54,10 +56,14 @@ public class SkillChoiceMenu : MonoBehaviour {
 		layoutStyle.onHover.background = tex;
 		layoutStyle.padding.left = layoutStyle.padding.right = layoutStyle.padding.top = layoutStyle.padding.bottom = 4;*/
 		
+        // A Notification handler for toggling the menu's visibility
+        NotificationCenter.DefaultCenter.AddObserver(this, "ToggleSkillChoiceMenuVisibility");
     }
 
     void OnGUI()
     {
+        if (!isVisible) return;
+
 		abilityCombo.List(new Rect(50, 100, 100, 20), new GUIContent("Abilities"), abilityList, layoutStyle);
 		GUI.Label(new Rect(50, 70, 400, 20), "You picked " + abilityCombo.GetSelectedItemIndex().ToString() + "!");
 		
@@ -93,4 +99,15 @@ public class SkillChoiceMenu : MonoBehaviour {
 
         GUILayout.EndArea();*/
     }//end OnGUI
+
+
+    void ToggleSkillChoiceMenuVisibility(Notification notification)
+    {
+        
+        if (this.isVisible) this.isVisible = false;
+        else this.isVisible = true;
+        //this.isVisible = !this.isVisible; // why does this not work?
+
+        Debug.Log("Menu Visiblity: " + this.isVisible);
+    }
 }
