@@ -19,6 +19,11 @@ public class SkillChoiceMenu : MonoBehaviour {
 	
 	public ComboBox techCombo = new ComboBox();
 	public GUIContent[] techList;
+	
+	public bool debugLearn = false;
+	public bool learnedLift =false;
+	public bool learnedPush =false;
+	public bool learnedPull =false;
 
     private bool isVisible = false;
 
@@ -26,9 +31,9 @@ public class SkillChoiceMenu : MonoBehaviour {
     {
 		abilityList = new GUIContent[6];
 
-		abilityList[0] = new GUIContent("Lift");
-		abilityList[1] = new GUIContent("Push");
-		abilityList[2] = new GUIContent("Pull");
+		abilityList[0] = new GUIContent("LOCKED");
+		abilityList[1] = new GUIContent("LOCKED");
+		abilityList[2] = new GUIContent("LOCKED");
 		abilityList[3] = new GUIContent("Disappear");
 		abilityList[4] = new GUIContent("Left");
 		abilityList[5] = new GUIContent("Right");
@@ -64,22 +69,66 @@ public class SkillChoiceMenu : MonoBehaviour {
     void OnGUI()
     {
         if (!isVisible) return;
+		
+		if(!debugLearn)
+		{
+			learnedLift = GameState.Instance.getCurrentPlayer().hasLearnedLift;
+			learnedPush = GameState.Instance.getCurrentPlayer().hasLearnedPush;
+			learnedPull = GameState.Instance.getCurrentPlayer().hasLearnedPull;
+		}
+		
+		if(learnedLift)//GameState.Instance.getCurrentPlayer().hasLearnedLift)
+		{
+			abilityList[0] = new GUIContent("Lift");
+			Debug.Log("Cognitive Skill LIFT Unlocked");
+		}
+		if(learnedPush)//GameState.Instance.getCurrentPlayer().hasLearnedPush)
+		{
+			abilityList[1] = new GUIContent("Push");
+			Debug.Log("Cognitive Skill PUSH Unlocked");
+		}
+		if(learnedPull)//GameState.Instance.getCurrentPlayer().hasLearnedPull)
+		{
+			abilityList[2] = new GUIContent("Pull");
+			Debug.Log("Cognitive Skill PULL Unlocked");
+		}
 
 		abilityCombo.List(new Rect(50, 100, 100, 20), new GUIContent("Abilities"), abilityList, layoutStyle);
 		//checks and sets skills
 		switch(abilityCombo.GetSelectedItemIndex())
 		{
 			case 0:
-				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;
-				Debug.Log("Cognitive Skill LIFT Set");
+				if(learnedLift)//GameState.Instance.getCurrentPlayer().hasLearnedLift)
+				{
+					GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;
+					Debug.Log("Cognitive Skill LIFT Set");
+				}
+				else
+				{
+					Debug.Log("Cognitive Skill LIFT LOCKED");
+				}
 				break;
 			case 1:
+			if(learnedPush)//GameState.Instance.getCurrentPlayer().hasLearnedPush)
+			{
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PUSH;
 				Debug.Log("Cognitive Skill PUSH Set");
+			}
+			else
+			{
+				Debug.Log("Cognitive Skill PUSH LOCKED");
+			}
 				break;
 			case 2:
+			if(learnedPull)//GameState.Instance.getCurrentPlayer().hasLearnedPull)
+			{
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PULL;
 				Debug.Log("Cognitive Skill PULL Set");
+			}
+			else
+			{
+				Debug.Log("Cognitive Skill Pull LOCKED");
+			}
 				break;
 			case 3:
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.DISAPPEAR;
