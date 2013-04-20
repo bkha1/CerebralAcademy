@@ -21,6 +21,8 @@ public class ProfileCreation : MonoBehaviour {
 
     private GameObject playerObject;
     private GameObject playerCamera;
+	
+	public bool emotiveDeviceExists = false;
 
 	void Start () {
 
@@ -124,8 +126,12 @@ public class ProfileCreation : MonoBehaviour {
                 player = GameState.Instance.getCurrentPlayer();
                 player.UserName = userName;
                 player.Gender = (isMale ? "Male" : "Female");
-
-                EmotivHandler.Instance.LoadProfile(ref player, userName);
+				
+				if(emotiveDeviceExists)//check to see if emotive device is there, this is just a bool that defaults to false for now
+				{
+                	EmotivHandler.Instance.LoadProfile(ref player, userName);
+				}
+				
                 GameState.Instance.setCurrentPlayer(player);
 
                 NotificationCenter.DefaultCenter.PostNotification(this, "PlayerCreatedEvent");
