@@ -202,7 +202,7 @@ public class CharacterMotor : MonoBehaviour
 	
 	void Jump (Notification notification){
 		float impactForce = float.Parse(""+notification.data["force"]);	
-		boostVelocity.y += impactForce/1.3F;
+		boostVelocity.y += impactForce;
 	}
 	
 	private void UpdateFunction()
