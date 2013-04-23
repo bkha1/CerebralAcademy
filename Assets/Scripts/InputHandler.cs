@@ -78,10 +78,12 @@ public class InputHandler : MonoBehaviour {
         {
             if (EmotivHandler.Instance.isConnected())
             {
+				Debug.Log("Disconnecting to EmotivHandler...");
                 EmotivHandler.Instance.disconnect();
             }
             else
             {
+				Debug.Log("Connecting to EmotivHandler...");
                 EmotivHandler.Instance.connect();
             }
         }

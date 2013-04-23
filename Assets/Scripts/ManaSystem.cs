@@ -10,6 +10,7 @@ public class ManaSystem : MonoBehaviour {
     public float ManaRefillRate = 10.0f;
     public float minMana = 10.0f;
     public float maxMana = 100.0f;
+	public float cognitivSkillCost = 0.5f;
 
 
     private float currentMana = 10.0f;
@@ -65,8 +66,8 @@ public class ManaSystem : MonoBehaviour {
 
         #region TESTING
         // NOTE: This is just for starting the game. We can instead enable the mana system after profile creation.
-        if (player == null && GameState.Instance.DebugMode) player = new Player();
-        if (player == null) return;
+        //if (player == null && GameState.Instance.DebugMode) player = new Player();
+        //if (player == null) return;
         #endregion
 
         if (player.Mana < maxMana && currentTime >= endTime)
@@ -106,7 +107,7 @@ public class ManaSystem : MonoBehaviour {
                     case (CognitivSkill.LIFT): 
                     {
                         if (!player.hasLearnedLift && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
-                        if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", notification.data);
                         }
@@ -115,7 +116,7 @@ public class ManaSystem : MonoBehaviour {
                     case (CognitivSkill.DISAPPEAR):
                     {
                         //if (!player.hasLearnedDisappear) EventFactory.FireDisplayTextEvent(this, "You first must learn disappear.", 2.0f);
-                        if (updateMana(gObj.GetComponent<CognitivObject>().disappearSensitivity, powerLevel, false))
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", notification.data);
                         }
@@ -123,7 +124,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.RIGHT):
                     {
-                        if (updateMana(gObj.GetComponent<CognitivObject>().rightSensitivity, powerLevel, false))
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivRightEvent", notification.data);
                         }
@@ -131,7 +132,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.LEFT):
                     {
-                        if (updateMana(gObj.GetComponent<CognitivObject>().leftSensitivity, powerLevel, false))
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLeftEvent", notification.data);
                         }
@@ -140,7 +141,7 @@ public class ManaSystem : MonoBehaviour {
                     case (CognitivSkill.PUSH):
                     {
                         if (!player.hasLearnedPush && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
-                        if (updateMana(gObj.GetComponent<CognitivObject>().liftSensitivity, powerLevel, false))
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);
                         }
@@ -165,6 +166,7 @@ public class ManaSystem : MonoBehaviour {
             //Debug.Log("ManaSystem: OnEmotionEvent: " + powerLevel);
             if (powerLevel > 0)
             {
+				//Debug.Log ("Mana updated via emotion event!");
                 player.Mana += powerLevel * 2.5f;
             }
         }

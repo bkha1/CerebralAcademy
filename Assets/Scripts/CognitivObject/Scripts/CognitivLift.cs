@@ -105,7 +105,7 @@ public class CognitivLift : MonoBehaviour {
                 float amount = (gObj.GetComponent<CognitivObject>().liftSensitivity * powerLevel) * sensitivityReduction;
                 movementAmount = amount;
                 updating = true;
-                endTime = Time.time + 0.5f;
+                endTime = Time.time + 1.0f;
             }
         }
     }

@@ -9,7 +9,7 @@ using System;
 public class EmotivHandler : MonoBehaviour {
 
     public static string DefaultProfilePath = "%appdata%";
-    public string debugProfileDir = "C:/Users/jvmilazz/Desktop/Joseph.emu";
+    public string debugProfileDir = "C:/Users/Brian/Desktop/Joseph.emu";
 	private static EmotivHandler instance = null;
 
     private EmoEngineClient engineClient = null;
@@ -102,42 +102,11 @@ public class EmotivHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
-        #region EmoClient
-        // NOTE: Even if this was a monoscript, we would not need to have this code here. EmoClient uses delegates on property changes.
-        /*if (engineClient != null && engineClient.IsPolling)
-        {
-            EmotivState emoState = engineClient.CurrentEmotivState;
-
-            if (emoState.AffectivMeditationScore > 0)
-            {
-                CognitvEventManager.TriggerCognitivEmotion(null, emoState.AffectivMeditationScore);
-
-            }
-
-            if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
-            {
-                CognitvEventManager.TriggerCognitivDisappear(null, emoState.CognitivCurrentActionPower);
-            }
-            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LIFT)
-            {
-                CognitvEventManager.TriggerCognitivLift(null, emoState.CognitivCurrentActionPower);
-            }
-            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_LEFT)
-            {
-                CognitvEventManager.TriggerCognitivLeft(null, emoState.CognitivCurrentActionPower);
-            }
-            else if (emoState.CognitivCurrentAction == EdkDll.EE_CognitivAction_t.COG_PUSH)
-            {
-                CognitvEventManager.TriggerCognitivPush(null, emoState.CognitivCurrentActionPower);
-            }
-        }*/
-        #endregion
-
         #region Emotiv
-        if (engine == null) return;
+        //if (engine == null) return;
 		// Handle any waiting events
-        engine.ProcessEvents();
+        //engine.ProcessEvents();
+		EmoEngine.Instance.ProcessEvents();
 		
 		// This should be called every second... (NOTE: Not needed for this game, thus commented)
         /*elapsedTime += Time.deltaTime;
@@ -195,7 +164,6 @@ public class EmotivHandler : MonoBehaviour {
         Debug.Log("PropertyChange: " + e.PropertyName);
         if (e.PropertyName == "CurrentEmotivState")
         {
-            Debug.Log("EmotivState Update");
             EmotivState emoState = engineClient.CurrentEmotivState;
 
             if (emoState.AffectivMeditationScore > 0)
@@ -263,7 +231,8 @@ public class EmotivHandler : MonoBehaviour {
     {
         Debug.Log("EmoEngine Connected!");
         userID = 0;
-        //engine.LoadUserProfile(userID, debugProfileDir); 
+		Debug.Log ("Engine UserID: " + e.userId);
+        engine.LoadUserProfile(userID, debugProfileDir); // NOTE: This is only for testing the headset.
 		//engine.DataAcquisitionEnable(userID, true);
 		//engine.EE_DataSetBufferSizeInSec(bufferSize); 
 		Debug.Log ("User ID: " + userID);
@@ -279,10 +248,12 @@ public class EmotivHandler : MonoBehaviour {
 		
 		// ask for up to 1 second of buffered data
         engine.EE_DataSetBufferSizeInSec(1.0f); 
-		
+		*/
 		// I don't need to do profile handling myself.
+		EmoEngine.Instance.LoadUserProfile(userID, debugProfileDir);
 		profile = EmoEngine.Instance.GetUserProfile(userID);
-        profile.GetBytes();*/
+        profile.GetBytes();
+		
 		
 	}
 
@@ -299,19 +270,21 @@ public class EmotivHandler : MonoBehaviour {
 
         if (emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
         {
-            CognitvEventManager.TriggerCognitivDisappear(sender, emoState.CognitivGetCurrentActionPower());
+            CognitvEventManager.TriggerCognitivDisappear(sender, emoState.CognitivGetCurrentActionPower() * 10);
         }
         else if (emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LIFT)
         {
-            CognitvEventManager.TriggerCognitivLift(sender, emoState.CognitivGetCurrentActionPower());
+			Debug.Log("EmoHandler sent Lift of " + emoState.CognitivGetCurrentActionPower() * 10);
+            CognitvEventManager.TriggerCognitivLift(sender, emoState.CognitivGetCurrentActionPower() * 10);
         }
         else if (emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LEFT)
         {
-            CognitvEventManager.TriggerCognitivLeft(sender, emoState.CognitivGetCurrentActionPower());
+            CognitvEventManager.TriggerCognitivLeft(sender, emoState.CognitivGetCurrentActionPower() * 10);
         }
         else if (emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
         {
-            CognitvEventManager.TriggerCognitivPush(sender, emoState.CognitivGetCurrentActionPower());
+			Debug.Log("EmoHandler sent Push of " + emoState.CognitivGetCurrentActionPower() * 10);
+            CognitvEventManager.TriggerCognitivPush(sender, emoState.CognitivGetCurrentActionPower() * 10);
         }
 	
 	}
@@ -321,7 +294,7 @@ public class EmotivHandler : MonoBehaviour {
 
     public Profile loadProfileFromPath(string profilePath)
     {
-        engine.LoadUserProfile(userID, profilePath);
+        //engine.LoadUserProfile(userID, profilePath); // NOTE: This is disabled because we iwll manually load a file.
         return engine.GetUserProfile(userID);
     }
 
@@ -361,10 +334,10 @@ public class EmotivHandler : MonoBehaviour {
                 System.IO.File.Copy(sourceFile, destFile, false);
             }
 
-            player.ProfilePath = destFile;
+            /*player.ProfilePath = destFile;
             player.Profile = loadProfileFromPath(sourceFile);
             engine.SetHardwarePlayerDisplay(userID, 1);
-            Debug.Log("User connected: Player Profile: " + player.Profile.ToString());
+            Debug.Log("User connected: Player Profile: " + player.Profile.ToString());*/
         }
     }
 }
