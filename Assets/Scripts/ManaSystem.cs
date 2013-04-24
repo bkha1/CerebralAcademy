@@ -49,12 +49,17 @@ public class ManaSystem : MonoBehaviour {
         player = GameState.Instance.getCurrentPlayer();
 
         if (player != null)
-            currentMana = player.Mana;
+            currentMana = player.Mana <= maxMana ? player.Mana : maxMana;
+        else
+        {
+            currentMana = minMana;
+        }
 
         // Set ManabarTexture to correct size
         Rect textureRect = ManabarTexture.pixelInset;
         textureRect.xMax = ManabarTexture.pixelInset.xMin + ManabarGUIWidth * currentMana;
         ManabarTexture.pixelInset = textureRect;
+        Debug.Log("ManaSystem: textureRect.xMax = " + textureRect.xMax + " with Mana: " + currentMana);
 
         currentTime = Time.time;
         endTime = currentTime + 1.0f;
@@ -106,7 +111,7 @@ public class ManaSystem : MonoBehaviour {
                 {
                     case (CognitivSkill.LIFT): 
                     {
-                        if (!player.hasLearnedLift && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
+                        if ((!player.hasLearnedLift && player.CurrentSkillEquipped == CognitivSkill.LIFT) || !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn lift.", 2.0f);
                         if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivLiftEvent", notification.data);
@@ -115,7 +120,6 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.DISAPPEAR):
                     {
-                        //if (!player.hasLearnedDisappear) EventFactory.FireDisplayTextEvent(this, "You first must learn disappear.", 2.0f);
                         if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivDisappearEvent", notification.data);
@@ -140,7 +144,7 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.PUSH):
                     {
-                        if (!player.hasLearnedPush && !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
+                        if ((!player.hasLearnedPush && player.CurrentSkillEquipped == CognitivSkill.PUSH) || !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
                         if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);
