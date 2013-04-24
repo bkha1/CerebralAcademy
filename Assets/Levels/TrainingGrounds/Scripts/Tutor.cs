@@ -6,7 +6,7 @@ public class Tutor : MonoBehaviour {
     
 	public GameObject liftObject;
     public int numberOfTimesToLift = 3;
-    public float timeBetweenLifts = 5.0f;
+    public float timeBetweenLifts = 1.5f;
 	
 	private int movementCount = 0;
 	
@@ -45,7 +45,6 @@ public class Tutor : MonoBehaviour {
         {
             if (Time.time >= timeUntilCanLiftNext)
             {
-                Debug.Log("You can now lift again.");
                 canLift = true;
             }
 
@@ -137,6 +136,10 @@ public class Tutor : MonoBehaviour {
 
                 NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
             }
+        }
+        else
+        {
+            EventFactory.FireDisplayTextEvent(this, "Why don't you try lifting in " + (int) (timeUntilCanLiftNext - Time.time) + " seconds?", timeUntilCanLiftNext - Time.time);
         }
     }
 
