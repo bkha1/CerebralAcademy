@@ -50,31 +50,31 @@ public class InputHandler : MonoBehaviour {
 		{
 			EventFactory.FireOnSkillChoiceEvent(this);
 		}
-        else if (Input.GetKeyUp(cognitivDisappearKey))
+        else if (cognitivDisappearKey != "" && Input.GetKeyUp(cognitivDisappearKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.DISAPPEAR, 6.4f);
         }
-        else if (Input.GetKeyUp(cognitivLiftKey))
+        else if (cognitivLiftKey != "" && Input.GetKeyUp(cognitivLiftKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.LIFT, 6.4f);
         }
-        else if (Input.GetKeyUp(cognitivLeftKey))
+        else if (cognitivLeftKey != "" && Input.GetKeyUp(cognitivLeftKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.LEFT, 6.4f);
         }
-        else if (Input.GetKeyUp(cognitivRightKey))
+        else if (cognitivRightKey != "" && Input.GetKeyUp(cognitivRightKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.RIGHT, 6.4f);
         }
-        else if (Input.GetKeyUp(cogntivPushKey))
+        else if (cogntivPushKey != "" && Input.GetKeyUp(cogntivPushKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
         }
-        else if (Input.GetKeyUp(debugKey))
+        else if (debugKey != "" && Input.GetKeyUp(debugKey))
         {
             GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
         }
-        else if (Input.GetKeyUp(emotivEngineToggleKey))
+        else if (emotivEngineToggleKey != "" && Input.GetKeyUp(emotivEngineToggleKey))
         {
             if (EmotivHandler.Instance.isConnected())
             {

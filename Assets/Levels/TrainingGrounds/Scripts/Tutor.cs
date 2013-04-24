@@ -4,8 +4,9 @@ using System.Collections;
 public class Tutor : MonoBehaviour {
 
     
-	public GameObject cube;
-    public int maxLifts = 5;
+	public GameObject liftObject;
+    public int numberOfTimesToLift = 3;
+    public float timeBetweenLifts = 5.0f;
 	
 	private int movementCount = 0;
 	
@@ -20,8 +21,11 @@ public class Tutor : MonoBehaviour {
     private const int NUM_MOVEMENT_DIRECTIONS = 5;
     private bool isActive = false;
 
-    public int numberOfTimesToLift = 3;
+    
     private int liftCounter = 0;
+
+    private float timeUntilCanLiftNext;
+    private bool canLift = true;
 
     void Awake()
     {
@@ -35,18 +39,27 @@ public class Tutor : MonoBehaviour {
 	
 	void Update () {
 		
-		if (movementFinished || !isActive) return;
+		if (!isActive) return;
+
+        if (movementFinished)
+        {
+            if (Time.time >= timeUntilCanLiftNext)
+            {
+                Debug.Log("You can now lift again.");
+                canLift = true;
+            }
+
+            return;
+        }
 
         // If they have not moved yet, keep the into text up.
         if (movementCount == 0)
         {
             EventFactory.FireDisplayTextEvent(this, "Welcome, I will teach you to move. Use W, A, S, D, and SPACE to move. Go ahead, give it a try.", 5.0f);
-        }
-		
-		if (movementCount >= NUM_MOVEMENT_DIRECTIONS) { // 5 because of jump
+        } else if (movementCount >= NUM_MOVEMENT_DIRECTIONS) { // 5 because of jump
 
             EventFactory.FireDisplayTextEvent(this, "Good, it seems you understand basic movement. Why don't you click on that cube over there?", 6.0f);
-			cube.SetActive(true);
+			liftObject.SetActive(true);
 			
 			movementFinished = true;
 			
@@ -107,16 +120,23 @@ public class Tutor : MonoBehaviour {
 
     void OnCognitivLiftEvent(Notification notification)
     {
-        liftCounter++;
-
-        if (liftCounter == 1)
+        if (canLift)
         {
-            StartCoroutine(explainMana());
-        } else if (liftCounter == numberOfTimesToLift)
-        {
-            EventFactory.FireDisplayTextEvent(this, "Good job! You have learned LIFT!", 5.0f);
+            liftCounter++;
 
-            NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
+            timeUntilCanLiftNext = Time.time + timeBetweenLifts;
+            canLift = false;
+
+            if (liftCounter == 1)
+            {
+                StartCoroutine(explainMana());
+            }
+            else if (liftCounter == numberOfTimesToLift)
+            {
+                EventFactory.FireDisplayTextEvent(this, "Good job! You have learned LIFT!", 5.0f);
+
+                NotificationCenter.DefaultCenter.PostNotification(this, "LiftCompleted");
+            }
         }
     }
 
