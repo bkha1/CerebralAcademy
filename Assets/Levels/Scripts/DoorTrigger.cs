@@ -24,7 +24,16 @@ public class DoorTrigger : MonoBehaviour {
 			{
 				if (levelToLoad == "Dungeon1" && !GameState.Instance.getCurrentPlayer().hasLearnedLift) {
                     EventFactory.FireDisplayTextEvent(this, "You have not been authorized to enter. Please visit the training grounds.", 1.0f);
-				} else {
+				}
+				else if (levelToLoad == "Dungeon2" && !GameState.Instance.getCurrentPlayer().hasLearnedPush)
+				{
+					EventFactory.FireDisplayTextEvent(this, "You have not been authorized to enter. Please learn how to Push and Pull.", 1.0f);
+				}
+				else if (levelToLoad == "meh")
+				{
+					EventFactory.FireDisplayTextEvent(this, "TOP SECRET ROOM! NO ACCESS!", 1.0f);
+				}
+				else {
                     EventFactory.FireTeleportPlayerEvent(this, GameObject.FindGameObjectWithTag("Player"), new Vector3(0.0f, 0.0f, 0.0f), true, levelToLoad);
 				}
 			}
