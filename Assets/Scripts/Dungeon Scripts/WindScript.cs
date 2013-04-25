@@ -5,7 +5,7 @@ public class WindScript : MonoBehaviour {
 	
 	private GameObject player = null;
 	private bool inZone = false;
-	private int notShielded = 0;
+	private int notShielded = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +16,7 @@ public class WindScript : MonoBehaviour {
 	void Update () {	
 		
 		if (inZone == true){
+			Debug.Log("Wind is pushing player");
 			//strength ranges from 10 at the fan to 0 at the edge of the zone
 			float strength = -.5F * Mathf.Min(0,player.gameObject.rigidbody.position.z);
 

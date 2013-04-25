@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GameState {
 	
+	//public int numOfJumps = 0;
+	
 	private static volatile GameState instance;
 	private static object _lock = new object();
 	
