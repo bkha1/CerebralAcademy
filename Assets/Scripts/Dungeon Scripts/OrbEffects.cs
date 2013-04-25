@@ -30,11 +30,6 @@ public class OrbEffects : MonoBehaviour {
 			param.Add ("name", name+"Orb");
 			NotificationCenter.DefaultCenter.PostNotification(this, "ItemPickup", param);
 			Destroy(gameObject);
-			
-			/*param = new Hashtable();
-            param.Add("text", "You obtained the ability "+ name+"Orb.");
-            param.Add("duration", 0.5f);
-            NotificationCenter.DefaultCenter.PostNotification(this, "DisplayText", param);*/
 		}
 	}
 }

@@ -41,19 +41,6 @@ function OnTriggerEnter(otherObj : Collider) {
 		RendererAndColliderOff(chest1);
 		var chest2 = GameObject.Find("Treasure room/Chest2");
 		RendererAndColliderOff(chest2);
-		
-		var fence1 = GameObject.Find("Treasure room/Fence(Left)");
-		RendererAndColliderOff(fence1);
-			fence1 = GameObject.Find("Treasure room/Fence(Left)/Fence0");
-			RendererAndColliderOff(fence1);
-			fence1 = GameObject.Find("Treasure room/Fence(Left)/Fence1");
-			RendererAndColliderOff(fence1); 
-		var fence2 = GameObject.Find("Treasure room/Fence(Right)");
-		RendererAndColliderOff(fence2);
-			fence2 = GameObject.Find("Treasure room/Fence(Right)/Fence0");
-			RendererAndColliderOff(fence2);
-			fence2 = GameObject.Find("Treasure room/Fence(Right)/Fence1");
-			RendererAndColliderOff(fence2); 
 			
 		var chest1b = GameObject.Find("Treasure room/Chest1b");
 		RendererAndColliderOn(chest1b);
