@@ -1,8 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ManaSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Dungeon Scripts\WindScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\ManaSystem.cs" Line="78" Column="1" />
+      <File FileName="Assets\Levels\Scripts\DoorTrigger.cs" Line="28" Column="86" />
+      <File FileName="Assets\Scripts\ManaSystem.cs" Line="79" Column="10" />
+      <File FileName="Assets\Scripts\GameState.cs" Line="6" Column="4" />
+      <File FileName="Assets\Scripts\Player.cs" Line="23" Column="99" />
+      <File FileName="Assets\Scripts\Dungeon Scripts\WindScript.cs" Line="8" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
