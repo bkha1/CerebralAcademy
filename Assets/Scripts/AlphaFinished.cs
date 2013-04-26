@@ -27,6 +27,9 @@ public class AlphaFinished : MonoBehaviour {
 		if (!isVisible) return;
 		
 		Time.timeScale = 0;
+		gameObject.GetComponent<MouseLook>().enabled = false;
+        transform.parent.GetComponent<MouseLook>().enabled = false;
+		gameObject.GetComponent<PauseController>().enabled = false;
 		
 		areaHeight = Screen.height;
 
@@ -36,20 +39,20 @@ public class AlphaFinished : MonoBehaviour {
         GUILayout.Label(textureTop);
         GUILayout.Space(buttonSpacing);
 		
-		GUILayout.Label("Congratulations! You have gained the ability to push and pull objects, however, you'll have to wait until the beta to play with them. See you soon!");
+		GUILayout.Label("Congratulations! You have gained the ability to push objects! Use the E Key to push objects! Please head on over to Test Area 2.");//, however, you'll have to wait until the beta to play with them. See you soon!");
 		
         GUILayout.Space(buttonSpacing);
 		if(GUILayout.Button("Okay"))
 		{
 			Time.timeScale = 1;
 
-//            gameObject.GetComponent<MouseLook>().enabled = true;
-//            transform.parent.GetComponent<MouseLook>().enabled = true;
-//            gameObject.GetComponent<PauseController>().enabled = true;
+            gameObject.GetComponent<MouseLook>().enabled = true;
+            transform.parent.GetComponent<MouseLook>().enabled = true;
+            gameObject.GetComponent<PauseController>().enabled = true;
 			//GameState.Instance.hasTrained = false;
 
 
-            EventFactory.FireTeleportPlayerEvent(this, player, new Vector3(), true, "Main Menu");
+            //EventFactory.FireTeleportPlayerEvent(this, player, new Vector3(), true, "Main Menu");
 			isVisible = false;
 			
 			
@@ -62,7 +65,7 @@ public class AlphaFinished : MonoBehaviour {
 	
 	void Dungeon1Complete(Notification notification) 
 	{
-		Time.timeScale = 0;
+		//Time.timeScale = 0;
 		gameObject.GetComponent<MouseLook>().enabled = false;
         transform.parent.GetComponent<MouseLook>().enabled = false;
 		gameObject.GetComponent<PauseController>().enabled = false;

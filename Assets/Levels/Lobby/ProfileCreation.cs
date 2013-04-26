@@ -13,6 +13,7 @@ public class ProfileCreation : MonoBehaviour {
     private string userName = "";
     private bool isMale = false;
     private bool isFemale = false;
+	private bool hasEEG = false;
 
     private bool isVisible = false;
 
@@ -106,6 +107,17 @@ public class ProfileCreation : MonoBehaviour {
         #endregion 
 
         GUILayout.Space(buttonSpacing);
+	
+
+        #region EEG Field
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Are you wearing an EEG?");
+        GUILayout.Space(10);
+        hasEEG = GUILayout.Toggle(hasEEG, "No");
+        GUILayout.EndHorizontal();
+        #endregion 
+		
+		GUILayout.Space(buttonSpacing);
 
         #region Error Field
         if (isError) GUILayout.Label("Error: " + errorMsg, "Error");
@@ -130,6 +142,12 @@ public class ProfileCreation : MonoBehaviour {
 				if(emotiveDeviceExists)//check to see if emotive device is there, this is just a bool that defaults to false for now
 				{
                 	EmotivHandler.Instance.LoadProfile(ref player, userName);
+				}
+				
+				if(hasEEG)
+				{
+					Debug.Log("No EEG: Debug mode on");
+					GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
 				}
 				
                 GameState.Instance.setCurrentPlayer(player);
