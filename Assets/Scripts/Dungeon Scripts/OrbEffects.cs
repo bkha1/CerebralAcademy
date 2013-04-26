@@ -4,8 +4,8 @@ using System.Collections;
 public class OrbEffects : MonoBehaviour {
 	
 	public float rotation = 100.0f;
-	public float hoverSpeed;
-	public float hoverHeight;
+	public float hoverSpeed = 120.0f;
+	public float hoverHeight = 0.125f;
 	public string name;
 	private float yCord;
 	
