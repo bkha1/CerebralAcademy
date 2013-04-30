@@ -3,8 +3,6 @@ using System.Collections;
 
 public class GameState {
 	
-	//public int numOfJumps = 0;
-	
 	private static volatile GameState instance;
 	private static object _lock = new object();
 	
@@ -13,10 +11,11 @@ public class GameState {
     public bool DebugMode { get; set; }
     public bool IsPaused { get; set; }
     public bool IsGuiOpen { get; set; }
-	public bool IsSkillMenuOpen {get; set;}
-
+	public bool IsSkillMenuOpen { get; set; }
+	public string SkillKey { get; set; }
+	
     static GameState() {}
-    private GameState() { DebugMode = false; }
+    private GameState() { DebugMode = false; SkillKey = KeyCode.Q.ToString(); }
 	
 	public static GameState Instance
 	{

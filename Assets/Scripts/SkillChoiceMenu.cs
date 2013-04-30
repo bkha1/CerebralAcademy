@@ -34,9 +34,9 @@ public class SkillChoiceMenu : MonoBehaviour {
 		abilityList[0] = new GUIContent("LOCKED");
 		abilityList[1] = new GUIContent("LOCKED");
 		abilityList[2] = new GUIContent("LOCKED");
-		abilityList[3] = new GUIContent("Disappear");
-		abilityList[4] = new GUIContent("Left");
-		abilityList[5] = new GUIContent("Right");
+		abilityList[3] = new GUIContent("LOCKED");
+		abilityList[4] = new GUIContent("LOCKED");
+		abilityList[5] = new GUIContent("LOCKED");
 		
 		techList = new GUIContent[3];
 		techList[0] = new GUIContent("Breath");
@@ -130,7 +130,8 @@ public class SkillChoiceMenu : MonoBehaviour {
 				Debug.Log("Cognitive Skill Pull LOCKED");
 			}
 				break;
-			case 3:
+			// JVM: NOTE: These skills are not supported in the game.
+			/*case 3:
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.DISAPPEAR;
 				Debug.Log("Cognitive Skill DISAPPEAR Set");
 				break;
@@ -141,7 +142,7 @@ public class SkillChoiceMenu : MonoBehaviour {
 			case 5:
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.RIGHT;
 				Debug.Log("Cognitive Skill PUSH Set");
-				break;
+				break;*/
 			default:
 				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.LIFT;
 				Debug.Log("Cognitive Skill Default LIFT Set");

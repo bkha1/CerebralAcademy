@@ -3,14 +3,14 @@ using System.Collections;
 
 public class InputHandler : MonoBehaviour {
 
-    public string cognitivDisappearKey;
+    //public string cognitivDisappearKey;
 
     public string cognitivLiftKey;
 
 	public string cogntivPushKey;
 
-	public string cognitivLeftKey;
-    public string cognitivRightKey;
+	//public string cognitivLeftKey;
+    //public string cognitivRightKey;
 
     public string emotivEngineToggleKey = "`";
 
@@ -50,7 +50,7 @@ public class InputHandler : MonoBehaviour {
 		{
 			EventFactory.FireOnSkillChoiceEvent(this);
 		}
-        else if (cognitivDisappearKey != "" && Input.GetKeyUp(cognitivDisappearKey))
+        /*else if (cognitivDisappearKey != "" && Input.GetKeyUp(cognitivDisappearKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.DISAPPEAR, 6.4f);
         }
@@ -69,7 +69,20 @@ public class InputHandler : MonoBehaviour {
         else if (cogntivPushKey != "" && Input.GetKeyUp(cogntivPushKey))
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
-        }
+        }*/
+		else if (Input.GetKeyDown(KeyCode.Q)) //(Input.GetKeyDown(GameState.Instance.SkillKey))
+		{
+			if (GameState.Instance.getCurrentPlayer().CurrentSkillEquipped == CognitivSkill.LIFT)
+			{
+				EventFactory.FireOnCognitvEvent(this, CognitivSkill.LIFT, 6.4f);
+			} else if (GameState.Instance.getCurrentPlayer().CurrentSkillEquipped == CognitivSkill.PUSH)
+			{
+				EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
+			} else if (GameState.Instance.getCurrentPlayer().CurrentSkillEquipped == CognitivSkill.PULL)
+			{
+				EventFactory.FireOnCognitvEvent(this, CognitivSkill.PULL, 6.4f);
+			}
+		}
         else if (debugKey != "" && Input.GetKeyUp(debugKey))
         {
             GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
