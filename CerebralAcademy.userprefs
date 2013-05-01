@@ -1,8 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Levels\TrainingGrounds\Scripts\PromptGUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CognitivObject\Scripts\CognitivPull.cs">
     <Files>
-      <File FileName="Assets\Levels\TrainingGrounds\Scripts\PromptGUI.cs" Line="155" Column="1" />
+      <File FileName="Assets\Levels\TrainingGrounds\Scripts\PromptGUI.cs" Line="24" Column="29" />
+      <File FileName="Assets\Scripts\GameState.cs" Line="15" Column="32" />
+      <File FileName="Assets\Levels\TrainingGrounds\Scripts\Tutor.cs" Line="96" Column="3" />
+      <File FileName="Assets\Scripts\SkillChoiceMenu.cs" Line="85" Column="15" />
+      <File FileName="Assets\Scripts\InputHandler.cs" Line="73" Column="62" />
+      <File FileName="Assets\Scripts\Dungeon Scripts\OrbEffects.cs" Line="8" Column="36" />
+      <File FileName="Assets\Scripts\CognitivObject\Scripts\CognitivPush.cs" Line="11" Column="20" />
+      <File FileName="Assets\Scripts\CognitivObject\Scripts\CognitivPull.cs" Line="26" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

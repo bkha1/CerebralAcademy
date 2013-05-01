@@ -29,11 +29,12 @@ public class OrbEffects : MonoBehaviour {
 			Hashtable param = new Hashtable();
 			param.Add ("name", name+"Orb");
 			NotificationCenter.DefaultCenter.PostNotification(this, "ItemPickup", param);
+			Debug.Log("Player just picked up: " + name);
 			
-			if (name.ToLower().Equals("Push"))
+			if (name.ToUpper().Equals("PUSH"))
 			{
 				GameState.Instance.getCurrentPlayer().hasLearnedPush = true;
-			} else if (name.ToLower().Equals("Pull"))
+			} else if (name.ToUpper().Equals("PULL"))
 			{
 				GameState.Instance.getCurrentPlayer().hasLearnedPull = true;
 			}

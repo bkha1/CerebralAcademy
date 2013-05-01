@@ -12,10 +12,10 @@ public class GameState {
     public bool IsPaused { get; set; }
     public bool IsGuiOpen { get; set; }
 	public bool IsSkillMenuOpen { get; set; }
-	public string SkillKey { get; set; }
+	public KeyCode SkillKey { get; set; }
 	
     static GameState() {}
-    private GameState() { DebugMode = false; SkillKey = KeyCode.Q.ToString(); }
+    private GameState() { DebugMode = false; SkillKey = KeyCode.Q; }
 	
 	public static GameState Instance
 	{

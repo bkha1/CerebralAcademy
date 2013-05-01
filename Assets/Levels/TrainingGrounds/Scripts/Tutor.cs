@@ -95,7 +95,7 @@ public class Tutor : MonoBehaviour {
 		GameObject selectedObject = notification.data["gameObject"] as GameObject;
 		
 		if (selectedObject.tag == "CognitivObject") {
-            EventFactory.FireDisplayTextEvent(this, "Excellent! Now press " + GameState.Instance.SkillKey.ToUpper() + " to lift the cube. Do this 3 times to continue.", 6.0f);
+            EventFactory.FireDisplayTextEvent(this, "Excellent! Now press " + GameState.Instance.SkillKey.ToString().ToUpper() + " to lift the cube. Do this 3 times to continue.", 6.0f);
 		}
 	}
 	

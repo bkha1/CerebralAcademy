@@ -70,7 +70,7 @@ public class InputHandler : MonoBehaviour {
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
         }*/
-		else if (Input.GetKeyDown(KeyCode.Q)) //(Input.GetKeyDown(GameState.Instance.SkillKey))
+		else if (Input.GetKeyDown(GameState.Instance.SkillKey)) //(Input.GetKeyDown(GameState.Instance.SkillKey))
 		{
 			if (GameState.Instance.getCurrentPlayer().CurrentSkillEquipped == CognitivSkill.LIFT)
 			{
