@@ -26,6 +26,7 @@ public class SkillChoiceMenu : MonoBehaviour {
 	public bool learnedPull =false;
 
     private bool isVisible = false;
+	
 
     void Start()
     {
@@ -109,15 +110,15 @@ public class SkillChoiceMenu : MonoBehaviour {
 				}
 				break;
 			case 1:
-			if(learnedPush)//GameState.Instance.getCurrentPlayer().hasLearnedPush)
-			{
-				GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PUSH;
-				Debug.Log("Cognitive Skill PUSH Set");
-			}
-			else
-			{
-				Debug.Log("Cognitive Skill PUSH LOCKED");
-			}
+				if(learnedPush)//GameState.Instance.getCurrentPlayer().hasLearnedPush)
+				{
+					GameState.Instance.getCurrentPlayer().CurrentSkillEquipped = CognitivSkill.PUSH;
+					Debug.Log("Cognitive Skill PUSH Set");
+				}
+				else
+				{
+					Debug.Log("Cognitive Skill PUSH LOCKED");
+				}
 				break;
 			case 2:
 			if(learnedPull)//GameState.Instance.getCurrentPlayer().hasLearnedPull)

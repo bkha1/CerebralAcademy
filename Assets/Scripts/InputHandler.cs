@@ -70,7 +70,7 @@ public class InputHandler : MonoBehaviour {
         {
             EventFactory.FireOnCognitvEvent(this, CognitivSkill.PUSH, 6.4f);
         }*/
-		else if (Input.GetKeyDown(GameState.Instance.SkillKey)) //(Input.GetKeyDown(GameState.Instance.SkillKey))
+		else if (Input.GetKeyDown(GameState.Instance.SkillKey))
 		{
 			if (GameState.Instance.getCurrentPlayer().CurrentSkillEquipped == CognitivSkill.LIFT)
 			{
@@ -86,6 +86,7 @@ public class InputHandler : MonoBehaviour {
         else if (debugKey != "" && Input.GetKeyUp(debugKey))
         {
             GameState.Instance.DebugMode = !GameState.Instance.DebugMode;
+			GameState.Instance.getCurrentPlayer().hasLearnedPull = true; // JVM: NOTE: Added this so I can test Pulling.
         }
         else if (emotivEngineToggleKey != "" && Input.GetKeyUp(emotivEngineToggleKey))
         {

@@ -11,8 +11,9 @@ public class CognitivPull : MonoBehaviour {
         NotificationCenter.DefaultCenter.AddObserver(this, "OnCognitivPullEvent");
 	}
 
-    void OnCognitivPushEvent(Notification notification)
+    void OnCognitivPullEvent(Notification notification)
     {
+		Debug.Log ("Hey, Pull Script received the notification.");
         GameObject gObj = GameState.Instance.getSelectedObject();
 
         if (gObj != null)
@@ -33,6 +34,9 @@ public class CognitivPull : MonoBehaviour {
 		direction.z = direction.z * -1.0f;
 		
 		if (gObj != null && gObj.rigidbody != null) {
+			
+			Debug.Log ("Player is at: " + Camera.main.transform.ToString());
+			Debug.Log ("Pull Direction: (" + direction.x + ", " + direction.y + ", " + direction.z + ")");
 			gObj.rigidbody.AddForce(direction * amount, ForceMode.Impulse);
 		}
 	}

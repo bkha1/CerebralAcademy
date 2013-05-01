@@ -29,7 +29,7 @@ public class OrbEffects : MonoBehaviour {
 			Hashtable param = new Hashtable();
 			param.Add ("name", name+"Orb");
 			NotificationCenter.DefaultCenter.PostNotification(this, "ItemPickup", param);
-			Debug.Log("Player just picked up: " + name);
+			
 			
 			if (name.ToUpper().Equals("PUSH"))
 			{

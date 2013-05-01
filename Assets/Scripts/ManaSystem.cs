@@ -144,10 +144,21 @@ public class ManaSystem : MonoBehaviour {
                     }
                     case (CognitivSkill.PUSH):
                     {
+						Debug.Log ("ManaSystem: Push code");
                         if ((!player.hasLearnedPush && player.CurrentSkillEquipped == CognitivSkill.PUSH) || !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "You first must learn push.", 2.0f);
                         if (updateMana(cognitivSkillCost, powerLevel, false))
                         {
                             NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPushEvent", notification.data);
+                        }
+                        break;
+                    }
+					case (CognitivSkill.PULL):
+                    {
+						Debug.Log ("Current Cog Skill: " + player.CurrentSkillEquipped.ToString());
+                        //if ((!player.hasLearnedPull && player.CurrentSkillEquipped == CognitivSkill.PULL) || !GameState.Instance.DebugMode) EventFactory.FireDisplayTextEvent(this, "PULL must be your current Cognitiv Skill.", 2.0f);
+                        if (updateMana(cognitivSkillCost, powerLevel, false))
+                        {
+                            NotificationCenter.DefaultCenter.PostNotification(this, "OnCognitivPullEvent", notification.data);
                         }
                         break;
                     }
